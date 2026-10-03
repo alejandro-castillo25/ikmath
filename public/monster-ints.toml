@@ -1,0 +1,199 @@
+[[items]]
+id = 1
+int = '\int_0^\infty \frac {\sin^3x\cos^2x} x \,dx'
+
+[[items]]
+id = 2
+int = '\int_0^1 \frac {x^6-x^3}{(1+x)\ln x}\,dx'
+
+[[items]]
+id = 3
+int = '\text{Probar que:}\\\,\\ \int_0^\infty \frac {x^{s-1}}{e^x-1}\,dx=\Gamma(s)\zeta(s)'
+
+[[items]]
+id = 4
+int = '\int_0^1 \frac {\ln(1+x^3)}{x} \,dx'
+
+[[items]]
+id = 5
+int = '\int_0^\infty \frac {x^2} {e^{4x}-1}\,dx'
+
+[[items]]
+id = 6
+int = '\text{Probar que:}\\\,\\ \int_0^\infty\frac{x^{m-1}}{1+x^n}\,dx=\frac \pi n \csc \left( \frac {m\pi} n\right),\qquad 0<m<n'
+
+[[items]]
+id = 7
+int = '\int_0^{\ln^2(2e)} \frac {\log_{2e}x} {\log_2 x + \log_e x} \,dx'
+
+[[items]]
+id = 8
+int = '\text{Hallar la Generalización:}\\\,\\ \int_0^\infty \frac {x^s} {\cosh x - 1}\,dx'
+
+[[items]]
+id = 9
+int = '\text{Hallar:}\\\,\\ \mathcal{L}\{\ln t\}(s) = I(s)'
+
+[[items]]
+id = 10
+int = '\int_0^\infty \frac {(e^{-2x} - e^{-5x})\cos (3x)} x \,dx'
+
+[[items]]
+id = 11
+int = '\int_0^\infty x^3\left( \frac 1 {e^x-1} - \frac 1 {e^x+1}\right)\,dx'
+
+[[items]]
+id = 12
+int = '\text{Demostrar:}\\\,\\ \int_0^\infty \frac {x^{s-1}}{e^x+1}\,dx=\Gamma(s)\eta(s)'
+
+[[items]]
+id = 13
+int = '\int_0^\infty \frac {x \ln x} {e^x - 1} \,dx'
+
+[[items]]
+id = 14
+int = '\int_0^1 \frac x {x+(x-x^2)^x} \,dx'
+
+[[items]]
+id = 15
+int = '\int_3^7 \frac {\ln (x+2)} {\ln (x+2) +\ln(12-x)} \,dx'
+
+[[items]]
+id = 16
+int = '\int_0^{\pi/2} \ln^2(\cos x) \,dx'
+
+[[items]]
+id = 17
+int = '\int_0^{\pi/2} \tan^sx \,dx'
+
+[[items]]
+id = 18
+int = '\int_0^{\pi / 2} \frac {\ln(\sin x)}{\sqrt{\sin x \cos x}} \,dx'
+
+[[items]]
+id = 19
+int = '\int_{-1}^{1} \frac{1+x+x^2+\cdots+x^{2026}}{1+x^2+x^4+\cdots+x^{2026}-x^{2027}+x^{2028}-x^{2029}+\cdots}\, dx'
+
+[[items]]
+id = 20
+int = '\text{Resolver la Integral de Dirichlet}\\\,\\ \int_{-\infty}^{\infty} \frac {\sin x} x \, dx'
+
+[[items]]
+id = 21
+int = '\text{Hallar la Generalización:}\\\,\\ \int_0^1 \frac {1-x^n} {1-x}\,dx'
+
+[[items]]
+id = 22
+int = '\int_0^\infty \frac {\cos x} {\cosh x}\,dx'
+
+[[items]]
+id = 23
+int = '\text{Probar que:}\\\,\\ \int_0^1 \frac {x^b - x^a} {\ln x}\,dx = \ln\left(\frac {b + 1} {a + 1}\right)\,,\quad a,b > -1'
+
+[[items]]
+id = 24
+int = '\int_0^1\frac {1-x^6} {1-x}\,dx'
+
+[[items]]
+id = 25
+int = '\int_0^\infty x^4 \ln x\,e^{-x}\,dx'
+
+[[items]]
+id = 26
+int = '\int_0^\infty \frac {x^6 \ln x} {(1+x^2)^5}\,dx'
+
+[[items]]
+id = 27
+int = '\text{Hallar la Generalización:}\\\,\\ I_n = -\int_0^1 x^n \ln (1-x)\,dx\,,\quad n \in \N_0 \\\,\\ \text{Expresada en Números Armónicos}'
+
+[[items]]
+id = 28
+int = '\int_0^\infty \frac {\sin x} x \sin^6 x\,\cos^2 x \,dx'
+
+[[items]]
+id = 29
+int = '\int_0^1 x^2(1-x)^3\ln\left(\frac 1 x\right)\,dx'
+
+[[items]]
+id = 30
+int = '\text{Hallar:}\quad \mathcal{L}\{t^{n-1}\ln t\}(s)'
+
+[[items]]
+id = 31
+int = '\int_0^\infty \sqrt x \ln x\,e^{-x}\,dx'
+
+[[items]]
+id = 32
+int = '\int_{-\infty}^{\infty} \frac {\cos x} {x^2 + 1}\,dx'
+
+[[items]]
+id = 33
+int = '\text{Probar que:}\quad\\\,\\ \int_{-\infty}^{\infty}e^{-\alpha x^2}\,dx= \sqrt{\frac \pi \alpha}'
+
+[[items]]
+id = 34
+int = '\int_{-\pi}^\pi \sin^{2025} x\,\cos^{2026} x\,dx'
+
+[[items]]
+id = 35
+int = '\int_0^{\pi/2} \sin^8 x\,dx'
+
+[[items]]
+id = 36
+int = '\int_0^\infty \frac {\cos(\alpha x)-\cos(\beta x)} x\ln x\,dx'
+
+[[items]]
+id = 37
+int = '\int_0^{\pi/2}\cos^9 x \,dx'
+
+[[items]]
+id = 38
+int = '\int_0^\infty \frac {e^{-x^2}\sin^2(x^2)} {x^2}\,dx'
+
+[[items]]
+id = 39
+int = '\text{Probar que:}\\\,\\ \int_0^1 e^{-x}\ln x \,dx = -\gamma'
+
+[[items]]
+id = 40
+int = '\int_0^{\pi/2} x \sin x \cos x \ln(\sin x) \ln(\cos x)\,dx'
+
+[[items]]
+id = 41
+int = '\int_0^\infty \Gamma^2(1-ix^2)\,\Gamma^2(1+ix^2)\,dx'
+
+[[items]]
+id = 42
+int = '\text{Resolver las Integrales de Fresnel:}\\\,\\ \int_0^\infty \sin(x^2)\,dx\,,\quad\int_0^\infty \cos(x^2)\,dx'
+
+[[items]]
+id = 43
+int = '\int_0^\infty e^{-x} \ln^2 x \,dx'
+
+[[items]]
+id = 44
+int = '\int_0^\infty \sin\left(x^2\right) \ln x \,dx'
+
+[[items]]
+id = 45
+int = '\text{Probar que:}\\\,\\ \int_0^\infty \frac {x^{\pi/5-1}} {1+x^{2\pi}}\,dx = \varphi'
+
+[[items]]
+id = 46
+int = '\text{Probar que:}\\\,\\ \int_0^1 \frac {-\ln x\,} {1-x} (1-x^n)\,dx = H^{(2)}_n'
+
+[[items]]
+id = 47
+int = '\int_0^\infty \frac {dx} {1+e^{x^2}}'
+
+[[items]]
+id = 48
+int = '\int_0^1 x^4 \left(\frac {-\ln x} {1-x}\right)\,dx'
+
+[[items]]
+id = 49
+int = '\text{Probar que:}\\\,\\ \int_0^\infty \frac {e^{-x} - e^{-nx}} x\,dx = \ln n'
+
+[[items]]
+id = 50
+int = '\int_0^\infty \frac {\sin^{12} x} {x^2}\,dx'
