@@ -8,7 +8,8 @@ int = '\int_0^1 \frac {x^6-x^3}{(1+x)\ln x}\,dx'
 
 [[items]]
 id = 3
-int = '\text{Probar que:}\\\,\\ \int_0^\infty \frac {x^{s-1}}{e^x-1}\,dx=\Gamma(s)\zeta(s)'
+int = '\int_0^\infty \frac {x^{s-1}}{e^x-1}\,dx=\Gamma(s)\zeta(s)'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 4
@@ -20,7 +21,8 @@ int = '\int_0^\infty \frac {x^2} {e^{4x}-1}\,dx'
 
 [[items]]
 id = 6
-int = '\text{Probar que:}\\\,\\ \int_0^\infty\frac{x^{m-1}}{1+x^n}\,dx=\frac \pi n \csc \left( \frac {m\pi} n\right),\qquad 0 < m < n'
+int = '\int_0^\infty\frac{x^{m-1}}{1+x^n}\,dx=\frac \pi n \csc \left( \frac {m\pi} n\right),\qquad 0 < m < n'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 7
@@ -28,11 +30,13 @@ int = '\int_0^{\ln^2(2e)} \frac {\log_{2e}x} {\log_2 x + \log_e x} \,dx'
 
 [[items]]
 id = 8
-int = '\text{Hallar la Generalización:}\\\,\\ \int_0^\infty \frac {x^s} {\cosh x - 1}\,dx'
+int = '\int_0^\infty \frac {x^s} {\cosh x - 1}\,dx'
+header = '\text{Hallar la Generalización:}'
 
 [[items]]
 id = 9
-int = '\text{Hallar:}\\\,\\ \mathcal{L}\{\ln t\}(s) = I(s)'
+int = '\mathcal{L}\{\ln t\}(s) = I(s)'
+header = '\text{Hallar:}'
 
 [[items]]
 id = 10
@@ -44,7 +48,8 @@ int = '\int_0^\infty x^3\left( \frac 1 {e^x-1} - \frac 1 {e^x+1}\right)\,dx'
 
 [[items]]
 id = 12
-int = '\text{Demostrar:}\\\,\\ \int_0^\infty \frac {x^{s-1}}{e^x+1}\,dx=\Gamma(s)\eta(s)'
+int = '\int_0^\infty \frac {x^{s-1}}{e^x+1}\,dx=\Gamma(s)\eta(s)'
+header = '\text{Demostrar:}'
 
 [[items]]
 id = 13
@@ -76,11 +81,13 @@ int = '\int_{-1}^{1} \frac{1+x+x^2+\cdots+x^{2026}}{1+x^2+x^4+\cdots+x^{2026}-x^
 
 [[items]]
 id = 20
-int = '\text{Resolver la Integral de Dirichlet}\\\,\\ \int_{-\infty}^{\infty} \frac {\sin x} x \, dx'
+int = '\int_{-\infty}^{\infty} \frac {\sin x} x \, dx'
+header = '\text{Resolver la Integral de Dirichlet}'
 
 [[items]]
 id = 21
-int = '\text{Hallar la Generalización:}\\\,\\ \int_0^1 \frac {1-x^n} {1-x}\,dx'
+int = '\int_0^1 \frac {1-x^n} {1-x}\,dx'
+header = '\text{Hallar la Generalización:}'
 
 [[items]]
 id = 22
@@ -88,7 +95,8 @@ int = '\int_0^\infty \frac {\cos x} {\cosh x}\,dx'
 
 [[items]]
 id = 23
-int = '\text{Probar que:}\\\,\\ \int_0^1 \frac {x^b - x^a} {\ln x}\,dx = \ln\left(\frac {b + 1} {a + 1}\right)\,,\quad a,b > -1'
+int = '\int_0^1 \frac {x^b - x^a} {\ln x}\,dx = \ln\left(\frac {b + 1} {a + 1}\right)\,,\quad a,b > -1'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 24
@@ -104,7 +112,9 @@ int = '\int_0^\infty \frac {x^6 \ln x} {(1+x^2)^5}\,dx'
 
 [[items]]
 id = 27
-int = '\text{Hallar la Generalización:}\\\,\\ I_n = -\int_0^1 x^n \ln (1-x)\,dx\,,\quad n \in \N_0 \\\,\\ \text{Expresada en Números Armónicos}'
+int = 'I_n = -\int_0^1 x^n \ln (1-x)\,dx\,,\quad n \in \mathbb N_0'
+title = '\text{Hallar la Generalización:}'
+footer = '\text{Expresada en Números Armónicos}'
 
 [[items]]
 id = 28
@@ -116,7 +126,8 @@ int = '\int_0^1 x^2(1-x)^3\ln\left(\frac 1 x\right)\,dx'
 
 [[items]]
 id = 30
-int = '\text{Hallar:}\quad \mathcal{L}\{t^{n-1}\ln t\}(s)'
+int = '\mathcal{L}\{t^{n-1}\ln t\}(s)'
+header = '\text{Hallar:}'
 
 [[items]]
 id = 31
@@ -128,7 +139,8 @@ int = '\int_{-\infty}^{\infty} \frac {\cos x} {x^2 + 1}\,dx'
 
 [[items]]
 id = 33
-int = '\text{Probar que:}\quad\\\,\\ \int_{-\infty}^{\infty}e^{-\alpha x^2}\,dx= \sqrt{\frac \pi \alpha}'
+int = '\int_{-\infty}^{\infty}e^{-\alpha x^2}\,dx= \sqrt{\frac \pi \alpha}'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 34
@@ -152,7 +164,8 @@ int = '\int_0^\infty \frac {e^{-x^2}\sin^2(x^2)} {x^2}\,dx'
 
 [[items]]
 id = 39
-int = '\text{Probar que:}\\\,\\ \int_0^1 e^{-x}\ln x \,dx = -\gamma'
+int = '\int_0^1 e^{-x}\ln x \,dx = -\gamma'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 40
@@ -164,7 +177,8 @@ int = '\int_0^\infty \Gamma^2(1-ix^2)\,\Gamma^2(1+ix^2)\,dx'
 
 [[items]]
 id = 42
-int = '\text{Resolver las Integrales de Fresnel:}\\\,\\ \int_0^\infty \sin(x^2)\,dx\,,\quad\int_0^\infty \cos(x^2)\,dx'
+int = '\int_0^\infty \sin(x^2)\,dx\,,\quad\int_0^\infty \cos(x^2)\,dx'
+header = '\text{Resolver las Integrales de Fresnel:}'
 
 [[items]]
 id = 43
@@ -176,11 +190,13 @@ int = '\int_0^\infty \sin\left(x^2\right) \ln x \,dx'
 
 [[items]]
 id = 45
-int = '\text{Probar que:}\\\,\\ \int_0^\infty \frac {x^{\pi/5-1}} {1+x^{2\pi}}\,dx = \varphi'
+int = '\int_0^\infty \frac {x^{\pi/5-1}} {1+x^{2\pi}}\,dx = \varphi'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 46
-int = '\text{Probar que:}\\\,\\ \int_0^1 \frac {-\ln x\,} {1-x} (1-x^n)\,dx = H^{(2)}_n'
+int = '\int_0^1 \frac {-\ln x\,} {1-x} (1-x^n)\,dx = H^{(2)}_n'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 47
@@ -192,7 +208,8 @@ int = '\int_0^1 x^4 \left(\frac {-\ln x} {1-x}\right)\,dx'
 
 [[items]]
 id = 49
-int = '\text{Probar que:}\\\,\\ \int_0^\infty \frac {e^{-x} - e^{-nx}} x\,dx = \ln n'
+int = '\int_0^\infty \frac {e^{-x} - e^{-nx}} x\,dx = \ln n'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 50
@@ -204,7 +221,8 @@ int = '\int_0^1\frac {(1-x^5)\ln x} {1-x}\,dx'
 
 [[items]]
 id = 52
-int = '\text{Hallar la Transformada de Mellin:}\\\,\\ \mathcal{M}\{\sin x\}(s) = \int_0^\infty x^{s-1}\sin x \,dx\,,\quad0<\text{Re(s)}<1'
+int = '\mathcal{M}\{\sin x\}(s) = \int_0^\infty x^{s-1}\sin x \,dx\,,\quad 0 < \Re(s) < 1'
+header = '\text{Hallar la Transformada de Mellin:}'
 
 [[items]]
 id = 53
@@ -216,7 +234,8 @@ int = '\int_{-\infty}^{\infty} x^2 e^{-e^x} e^{2x}\,dx'
 
 [[items]]
 id = 55
-int = '\text{Probar que:}\\\,\\ \int_0^1 x^n \ln^2 (1-x)\,dx = \frac {H^2_{n+1} + H^{(2)}_{n+1}} {n+1}'
+int = '\int_0^1 x^n \ln^2 (1-x)\,dx = \frac {H^2_{n+1} + H^{(2)}_{n+1}} {n+1}'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 56
@@ -228,7 +247,8 @@ int = '\int_0^1 \frac {\ln^2 x\,\ln(1-x)} x\,dx'
 
 [[items]]
 id = 58
-int = '\text{Probar la Integral de Bernoulli:}\\\,\\\int_0^1 x^x\,dx = \sum_{n=0}^\infty \frac {(-1)^{n }} {(n+1)^{n+1}}'
+int = '\int_0^1 x^x\,dx = \sum_{n=0}^\infty \frac {(-1)^{n }} {(n+1)^{n+1}}'
+header = '\text{Probar la Integral de Bernoulli:}'
 
 [[items]]
 id = 59
@@ -240,7 +260,8 @@ int = '\int_0^1 \frac {\ln^4 x} {1 + x^2} \,dx'
 
 [[items]]
 id = 61
-int = '\text{Hallar la Generalización:}\\\,\\ \int_0^1 \frac {x^\alpha - x^\beta} {(1+x+x^2)\ln\left(\frac 1 x\right)}\,dx\,,\quad\alpha , \beta > -1'
+int = '\int_0^1 \frac {x^\alpha - x^\beta} {(1+x+x^2)\ln\left(\frac 1 x\right)}\,dx\,,\quad\alpha , \beta > -1'
+header = '\text{Hallar la Generalización:}'
 
 [[items]]
 id = 62
@@ -252,7 +273,8 @@ int = '\int_0^\infty \frac {x^2\ln x} {1+ e^{\pi x}}\,dx'
 
 [[items]]
 id = 64
-int = '\text{Probar que:}\\\,\\ \int_0^1 x^n \ln^m x \,dx = \frac {(-1)^m\,\Gamma(m+1)} {(n+1)^{m+1}}'
+int = '\int_0^1 x^n \ln^m x \,dx = \frac {(-1)^m\,\Gamma(m+1)} {(n+1)^{m+1}}'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 65
@@ -276,7 +298,8 @@ int = '\underbrace{\int\int\cdots\int}_{20}x^{25}\,\underbrace{dxdx\cdots dx}_{2
 
 [[items]]
 id = 70
-int = '\text{Demostrar que:}\\\,\\ \int_0^\infty \frac {x^{s-1}} {2\cosh x}\,dx=\Gamma(s)\beta(s)\,,\quad\Re(s) > 0'
+int = '\int_0^\infty \frac {x^{s-1}} {2\cosh x}\,dx=\Gamma(s)\beta(s)\,,\quad\Re(s) > 0'
+header = '\text{Demostrar que:}'
 
 [[items]]
 id = 71
@@ -288,7 +311,8 @@ int = '\int_0^1 x(-1)^x\,dx'
 
 [[items]]
 id = 73
-int = '\text{Hallar la Generalización:}\\\,\\ \int_0^\infty \frac {1-e^x} {1-e^{\alpha x}}\,dx\,,\quad \alpha > 1'
+int = '\int_0^\infty \frac {1-e^x} {1-e^{\alpha x}}\,dx\,,\quad \alpha > 1'
+header = '\text{Hallar la Generalización:}'
 
 [[items]]
 id = 74
@@ -300,7 +324,8 @@ int = '\int_0^\infty \left[ \frac {x^{\varphi -1 }} {e^x - 1} + \frac{x^{\varphi
 
 [[items]]
 id = 76
-int = '\text{Hallar la Generalización:}\\\,\\ \int_0^\infty e^{-\sigma x^n} \cos(\alpha x^n)\,dx\,,\quad \sigma,\alpha > 1'
+int = '\int_0^\infty e^{-\sigma x^n} \cos(\alpha x^n)\,dx\,,\quad \sigma,\alpha > 1'
+header = '\text{Hallar la Generalización:}'
 
 [[items]]
 id = 77
@@ -316,15 +341,19 @@ int = '\int_0^\infty \sin(x^n)\,dx'
 
 [[items]]
 id = 80
-int = '\text{Resolver la Integral de Fresnel:}\\\,\\ \int_0^\infty \sin(x^2)\,dx \\\,\\ \text{Usando la transformada de Mellin}'
+int = '\int_0^\infty \sin(x^2)\,dx'
+header = '\text{Resolver la Integral de Fresnel:}'
+footer = '\text{Usando la transformada de Mellin}'
 
 [[items]]
 id = 81
-int = '\text{Resolver usando la Transformada de Mellin:}\\\,\\ \int_0^\infty \text{sinc}\,x\,dx'
+int = '\int_0^\infty \text{sinc}\,x\,dx'
+header = '\text{Resolver usando la Transformada de Mellin:}'
 
 [[items]]
 id = 82
-int = '\text{Hallar la Transformada de Stieltjes:}\\\,\\ S\left\{\frac 1 {t^2 + 1}\right\}(p)=\mathcal{L}_s \left\{ \mathcal{L}_t \left\{ \frac 1 {t^2 + 1} \right\}(s) \right\}(p) '
+int = 'S\left\{\frac 1 {t^2 + 1}\right\}(p)=\mathcal{L}_s \left\{ \mathcal{L}_t \left\{ \frac 1 {t^2 + 1} \right\}(s) \right\}(p) '
+header = '\text{Hallar la Transformada de Stieltjes:}'
 
 [[items]]
 id = 83
@@ -336,7 +365,8 @@ int = '\int_0^1  \ln \left( \frac 1 {\Gamma(1+x)+\Gamma(x) + \Gamma(x-1)}\right)
 
 [[items]]
 id = 85
-int = '\text{Hallar la Generalización:}\\\,\\ \int_0^1 \frac{(1+x^{s-1})\sin(a\ln x)+1-\cos(a\ln x)}{\ln x}\,dx\,,\quad s>0,\,a\in\R'
+int = '\int_0^1 \frac{(1+x^{s-1})\sin(a\ln x)+1-\cos(a\ln x)}{\ln x}\,dx\,,\quad s>0,\,a\in\R'
+header = '\text{Hallar la Generalización:}'
 
 [[items]]
 id = 86
@@ -348,7 +378,8 @@ int = '\int \begin{vmatrix}x&1&0&0&0\\1&x&1&0&0\\0&1&x&1&0\\0&0&1&x&1\\0&0&0&1&x
 
 [[items]]
 id = 88
-int = '\text{Demostrar que:}\\\,\\ \int_0^1 \frac {x^{s-1}} {x+1}\,dx=H_{s-1} - H_{s/2 - 1}-\ln 2'
+int = '\int_0^1 \frac {x^{s-1}} {x+1}\,dx=H_{s-1} - H_{s/2 - 1}-\ln 2'
+header = '\text{Demostrar que:}'
 
 [[items]]
 id = 89
@@ -360,7 +391,8 @@ int = '\sum_{k=0}^{\infty}\int_0^{\pi}\left[\frac{x^k}{k!} + \frac{(-1)^kx^{2k+1
 
 [[items]]
 id = 91
-int = '\text{Hallar la Generalización:}\\\,\\ \int_0^\infty \left(x\ln x\right)^3 e^{-sx}\,dx\,,\quad s>0'
+int = '\int_0^\infty \left(x\ln x\right)^3 e^{-sx}\,dx\,,\quad s>0'
+header = '\text{Hallar la Generalización:}'
 
 [[items]]
 id = 92
@@ -372,7 +404,8 @@ int = '\int_0^\infty x^2 \sin x\,e^{-2x}\,dx'
 
 [[items]]
 id = 94
-int = '\text{Demostrar:}\\\,\\ \int_0^\infty\frac{x^{s-1}}{e^x+1}\,dx = \big(1-2^{1-s}\big)\int_0^\infty\frac{x^{s-1}}{e^x-1}\,dx\,,\quad \Re(s)>0'
+int = '\int_0^\infty\frac{x^{s-1}}{e^x+1}\,dx = \big(1-2^{1-s}\big)\int_0^\infty\frac{x^{s-1}}{e^x-1}\,dx\,,\quad \Re(s)>0'
+header = '\text{Demostrar:}'
 
 [[items]]
 id = 95
@@ -384,7 +417,8 @@ int = '\int_0^\infty \frac {x^3}{2\sinh(2x)}\,dx'
 
 [[items]]
 id = 97
-int = '\text{Demostrar que:}\\\,\\ \int_0^\infty \frac {x^{s - 1}}{2\sinh x}\,dx=\Gamma(s)\,\lambda(s)\,,\quad \Re(s)>1'
+int = '\int_0^\infty \frac {x^{s - 1}}{2\sinh x}\,dx=\Gamma(s)\,\lambda(s)\,,\quad \Re(s)>1'
+header = '\text{Demostrar que:}'
 
 [[items]]
 id = 98
@@ -396,7 +430,8 @@ int = '\int_0^\infty \frac{x^2 \ln x}{2\cosh x}\,dx'
 
 [[items]]
 id = 100
-int = '\text{Probar que:}\\\,\\ \int_0^1 \frac {-x^n\ln^{m-1}x} {1-x}\,dx = (-1)^m(m-1)![\zeta(m) - H_n^{(m)}]'
+int = '\int_0^1 \frac {-x^n\ln^{m-1}x} {1-x}\,dx = (-1)^m(m-1)![\zeta(m) - H_n^{(m)}]'
+header = '\text{Probar que:}'
 
 [[items]]
 id = 101
@@ -408,7 +443,8 @@ int = '\int_0^{\pi/2} x \cot x \,dx'
 
 [[items]]
 id = 103
-int = '\text{Hallar:}\\\,\\ \int_0^a x\,\text{csch}\,x\,dx,\qquad0<a<\pi'
+int = '\int_0^a x\,\text{csch}\,x\,dx,\qquad0<a<\pi'
+header = '\text{Hallar:}'
 
 [[items]]
 id = 104
@@ -416,11 +452,13 @@ int = '\int_0^{\pi/3} x^3\,\text{csch}\,x\,dx'
 
 [[items]]
 id = 105
-int = '\text{Expresar en función de } B_{14}:\\\,\\ \int_0^\infty \frac {x^{13}} {e^x - 1}\,dx'
+int = '\int_0^\infty \frac {x^{13}} {e^x - 1}\,dx'
+header = '\text{Expresar en función de } B_{14}:'
 
 [[items]]
 id = 106
-int = '\text{Demostrar:} \\\,\\ \int_0^a \frac {x\,\text{csch}\,x - 1} {x^2}\,dx = \sum_{n=1}^\infty \frac {(2-4^n)B_{2n} a ^{2n - 1}} {(2n)!(2n-1)},\qquad 0<a<\pi'
+int = '\int_0^a \frac {x\,\text{csch}\,x - 1} {x^2}\,dx = \sum_{n=1}^\infty \frac {(2-4^n)B_{2n} a ^{2n - 1}} {(2n)!(2n-1)},\qquad 0<a<\pi'
+header = '\text{Demostrar:} '
 
 [[items]]
 id = 107
@@ -432,7 +470,8 @@ int = '\int_0^1 \tan x \ln x\,dx'
 
 [[items]]
 id = 109
-int = '\text{Demostrar:}\\\,\\ \int_0^\infty \frac {x^{2s - 1}} {e^x - 1}\,dx = \frac {(-1)^{s+1}(2\pi)^{2s} B_{2s}} {4s},\quad s \in \mathbb Z^+'
+int = '\int_0^\infty \frac {x^{2s - 1}} {e^x - 1}\,dx = \frac {(-1)^{s+1}(2\pi)^{2s} B_{2s}} {4s},\quad s \in \mathbb Z^+'
+header = '\text{Demostrar:}'
 
 [[items]]
 id = 110
@@ -444,7 +483,8 @@ int = '\int_{\sqrt 2 - 1}^{\sqrt 2 + 1} \frac {\arctan (x^5)} {x}\,dx'
 
 [[items]]
 id = 112
-int = '\text{Demostrar que:}\\\,\\\int_0^\infty \frac {x^{2n}} {\sinh^2 x}\,dx = (-1)^{n+1}\pi^{2n} B_{2n},\qquad n \in \mathbb Z^+'
+int = '\int_0^\infty \frac {x^{2n}} {\sinh^2 x}\,dx = (-1)^{n+1}\pi^{2n} B_{2n},\qquad n \in \mathbb Z^+'
+header = '\text{Demostrar que:}'
 
 [[items]]
 id = 113
@@ -456,7 +496,8 @@ int = '\int_1^e x^{2x}e^{-2x}\ln x\,dx'
 
 [[items]]
 id = 115
-int = '\text{Hallar:}\\\,\\\int_0^a W(x)\,dx,\qquad a > 0'
+int = '\int_0^a W(x)\,dx,\qquad a > 0'
+header = '\text{Hallar:}'
 
 [[items]]
 id = 116
@@ -468,7 +509,8 @@ int = '\int_0^1 \arctan \left( \frac {\sqrt{1+x} + \sqrt{1-x}} {\sqrt{1+x} - \sq
 
 [[items]]
 id = 118
-int = '\text{Demostrar la función Gamma:}\\\,\\ \Gamma(z) = \int_0^\infty x^{z-1}e^{-x}\,dx,\qquad \Re(z) > 0'
+int = '\Gamma(z) = \int_0^\infty x^{z-1}e^{-x}\,dx,\qquad \Re(z) > 0'
+header = '\text{Demostrar la función Gamma:}'
 
 [[items]]
 id = 119
@@ -480,5 +522,18 @@ int = '\int_0^{\pi/4}x\sec x\,dx'
 
 [[items]]
 id = 121
-int = '\text{Hallar:}\\\,\\\int_0^a x^m\,\text{sech}\,x\,dx,\qquad m \in \mathbb Z^+ \land 0<a<\frac \pi 2'
+int = '\int_0^a x^m\,\text{sech}\,x\,dx,\qquad m \in \mathbb Z^+ \land 0<a<\frac \pi 2'
+header = '\text{Hallar:}'
 
+[[items]]
+id=122
+int = '\int_0^\infty \frac {x^{20}} {2\cosh x}\,dx'
+
+[[items]]
+id= 123
+int = '\int_0^{\pi/2} \ln(\sin x)\,dx'
+
+[[items]]
+id=124
+int = '\int_0^\infty \frac{x^{2n}}{2\cosh x}\,dx=\frac{|E_{2n}|\,\pi^{2n+1}}{4^{n+1}},\qquad \forall\,n\in \mathbb Z_{\ge 0}'
+header = '\text{Probar que:}'

@@ -1,16 +1,17 @@
 {
   "name": "ikmath",
-  "module": "index.ts",
+  "module": "./server/index.ts",
   "type": "module",
   "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^7"
-  },
+
+  "workspaces": ["frontend", "shared"],
   "dependencies": {
     "hono": "^4.13.12",
+    "ikmath-shared": "workspace:*",
     "zod": "^4.6.5"
+  },
+ 
+  "peerDependencies": {
+    "typescript": "^7"
   }
 }
