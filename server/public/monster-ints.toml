@@ -526,14 +526,54 @@ int = '\int_0^a x^m\,\text{sech}\,x\,dx,\qquad m \in \mathbb Z^+ \land 0<a<\frac
 header = '\text{Hallar:}'
 
 [[items]]
-id=122
+id = 122
 int = '\int_0^\infty \frac {x^{20}} {2\cosh x}\,dx'
 
 [[items]]
-id= 123
+id = 123
 int = '\int_0^{\pi/2} \ln(\sin x)\,dx'
 
 [[items]]
-id=124
+id = 124
 int = '\int_0^\infty \frac{x^{2n}}{2\cosh x}\,dx=\frac{|E_{2n}|\,\pi^{2n+1}}{4^{n+1}},\qquad \forall\,n\in \mathbb Z_{\ge 0}'
 header = '\text{Probar que:}'
+
+[[items]]
+id = 125
+int = '\int_0^1 x\ln^3 x\,\ln(-\ln x)\,dx'
+
+[[items]]
+id = 126
+int = '\int \ln x\left[ \left( \frac {x} {e}\right)^x + \left(\frac {e} {x}\right)^x \right]\,dx'
+
+[[items]]
+id = 127
+int = '\int_0^\infty x^\alpha e^{-\beta x}\cos(\gamma x)\,dx\qquad \gamma \in \mathbb R,\, \alpha,\beta \in \mathbb R^+'
+header = '\text{Hallar la Generalización:}'
+
+[[items]]
+id = 128
+int = '\int_0^4 x\,\lfloor x\rfloor \,dx'
+
+[[items]]
+id = 129
+int = '\int_0^2 \lfloor x \rfloor \, \lfloor x^2 \rfloor\,dx'
+
+[[items]]
+id = 130
+int = '\int_0^n x^2\,\lfloor x \rfloor\,dx,\qquad n \in \mathbb Z^+'
+header = '\text{Evaluar:}'
+
+[[items]]
+id = 131
+int = '\int_0^4 x\,\lceil x  \rceil\,dx'
+
+[[items]]
+id = 132
+int = '\int_0^3 \lceil x^2 \rceil\,dx'
+
+[[items]]
+id = 133
+int = '\int_0^n x^2 \,\lceil x \rceil,\qquad n \in \mathbb Z^+'
+header = '\text{Evaluar:}'
+

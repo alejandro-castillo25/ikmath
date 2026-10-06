@@ -23,6 +23,18 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
 
   if (["monster", "monsters"].includes(intsType)) {
     const { items: monsterInts } = monsterIntsToml;
+
+    const count = c.req.query("count");
+
+    if (count !== undefined) {
+      if (count.toLowerCase() === "true")
+        return c.json({
+          count: monsterInts.length
+        } as Object);
+
+      return c.text("Invalid argument in count query. Expected: 'true'", 400);
+    }
+
     const id = c.req.query("id");
     const { from, to } = c.req.query();
     const search = c.req.query("search");
@@ -31,14 +43,14 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
     const isOutBounds = (index: number) =>
       index > monsterInts.length || index <= 0;
 
-    let filterHeaders: "headers" | "no_headers" | "no" = "no"
+    let filterHeaders: "headers" | "no_headers" | "no" = "no";
 
     if (hasHeader !== undefined) {
-      if(hasHeader === "true") filterHeaders = "headers"
-      if (hasHeader === "false") filterHeaders = "no_headers"
+      if (hasHeader === "true") filterHeaders = "headers";
+      if (hasHeader === "false") filterHeaders = "no_headers";
       // TODO, and we're not handling this yet so
     }
-    
+
     let elementForLookup = "";
 
     if (id !== undefined) {
@@ -81,7 +93,10 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
 
     if (from_i > to_i)
       //todo: consider changing this to return a descending array, makes sense (i think...)
-      return c.text(`Bad request!\nfrom=${from} > to=${to}, that doesn't make sense`, 400);
+      return c.text(
+        `Bad request!\nfrom=${from} > to=${to}, that doesn't make sense`,
+        400,
+      );
 
     return c.json(
       monsterInts.filter((intEl: Int) => {
