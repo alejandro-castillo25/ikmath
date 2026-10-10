@@ -10,7 +10,7 @@ export default function Bg({ focusStart }: { focusStart: boolean }) {
 
   return (
     <ShapeGrid
-      speed={focusStart ? 0.2 * (Math.PI ** 2 / 2) : 0.2}
+      speed={focusStart ? 0.2 * Math.E ** 2 : 0.2}
       squareSize={65}
       direction={focusStart ? "up" : "diagonal"}
       

@@ -29,7 +29,7 @@ import { Separator } from "@/components/ui/separator";
 import { Moon, Sun } from "lucide-react";
 import { useEffect } from "react";
 import { Github } from "./Icons";
-import { useAppContext } from "@/AppContext";
+import { useAppContext, type Lang } from "@/AppContext";
 
 export default function NavExtraButtons() {
   const {
@@ -44,7 +44,7 @@ export default function NavExtraButtons() {
     else document.body.classList.remove("dark");
   }, [theme]);
 
-  const items = [
+  const items: Array<{label: string, value: Lang}> = [
     { label: "Español", value: "es" },
     { label: "English", value: "en" },
   ];
@@ -61,6 +61,8 @@ export default function NavExtraButtons() {
         >
           <Github />
         </a>
+
+        <Separator orientation="vertical" />
 
         <Select
           items={items}

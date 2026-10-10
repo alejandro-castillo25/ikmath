@@ -182,8 +182,8 @@ button:hover {
 .katex {
   height: 100%;
   width: 100%;
-  font-size: 1.25rem !important;
-  /*user-select: none;*/
+  /*font-size: 1rem !important;*/
+  user-select: none;
 }
 
 ::selection { 
