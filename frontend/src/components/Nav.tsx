@@ -3,7 +3,16 @@ import { Logo } from "@/components/Logo";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+const links = [
+  { value: "subjects", href: "/subjects.html", label: "Materias" },
+  { value: "integrals", href: "/integrals.html", label: "Integrales" },
+  { value: "references", href: "/references.html", label: "Referencias" },
+];
+
 export default function Nav() {
+  const current =
+    links.find((l) => l.href === window.location.pathname)?.value ?? null;
+
   return (
     <header
       className="flex items-center absolute top-0 p-4 w-full h-16
@@ -17,17 +26,20 @@ export default function Nav() {
         </h2>
       </a>
 
-      <Tabs defaultValue="none" className="hidden md:block">
+      <Tabs value={current} className="hidden md:block">
         <TabsList variant="line">
-          <TabsTrigger value="none" className="hidden">
-            none
-          </TabsTrigger>
-          <TabsTrigger value="overview">Materias</TabsTrigger>
-          <TabsTrigger value="analytics">Integrales</TabsTrigger>
-          <TabsTrigger value="reports">Referencias</TabsTrigger>
+          {links.map((l) => (
+            <TabsTrigger
+              key={l.value}
+              value={l.value}
+              nativeButton={false}
+              render={<a href={l.href} />}
+            >
+              {l.label}
+            </TabsTrigger>
+          ))}
         </TabsList>
       </Tabs>
-
       <NavExtraButtons />
     </header>
   );

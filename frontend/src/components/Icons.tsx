@@ -1,6 +1,4 @@
-import React from 'react';
-
-
+import React from "react";
 
 export const Github = () => (
   <svg
@@ -20,23 +18,22 @@ export const Github = () => (
   </svg>
 );
 
-
-
-interface MyIconProps {
-  className?: string;
-  width?: number | string;
-  height?: number | string;
-}
-
-export const MyIcon: React.FC<MyIconProps> = ({
-  className,
-  width,
-  height,
-  ...props
-}) => {
+export const Int = ({ className }: { className?: string }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square-function preview-icon" className={className} width={width} height={height} {...props}>
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M9 17c2 0 2.8-1 2.8-2.8V10c0-2 1-3.3 3.2-3"/><path d="M9 11.2h5.7"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${className ?? ""} lucide lucide-square-function preview-icon`}
+    >
+      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+      <path d="M8.5 16.5c0 1 .8 1.8 1.7 1.8s1.5-.9 1.5-2.3V8.3c0-1.4.7-2.3 1.5-2.3.9 0 1.7.8 1.7 1.8" />
     </svg>
   );
 };

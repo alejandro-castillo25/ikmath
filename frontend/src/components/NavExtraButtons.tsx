@@ -1,6 +1,14 @@
 import { useIsMobile } from "@/hooks/use-mobile";
 
-import { Menu, X, Languages } from "lucide-react";
+import {
+  Menu,
+  X,
+  Languages,
+  Moon,
+  Sun,
+  LibraryBig,
+  BookSearch,
+} from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 import {
@@ -24,12 +32,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { Separator } from "@/components/ui/separator";
 
-import { Moon, Sun } from "lucide-react";
 import { useEffect } from "react";
-import { Github } from "./Icons";
+import { Github, Int } from "./Icons";
 import { useAppContext, type Lang } from "@/AppContext";
+
+const items: Array<{ label: string; value: Lang }> = [
+  { label: "Español", value: "es" },
+  { label: "English", value: "en" },
+];
 
 export default function NavExtraButtons() {
   const {
@@ -43,11 +61,6 @@ export default function NavExtraButtons() {
     if (theme === "dark") document.body.classList.add("dark");
     else document.body.classList.remove("dark");
   }, [theme]);
-
-  const items: Array<{label: string, value: Lang}> = [
-    { label: "Español", value: "es" },
-    { label: "English", value: "en" },
-  ];
 
   return (
     <>
@@ -69,10 +82,20 @@ export default function NavExtraButtons() {
           value={lang}
           onValueChange={(lan) => setLang(lan)}
         >
-          <SelectTrigger className="w-35 bg-transparent! hover:bg-muted! border-0! h-full!">
-            <Languages />
-            <SelectValue />
-          </SelectTrigger>
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <SelectTrigger className="w-35 bg-transparent! hover:bg-muted! border-0! h-full!" />
+              }
+            >
+              <Languages />
+              <SelectValue />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Idioma</p>
+            </TooltipContent>
+          </Tooltip>
+
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Idiomas</SelectLabel>
@@ -85,14 +108,25 @@ export default function NavExtraButtons() {
           </SelectContent>
         </Select>
 
-        <Button
-          variant="ghost"
-          size="icon-lg"
-          className="h-full"
-          onClick={() => setTheme((v) => (v === "dark" ? "light" : "dark"))}
-        >
-          {theme === "dark" ? <Moon /> : <Sun />}
-        </Button>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <Button
+                variant="ghost"
+                size="icon-lg"
+                className="h-full"
+                onClick={() =>
+                  setTheme((v) => (v === "dark" ? "light" : "dark"))
+                }
+              >
+                {theme === "dark" ? <Moon /> : <Sun />}
+              </Button>
+            }
+          />
+          <TooltipContent>
+            <p>Tema</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       <Drawer showSwipeHandle={isMobile} swipeDirection="right">
@@ -124,9 +158,18 @@ export default function NavExtraButtons() {
             <DrawerDescription></DrawerDescription>
           </DrawerHeader>
           <div className="p-4 flex flex-col gap-2">
-            <Button variant="outline">Materias</Button>
-            <Button variant="outline">Integrales</Button>
-            <Button variant="outline">Referencias</Button>
+            <Button variant="outline">
+              <LibraryBig />
+              Materias
+            </Button>
+            <Button variant="outline">
+              <Int />
+              Integrales
+            </Button>
+            <Button variant="outline">
+              <BookSearch />
+              Referencias
+            </Button>
           </div>
           <DrawerFooter className="gap-4">
             <Separator />
@@ -142,16 +185,23 @@ export default function NavExtraButtons() {
                 >
                   <Github />
                 </a>
-
                 <Select
                   items={items}
                   value={lang}
                   onValueChange={(lan) => setLang(lan)}
                 >
-                  <SelectTrigger className="w-32 h-full!">
-                    <Languages />
-                    <SelectValue />
-                  </SelectTrigger>
+                  <Tooltip>
+                    <TooltipTrigger
+                      render={<SelectTrigger className="w-35 h-full!" />}
+                    >
+                      <Languages />
+                      <SelectValue />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Idioma</p>
+                    </TooltipContent>
+                  </Tooltip>
+
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Idiomas</SelectLabel>
@@ -164,16 +214,25 @@ export default function NavExtraButtons() {
                   </SelectContent>
                 </Select>
 
-                <Button
-                  variant="outline"
-                  size="icon-lg"
-                  className="h-full!"
-                  onClick={() =>
-                    setTheme((v) => (v === "dark" ? "light" : "dark"))
-                  }
-                >
-                  {theme === "dark" ? <Moon /> : <Sun />}
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        variant="outline"
+                        size="icon-lg"
+                        className="h-full!"
+                        onClick={() =>
+                          setTheme((v) => (v === "dark" ? "light" : "dark"))
+                        }
+                      >
+                        {theme === "dark" ? <Moon /> : <Sun />}
+                      </Button>
+                    }
+                  />
+                  <TooltipContent>
+                    <p>Tema</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </div>
           </DrawerFooter>

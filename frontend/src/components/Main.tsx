@@ -38,7 +38,7 @@ export default function Main({ focusStart, setFocusStart }: ButtonFocusStart) {
           </p>
 
           <a
-            href="/"
+            href="/subjects"
             className={buttonVariants({ variant: "default", size: "lg" })}
 
             onMouseEnter={handleFocusIn}
@@ -55,7 +55,7 @@ export default function Main({ focusStart, setFocusStart }: ButtonFocusStart) {
         />
       </main>
       
-      <Tex>
+      <Tex className={`fixed bottom-0 text-2xl opacity-0 transition-opacity duration-400 pointer-events-none ${focusStart && "main-lim-anim"} `}>
         {String.raw`\lim_{\Delta\to\infty} f(\Delta)`} 
       </Tex>
       
