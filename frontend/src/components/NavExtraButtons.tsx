@@ -157,20 +157,33 @@ export default function NavExtraButtons() {
             <DrawerTitle>Contenidos</DrawerTitle>
             <DrawerDescription></DrawerDescription>
           </DrawerHeader>
+
           <div className="p-4 flex flex-col gap-2">
-            <Button variant="outline">
+            <a
+              href="/subjects.html"
+              className={buttonVariants({ variant: "secondary" })}
+            >
               <LibraryBig />
               Materias
-            </Button>
-            <Button variant="outline">
+            </a>
+
+            <a
+              href="/integrals.html"
+              className={buttonVariants({ variant: "secondary" })}
+            >
               <Int />
               Integrales
-            </Button>
-            <Button variant="outline">
+            </a>
+
+            <a
+              href="/references.html"
+              className={buttonVariants({ variant: "secondary" })}
+            >
               <BookSearch />
               Referencias
-            </Button>
+            </a>
           </div>
+
           <DrawerFooter className="gap-4">
             <Separator />
             <div className="flex">
