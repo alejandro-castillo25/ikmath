@@ -11,5 +11,14 @@ export default defineConfig({
       alias: {
         "@": path.resolve(import.meta.dirname, "./src"),
       },
-    },
+  },
+
+  build: {
+    rolldownOptions: {
+      input: {
+        main: path.resolve(import.meta.dirname, "./index.html")
+      }
+    }
+ }
+  
 })
