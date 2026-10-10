@@ -2,7 +2,7 @@ import React from "react";
 
 export const Github = () => (
   <svg
-    className="size-6 text-gray-800 dark:text-white"
+    className="size-6 currentColor"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     width="24"
