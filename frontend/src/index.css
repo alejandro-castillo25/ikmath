@@ -47,6 +47,15 @@
   --sidebar-border: oklch(0.808 0.017 271.198);
   /*--sidebar-ring: oklch(0.555 0.25 297.016);*/
   --sidebar-ring: oklch(0.648 0.107 212.889);
+
+
+  --calculus: oklch(0.550 0.216 19.809);
+  --algebra: oklch(0.714 0.149 67.777);
+  --real-analysis: oklch(0.555 0.250 297.016);
+  --complex-analysis: oklch(0.625 0.177 140.445);
+  --number-theory: oklch(0.648 0.107 212.889); /* Maybe use blue instead of sapphire? maybe :> */
+
+  
 }
 
 .dark {
@@ -88,6 +97,14 @@
   --sidebar-border: oklch(0.404 0.032 280.152);
   /*--sidebar-ring: oklch(0.787 0.119 304.769);*/
   --sidebar-ring: oklch(0.791 0.096 228.653);
+
+
+
+  --calculus: oklch(0.756 0.130 2.764);
+  --algebra: oklch(0.919 0.070 86.528);
+  --real-analysis: oklch(0.787 0.119 304.769);
+  --complex-analysis: oklch(0.858 0.109 142.715);
+  --number-theory: oklch(0.791 0.096 228.653); /* Maybe use blue instead of sapphire? maybe :> */
 }
 
 @theme inline {
@@ -155,6 +172,28 @@
   justify-content: center;
 }
 
+#root.subjects {
+  justify-content: flex-start;
+}
+
+.main-subjects > * {
+  @apply relative flex flex-col justify-start items-start text-left whitespace-normal w-full p-4 md:w-[48%] h-50 border-2 transition-all duration-300;
+}
+
+/*.main-subjects > :last-child {
+  @apply md:w-[97.2%];
+}*/
+
+.main-subjects:has(*:hover, *:focus-visible) > *:not(*:hover, *:focus-visible) {
+  filter: brightness(65%);
+}
+
+.main-subjects > *:hover,
+.main-subjects > *:focus-visible {
+  filter: brightness(100%);
+  scale: 101.25%;
+}
+
 
 body {
   position: relative;
@@ -196,10 +235,6 @@ button:hover {
     transform: translateY(-15%)
   }
 }
-
-
-
-
 
 
 ::selection { 

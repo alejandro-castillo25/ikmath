@@ -14,14 +14,13 @@ export default function Nav() {
     links.find((l) => l.href === window.location.pathname)?.value ?? null;
 
   return (
-    <header
-      className="flex items-center absolute top-0 p-4 w-full h-16
-    border-b border-border bg-background/5 backdrop-blur-xs"
+    <nav
+      className="z-10 flex items-center fixed top-0 p-4 w-full h-16
+    border-b border-border bg-background/35 backdrop-blur-xs"
     >
       <a href="/" className="flex items-center gap-4 mr-4">
         <Logo size={32} />
         <h2 className="select-none">
-          {" "}
           <span className="text-primary">ik</span>math
         </h2>
       </a>
@@ -41,6 +40,6 @@ export default function Nav() {
         </TabsList>
       </Tabs>
       <NavExtraButtons />
-    </header>
+    </nav>
   );
 }

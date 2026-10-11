@@ -85,7 +85,7 @@ export default function NavExtraButtons() {
           <Tooltip>
             <TooltipTrigger
               render={
-                <SelectTrigger className="w-35 bg-transparent! hover:bg-muted! border-0! h-full!" />
+                <SelectTrigger className="hidden w-35 bg-transparent! hover:bg-muted! border-0! h-full!" />
               }
             >
               <Languages />
@@ -152,7 +152,7 @@ export default function NavExtraButtons() {
                 />
               }
             >
-              <X />{" "}
+              <X />
             </DrawerClose>
             <DrawerTitle>Contenidos</DrawerTitle>
             <DrawerDescription></DrawerDescription>
@@ -205,7 +205,7 @@ export default function NavExtraButtons() {
                 >
                   <Tooltip>
                     <TooltipTrigger
-                      render={<SelectTrigger className="w-35 h-full!" />}
+                      render={<SelectTrigger className="hidden w-35 h-full!" />}
                     >
                       <Languages />
                       <SelectValue />
