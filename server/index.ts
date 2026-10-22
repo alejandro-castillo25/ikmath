@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { handle } from 'hono/vercel'
+// import { handle } from 'hono/vercel'
 
 
 import { cors } from "hono/cors";
@@ -11,7 +11,7 @@ import type { Int } from "ikmath-shared";
 import { monsterIntsToml } from "./public/monster-ints";
 
 
-const app = new Hono()
+const app = new Hono().basePath("/api")
 // const app = new Hono();
 
 const corsMiddleware = cors({
@@ -125,4 +125,4 @@ app.get("/", (c) => {
   return c.text("ikmath");
 });
 
-export default handle(app);
+export default app;

@@ -42,11 +42,12 @@ export function Logo({ size = 48, ...props }: LogoProps) {
       />
 
       <text
-        x="28"
+        x="30"
         y="80"
         fill="currentColor"
-        fontSize="52"
+        // fontSize="52"
         style={{
+          fontSize: "2.75rem",
           userSelect: "none"
         }}
         fontFamily='"Computer Modern Serif", "New Computer Modern", serif'
