@@ -177,7 +177,7 @@
 }
 
 .main-subjects > * {
-  @apply relative flex flex-col justify-start items-start text-left whitespace-normal w-full p-4 md:w-[48%] h-50 border-2 transition-all duration-300;
+  @apply relative flex flex-col justify-start items-start text-left whitespace-normal w-full p-4 md:p-8 md:w-[48%] h-50 border-2 transition-all duration-300;
 }
 
 /*.main-subjects > :last-child {
@@ -211,6 +211,12 @@ body {
 button:hover {
   cursor: pointer;
 }
+
+/*button,
+[role="button"] {
+  user-select: text !important;
+  -webkit-user-select: text;
+}*/
 
 .katex {
   height: 100%;

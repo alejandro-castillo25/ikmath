@@ -38,7 +38,7 @@ export default function Main({ focusStart, setFocusStart }: ButtonFocusStart) {
           </p>
 
           <a
-            href="/subjects"
+            href="/subjects.html"
             className={buttonVariants({ variant: "default", size: "lg" })}
 
             onMouseEnter={handleFocusIn}

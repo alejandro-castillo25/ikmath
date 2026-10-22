@@ -31,7 +31,7 @@ function App() {
     <AppContextProvider>
       <Bg focusStart={focusStart} />
 
-      <Nav />
+      <Nav current={null} />
 
       <Main focusStart={focusStart} setFocusStart={setFocusStart} />
     </AppContextProvider>

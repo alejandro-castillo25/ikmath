@@ -294,7 +294,7 @@ int = '\int_0^\infty x^4 e^{-2x^2}\,dx'
 
 [[items]]
 id = 69
-int = '\underbrace{\int\int\cdots\int}_{20}x^{25}\,\underbrace{dxdx\cdots dx}_{20} '
+int = '\underbrace{\int\int\cdots\int}_{20}x^{25}\,\underbrace{dxdx\cdots dx}_{20}'
 
 [[items]]
 id = 70

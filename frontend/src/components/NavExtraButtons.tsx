@@ -1,14 +1,6 @@
 import { useIsMobile } from "@/hooks/use-mobile";
 
-import {
-  Menu,
-  X,
-  Languages,
-  Moon,
-  Sun,
-  LibraryBig,
-  BookSearch,
-} from "lucide-react";
+import { Menu, X, Languages, Moon, Sun } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 import {
@@ -41,15 +33,24 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 import { useEffect } from "react";
-import { Github, Int } from "./Icons";
+import { Github } from "./Icons";
 import { useAppContext, type Lang } from "@/AppContext";
+import type { Contents, Links } from "./Nav";
+
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const items: Array<{ label: string; value: Lang }> = [
   { label: "Español", value: "es" },
   { label: "English", value: "en" },
 ];
 
-export default function NavExtraButtons() {
+export default function NavExtraButtons({
+  current,
+  links,
+}: {
+  current: Contents;
+  links: Links;
+}) {
   const {
     theme: [theme, setTheme],
     lang: [lang, setLang],
@@ -158,95 +159,85 @@ export default function NavExtraButtons() {
             <DrawerDescription></DrawerDescription>
           </DrawerHeader>
 
-          <div className="p-4 flex flex-col gap-2">
-            <a
-              href="/subjects.html"
-              className={buttonVariants({ variant: "secondary" })}
-            >
-              <LibraryBig />
-              Materias
-            </a>
-
-            <a
-              href="/integrals.html"
-              className={buttonVariants({ variant: "secondary" })}
-            >
-              <Int />
-              Integrales
-            </a>
-
-            <a
-              href="/references.html"
-              className={buttonVariants({ variant: "secondary" })}
-            >
-              <BookSearch />
-              Referencias
-            </a>
-          </div>
-
-          <DrawerFooter className="gap-4">
-            <Separator />
-            <div className="flex">
-              <div className="flex gap-3 w-full">
-                {/*TODO: Add this project github repository link*/}
-                <a
-                  href="/"
-                  className={
-                    buttonVariants({ variant: "outline", size: "icon-lg" }) +
-                    " h-full mr-auto rounded-"
-                  }
-                >
-                  <Github />
-                </a>
-                <Select
-                  items={items}
-                  value={lang}
-                  onValueChange={(lan) => setLang(lan)}
-                >
-                  <Tooltip>
-                    <TooltipTrigger
-                      render={<SelectTrigger className="hidden w-35 h-full!" />}
+          <ToggleGroup value={[current]} variant="outline"  orientation="vertical" className="w-full p-2">
+              {links.map((l) => (
+                <ToggleGroupItem
+                  value={l.value}
+                  render={
+                    <a
+                      href={l.href}
                     >
-                      <Languages />
-                      <SelectValue />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Idioma</p>
-                    </TooltipContent>
-                  </Tooltip>
+                      {l.icon}
+                      {l.label}
+                    </a>
+                  }
+                />
+              ))}
+            </ToggleGroup>
 
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Idiomas</SelectLabel>
-                      {items.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+          
 
+          <DrawerFooter className="gap-4 ">
+            <Separator />
+            <div className="flex gap-3 w-full">
+              {/*TODO: Add this project github repository link*/}
+              <a
+                href="/"
+                className={
+                  buttonVariants({ variant: "outline", size: "icon-lg" }) +
+                  " size-9.5 mr-auto"
+                }
+              >
+                <Github />
+              </a>
+              <Select
+                items={items}
+                value={lang}
+                onValueChange={(lan) => setLang(lan)}
+              >
                 <Tooltip>
                   <TooltipTrigger
-                    render={
-                      <Button
-                        variant="outline"
-                        size="icon-lg"
-                        className="h-full!"
-                        onClick={() =>
-                          setTheme((v) => (v === "dark" ? "light" : "dark"))
-                        }
-                      >
-                        {theme === "dark" ? <Moon /> : <Sun />}
-                      </Button>
-                    }
-                  />
+                    render={<SelectTrigger className="hidden w-35 h-full!" />}
+                  >
+                    <Languages />
+                    <SelectValue />
+                  </TooltipTrigger>
                   <TooltipContent>
-                    <p>Tema</p>
+                    <p>Idioma</p>
                   </TooltipContent>
                 </Tooltip>
-              </div>
+
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Idiomas</SelectLabel>
+                    {items.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      variant="outline"
+                      size="icon-lg"
+                      className="size-9.5"
+                      onClick={() =>
+                        setTheme((v) => (v === "dark" ? "light" : "dark"))
+                      }
+                    >
+                      {theme === "dark" ? <Moon /> : <Sun />}
+                    </Button>
+                  }
+                />
+                <TooltipContent>
+                  <p>Tema</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </DrawerFooter>
         </DrawerContent>

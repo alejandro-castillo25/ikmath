@@ -2,16 +2,23 @@ import NavExtraButtons from "./NavExtraButtons";
 import { Logo } from "@/components/Logo";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookSearch, LibraryBig } from "lucide-react";
+import { Int } from "./Icons";
 
-const links = [
-  { value: "subjects", href: "/subjects.html", label: "Materias" },
-  { value: "integrals", href: "/integrals.html", label: "Integrales" },
-  { value: "references", href: "/references.html", label: "Referencias" },
-];
+export type Contents = "subjects" | "integrals" | "references";
+export type Links = Array<{
+  value: string;
+  href: string;
+  label: string;
+  icon: React.JSX.Element;
+}>;
 
-export default function Nav() {
-  const current =
-    links.find((l) => l.href === window.location.pathname)?.value ?? null;
+export default function Nav({ current }: { current: Contents | null }) {
+  const links: Links = [
+    { value: "subjects", href: "/subjects.html", label: "Materias", icon: <LibraryBig /> },
+    { value: "integrals", href: "/integrals.html", label: "Integrales", icon: <Int /> },
+    { value: "references", href: "/references.html", label: "Referencias", icon: <BookSearch /> },
+  ];
 
   return (
     <nav
@@ -39,7 +46,7 @@ export default function Nav() {
           ))}
         </TabsList>
       </Tabs>
-      <NavExtraButtons />
+      <NavExtraButtons current={current} links={links} />
     </nav>
   );
 }

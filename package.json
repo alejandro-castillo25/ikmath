@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
 
-  "workspaces": ["frontend", "shared"],
+  "workspaces": ["frontend", "shared", "server"],
   "dependencies": {
     "hono": "^4.13.12",
     "ikmath-shared": "workspace:*",
