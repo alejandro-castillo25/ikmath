@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PixelSnow from "./PixelSnow";
 import { useAppContext } from "@/AppContext";
 
@@ -6,19 +7,21 @@ export default function BgIntegrals() {
     theme: [theme],
   } = useAppContext()!;
 
+  const [variant] = useState<"square" | "round">(() =>
+    Math.random() > 0.5 ? "square" : "round",
+  );
+
   return (
-    <div
-      className="fixed size-full -z-3"
-      >
+    <div className="fixed size-full -z-3">
       <PixelSnow
         color={"#74c7ec"}
-        variant="snowflake"
+        variant={variant}
         density={0.6}
         speed={1}
         wind={0.25}
         flakeSize={1}
         pixelSize={3}
-        glow={0.8}
+        glow={1.0}
         mouseInteraction
         sway={0.5}
         twinkle={0.35}
@@ -28,8 +31,8 @@ export default function BgIntegrals() {
         fade={0}
         opacity={1}
         intro
-        lightMode={theme==="light"}
-    />
+        lightMode={theme === "light"}
+      />
     </div>
   );
 }
