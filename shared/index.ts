@@ -5,10 +5,11 @@ const id_trait = z.number().int().positive();
 
 
 export const IntSchema = z.object({
-  id:id_trait,
+  id: id_trait,
   int: z.string(),
   header: z.string().optional(),
-  footer: z.string().optional()
+  footer: z.string().optional(),
+  title: z.string().optional()
 });
 
 export const QueryParmsSchema = z.object({
@@ -16,9 +17,9 @@ export const QueryParmsSchema = z.object({
   from: id_trait,
   to: id_trait,
   search: z.string()
-}).refine(({from, to}) => from > to, {
-  message: `'from' can't be grater than 'to', that doesn't make sense`
-})
+}).refine(({from, to}) => from <= to, {
+  message: `'from' can't be greater than 'to', that doesn't make sense`
+});
 
 export const QueryParmsPartialSchema = QueryParmsSchema.partial();
 // TODO: Use the QueryParams stuff

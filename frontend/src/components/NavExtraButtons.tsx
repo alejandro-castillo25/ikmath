@@ -66,9 +66,6 @@ export default function NavExtraButtons({
   return (
     <>
       <div className="md:flex hidden ml-auto gap-3 h-[115%]">
-
-
-
         <Tooltip>
           <TooltipTrigger
             render={
@@ -76,7 +73,8 @@ export default function NavExtraButtons({
                 target="_blank"
                 href="https://github.com/alejandro-castillo25/ikmath"
                 className={
-                  buttonVariants({ variant: "ghost", size: "icon-lg" }) + " h-full"
+                  buttonVariants({ variant: "ghost", size: "icon-lg" }) +
+                  " h-full"
                 }
               >
                 <Github />
@@ -90,7 +88,6 @@ export default function NavExtraButtons({
             <p>Repositorio de Github</p>
           </TooltipContent>
         </Tooltip>
-
 
         <Separator orientation="vertical" />
 
@@ -175,28 +172,28 @@ export default function NavExtraButtons({
             <DrawerDescription></DrawerDescription>
           </DrawerHeader>
 
-          <ToggleGroup value={[current]} variant="outline"  orientation="vertical" className="w-full p-2">
-              {links.map((l) => (
-                <ToggleGroupItem
-                  value={l.value}
-                  render={
-                    <a
-                      href={l.href}
-                    >
-                      {l.icon}
-                      {l.label}
-                    </a>
-                  }
-                />
-              ))}
-            </ToggleGroup>
-
-
+          <ToggleGroup
+            value={[current]}
+            variant="outline"
+            orientation="vertical"
+            className="w-full p-2"
+          >
+            {links.map((l) => (
+              <ToggleGroupItem
+                value={l.value}
+                render={
+                  <a href={l.href}>
+                    {l.icon}
+                    {l.label}
+                  </a>
+                }
+              />
+            ))}
+          </ToggleGroup>
 
           <DrawerFooter className="gap-4 ">
             <Separator />
             <div className="flex gap-3 w-full">
-
               <Tooltip>
                 <TooltipTrigger
                   render={
@@ -204,8 +201,10 @@ export default function NavExtraButtons({
                       href="https://github.com/alejandro-castillo25/ikmath"
                       target="_blank"
                       className={
-                        buttonVariants({ variant: "outline", size: "icon-lg" }) +
-                        " size-9.5 mr-auto"
+                        buttonVariants({
+                          variant: "outline",
+                          size: "icon-lg",
+                        }) + " size-9.5 mr-auto"
                       }
                     >
                       <Github />
@@ -219,7 +218,6 @@ export default function NavExtraButtons({
                   <p>Repositorio de Github</p>
                 </TooltipContent>
               </Tooltip>
-
 
               <Select
                 items={items}
