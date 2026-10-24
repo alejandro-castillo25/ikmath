@@ -180,6 +180,8 @@ export default function NavExtraButtons({
           >
             {links.map((l) => (
               <ToggleGroupItem
+                nativeButton={false}
+                key={l.label}
                 value={l.value}
                 render={
                   <a href={l.href}>

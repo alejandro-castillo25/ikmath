@@ -17,7 +17,7 @@ export default function BgSubjects() {
         rayColor2={theme === "dark" ? "#74c7ec" : "#209fb5"}
         intensity={4}
         spread={2}
-        origin="top-right"
+        origin="bottom-right"
         tilt={0}
         saturation={1}
         blend={0.75}
