@@ -66,15 +66,31 @@ export default function NavExtraButtons({
   return (
     <>
       <div className="md:flex hidden ml-auto gap-3 h-[115%]">
-        {/*TODO: Add this project github repository link*/}
-        <a
-          href="/"
-          className={
-            buttonVariants({ variant: "ghost", size: "icon-lg" }) + " h-full"
-          }
-        >
-          <Github />
-        </a>
+
+
+
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <a
+                target="_blank"
+                href="https://github.com/alejandro-castillo25/ikmath"
+                className={
+                  buttonVariants({ variant: "ghost", size: "icon-lg" }) + " h-full"
+                }
+              >
+                <Github />
+              </a>
+            }
+          >
+            <Languages />
+            <SelectValue />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Repositorio de Github</p>
+          </TooltipContent>
+        </Tooltip>
+
 
         <Separator orientation="vertical" />
 
@@ -175,21 +191,36 @@ export default function NavExtraButtons({
               ))}
             </ToggleGroup>
 
-          
+
 
           <DrawerFooter className="gap-4 ">
             <Separator />
             <div className="flex gap-3 w-full">
-              {/*TODO: Add this project github repository link*/}
-              <a
-                href="/"
-                className={
-                  buttonVariants({ variant: "outline", size: "icon-lg" }) +
-                  " size-9.5 mr-auto"
-                }
-              >
-                <Github />
-              </a>
+
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <a
+                      href="https://github.com/alejandro-castillo25/ikmath"
+                      target="_blank"
+                      className={
+                        buttonVariants({ variant: "outline", size: "icon-lg" }) +
+                        " size-9.5 mr-auto"
+                      }
+                    >
+                      <Github />
+                    </a>
+                  }
+                >
+                  <Languages />
+                  <SelectValue />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Repositorio de Github</p>
+                </TooltipContent>
+              </Tooltip>
+
+
               <Select
                 items={items}
                 value={lang}

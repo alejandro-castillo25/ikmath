@@ -1,7 +1,6 @@
 import { Hono } from "hono";
 // import { handle } from 'hono/vercel'
 
-
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import type { Int } from "ikmath-shared";
@@ -10,8 +9,7 @@ import type { Int } from "ikmath-shared";
 
 import { monsterIntsToml } from "./public/monster-ints";
 
-
-const app = new Hono().basePath("/api")
+const app = new Hono().basePath("/api");
 // const app = new Hono();
 
 const corsMiddleware = cors({
@@ -36,7 +34,7 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
     if (count !== undefined) {
       if (count.toLowerCase() === "true")
         return c.json({
-          count: monsterInts.length
+          count: monsterInts.length,
         } as Object);
 
       return c.text("Invalid argument in count query. Expected: 'true'", 400);
@@ -49,14 +47,6 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
 
     const isOutBounds = (index: number) =>
       index > monsterInts.length || index <= 0;
-
-    let filterHeaders: "headers" | "no_headers" | "no" = "no";
-
-    if (hasHeader !== undefined) {
-      if (hasHeader === "true") filterHeaders = "headers";
-      if (hasHeader === "false") filterHeaders = "no_headers";
-      // TODO, and we're not handling this yet so
-    }
 
     let elementForLookup = "";
 
@@ -107,14 +97,21 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
 
     return c.json(
       monsterInts.filter((intEl: Int) => {
-        const { id, int } = intEl;
+        const { id, int, header, footer } = intEl;
 
-        return id >= from_i && id <= to_i && int.includes(elementForLookup);
+        return (
+          id >= from_i &&
+          id <= to_i &&
+          (int.includes(elementForLookup) ||
+            (header ?? "").includes(elementForLookup) ||
+            (footer ?? "").includes(elementForLookup))
+        );
       }),
     );
   }
 
   if (["normal", "normals"].includes(intsType)) {
+    c.header("Content-Type", "text/plain; charset=utf-8");
     return c.text("todo!");
   }
 
