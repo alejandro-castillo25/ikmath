@@ -3,7 +3,6 @@
 // import { BlockMath } from "react-katex";
 // import type { Int } from "ikmath-shared";
 
-import "./App.css";
 import { AppContextProvider } from "./AppContextProvider";
 
 import Nav from "@/components/Nav";

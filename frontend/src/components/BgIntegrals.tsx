@@ -14,7 +14,7 @@ export default function BgIntegrals() {
   return (
     <div className="fixed size-full -z-3">
       <PixelSnow
-        color={"#74c7ec"}
+        color={theme === "dark" ? "#74c7ec" : "#209fb5"}
         variant={variant}
         density={0.6}
         speed={1}

@@ -23,6 +23,8 @@ export default function BgSubjects() {
         blend={0.75}
         falloff={1.6}
         opacity={1}
+        lightMode={theme === "light"}
+        
       />
     </div>
   );
