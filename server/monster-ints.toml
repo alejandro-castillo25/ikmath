@@ -576,4 +576,3 @@ int = '\int_0^3 \lceil x^2 \rceil\,dx'
 id = 133
 int = '\int_0^n x^2 \,\lceil x \rceil,\qquad n \in \mathbb Z^+'
 header = '\text{Evaluar:}'
-

@@ -5,10 +5,10 @@
   "private": true,
   "workspaces": ["frontend", "shared", "server"],
   "dependencies": {
-    "hono": "^4.13.12",
-    "ikmath-shared": "workspace:*",
-    "zod": "^4.6.5"
-  },
+     "hono": "^4.13.12",
+     "ikmath-shared": "workspace:*",
+     "zod": "^4.6.5"
+   },
   "peerDependencies": {
     "typescript": "5.7.2"
   }
