@@ -18,13 +18,14 @@ export default function BgSubjects() {
         intensity={4}
         spread={2}
         origin="bottom-right"
+        sharpness={0.1}
+
         tilt={0}
         saturation={1}
         blend={0.75}
         falloff={1.6}
         opacity={1}
         lightMode={theme === "light"}
-        
       />
     </div>
   );

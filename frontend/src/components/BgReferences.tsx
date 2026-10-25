@@ -18,6 +18,7 @@ export default function BgReferences() {
         intensity={4}
         spread={2}
         origin="bottom-right"
+        sharpness={0.1}
         tilt={0}
         saturation={1}
         blend={0.75}

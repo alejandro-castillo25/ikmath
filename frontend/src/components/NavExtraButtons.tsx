@@ -206,7 +206,7 @@ export default function NavExtraButtons({
                         buttonVariants({
                           variant: "outline",
                           size: "icon-lg",
-                        }) + " size-9.5 mr-auto"
+                        }) + " size-9.5 mr-auto border border-input!"
                       }
                     >
                       <Github />
