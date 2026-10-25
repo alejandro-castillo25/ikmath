@@ -33,7 +33,7 @@ export default function Main({ focusStart, setFocusStart }: ButtonFocusStart) {
             <span className="text-primary">ik</span>math
           </h1>
           <p className="text-center">
-            Un lugar para aprender los límites divirgentes de las matemáticas.
+            Un lugar para aprender los límites divergentes de las matemáticas.
             Abarcando desde métodos elementales, hasta teoria de números
           </p>
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PixelSnow from "./PixelSnow";
 import { useAppContext } from "@/AppContext";
+import { useIsChristmasMonth } from "@/hooks/use-christmas-month";
 
 export default function BgIntegrals() {
   const {
@@ -15,7 +16,7 @@ export default function BgIntegrals() {
     <div className="fixed size-full -z-3">
       <PixelSnow
         color={theme === "dark" ? "#74c7ec" : "#209fb5"}
-        variant={variant}
+        variant={!useIsChristmasMonth() ? variant : "snowflake"}
         density={0.6}
         speed={1}
         wind={0.25}

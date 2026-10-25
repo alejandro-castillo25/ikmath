@@ -199,8 +199,8 @@ body {
   position: relative;
   font-family: "Computer Modern Serif", Georgia, serif;
   background: var(--background) !important;
-  height: 100svh;
   height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   place-items: center;
