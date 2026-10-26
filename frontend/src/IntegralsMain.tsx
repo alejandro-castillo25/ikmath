@@ -6,7 +6,7 @@ import Tex from "./components/Tex";
 import type { Int } from "ikmath-shared";
 import { Spinner } from "./components/ui/spinner";
 import { Badge } from "./components/ui/badge";
-import { Download, Ellipsis } from "lucide-react";
+import { Camera, Ellipsis } from "lucide-react";
 
 import { toPng } from "html-to-image";
 
@@ -18,7 +18,7 @@ export interface FetchDataSettings {
 }
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = true;
+const DEV = false;
 
 export default function IntegralsMain() {
   // TODO: Add light/dark label as a postfix of the download name
@@ -90,7 +90,18 @@ export default function IntegralsMain() {
 
     // Marging of the integral
     // ik it's technically padding but, think about it
-    const MARGIN = 16;
+    // const MARGIN = 8;
+
+    const FRAME_W = 1920;
+    const FRAME_H = 1080;
+    
+    const FRAME_PAD_X = 100; //? 140
+    const FRAME_PAD_Y = 120;
+    
+    const MAX_SCALE = Infinity;
+
+    // TODO: If possible, make a function to change the quality of the image
+    const EXPORT_PIXEL_RATIO = 3 //? 2
 
     const targets = new Set<HTMLElement>();
     element.querySelectorAll<HTMLElement>(".katex-display").forEach((d) => {
@@ -138,6 +149,7 @@ export default function IntegralsMain() {
 
         minL = Math.min(minL, r.left);
         minT = Math.min(minT, r.top);
+        
         maxR = Math.max(maxR, r.right);
         maxB = Math.max(maxB, r.bottom);
       });
@@ -157,6 +169,16 @@ export default function IntegralsMain() {
       const offsetX = minL - elRect.left; // where the math starts inside the card (he said the thing....)
       const offsetY = minT - elRect.top;
 
+      const scale = Math.min(
+        MAX_SCALE,
+        (FRAME_W - FRAME_PAD_X * 2) / contentWidth,
+        (FRAME_H - FRAME_PAD_Y * 2) / contentHeight,
+      );
+      
+      // Center the scaled content inside the frame
+      const tx = (FRAME_W - contentWidth * scale) / 2 - offsetX * scale;
+      const ty = (FRAME_H - contentHeight * scale) / 2 - offsetY * scale;
+
       const probe = document.createElement("div");
       probe.style.backgroundColor = "var(--background)";
 
@@ -169,10 +191,10 @@ export default function IntegralsMain() {
 
       const dataUrl = await toPng(element, {
         cacheBust: true,
-        pixelRatio: 4,
+        pixelRatio: EXPORT_PIXEL_RATIO,
         backgroundColor: bgColor,
-        width: contentWidth + MARGIN * 2,
-        height: contentHeight + MARGIN * 2,
+        width: FRAME_W,
+        height: FRAME_H,
         style: {
           width: `${Math.ceil(elRect.width)}px`,
           height: `${Math.ceil(elRect.height)}px`,
@@ -182,11 +204,10 @@ export default function IntegralsMain() {
           overflow: "visible",
           margin: "0",
           padding: "0",
-          transform: `translate(${MARGIN - offsetX}px, ${MARGIN - offsetY}px)`,
+          transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
           transformOrigin: "top left",
         },
       });
-
       const link = document.createElement("a");
 
 
@@ -211,7 +232,7 @@ export default function IntegralsMain() {
     <main className="flex w-full h-full items-center justify-center flex-col gap-2 p-2 pt-6 pb-6 mt-16 ">
       <ScrollArea
         key={int?.id}
-        className={`relative h-auto min-h-35 sm:max-w-[65%] w-full border border-border bg-background/35 backdrop-blur-xs p-2 rounded-lg`}
+        className={`relative h-auto min-h-38 sm:max-w-[65%] w-full border border-border bg-background/35 backdrop-blur-xs p-2 rounded-lg`}
       >
         {int.id !== 0 && (
           <Badge
@@ -245,11 +266,11 @@ export default function IntegralsMain() {
         <Button
           onClick={handleDownloadPng}
           disabled={isLoading || isExporting}
-          className="absolute -bottom-1 -right-1 z-10"
+          className="absolute -top-1 -right-1 z-10"
           variant="secondary"
           size="icon"
         >
-          {isExporting ? <Spinner className="size-4" /> : <Download />}
+          {isExporting ? <Spinner className="size-4" /> : <Camera />}
         </Button>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
