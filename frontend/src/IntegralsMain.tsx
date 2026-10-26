@@ -19,7 +19,7 @@ export interface FetchDataSettings {
 
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = false;
+const DEV = true;
 
 export default function IntegralsMain() {
 
@@ -146,7 +146,7 @@ export default function IntegralsMain() {
                 <Tex className="w-full">{int.header}</Tex>
               )}
 
-              <Tex className="bg-green-400/0">
+              <Tex className="w-full">
                 {int.int}
               </Tex>
 
@@ -170,7 +170,7 @@ export default function IntegralsMain() {
       </ScrollArea>
 
       <Button
-        onClick={() => fetchData({ id: Math.floor(Math.random() * 133) + 1 })}
+        onClick={() => fetchData({ id:106 })}
       >
         ¡Sorpréndeme!
       </Button>
