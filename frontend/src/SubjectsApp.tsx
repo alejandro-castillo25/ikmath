@@ -18,7 +18,7 @@ export default function SubjectsApp() {
 
       <Nav current="subjects" />
 
-      <main className="main-subjects flex w-full justify-center flex-col md:flex-row flex-wrap gap-4 p-2 mt-20 pb-6">
+      <main className="main-subjects flex w-full justify-center flex-col md:flex-row flex-wrap gap-4 p-2 mt-16 pt-6 pb-6">
         <Button
           variant="secondary"
           className="border-(--calculus) bg-linear-to-br from-background from-40% to-(--calculus)/30"

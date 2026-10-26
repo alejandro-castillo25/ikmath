@@ -1,18 +1,22 @@
 import { AppContextProvider } from "./AppContextProvider";
 import Nav from "@/components/Nav";
 
-
-import PixelSnow from '@/components/PixelSnow';
 import BgIntegrals from "./components/BgIntegrals";
+import IntegralsMain from "./IntegralsMain";
+
+
+
 
 
 export default function IntegralsApp() {
+ 
   return (
     <AppContextProvider>
-      <BgIntegrals/>
+      <BgIntegrals />
+
+      <Nav current="integrals" />
+      <IntegralsMain/>
       
-      <Nav current="integrals"/>
-      <main></main>
     </AppContextProvider>
   );
 }

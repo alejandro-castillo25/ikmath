@@ -9,7 +9,7 @@ export const IntSchema = z.object({
   int: z.string(),
   header: z.string().optional(),
   footer: z.string().optional(),
-  title: z.string().optional()
+  // title: z.string().optional()
 });
 
 export const QueryParmsSchema = z.object({

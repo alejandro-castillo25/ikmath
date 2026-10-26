@@ -15,9 +15,24 @@ export type Links = Array<{
 
 export default function Nav({ current }: { current: Contents | null }) {
   const links: Links = [
-    { value: "subjects", href: "/subjects.html", label: "Materias", icon: <LibraryBig /> },
-    { value: "integrals", href: "/integrals.html", label: "Integrales", icon: <Int /> },
-    { value: "references", href: "/references.html", label: "Referencias", icon: <BookSearch /> },
+    {
+      value: "subjects",
+      href: "/subjects.html",
+      label: "Materias",
+      icon: <LibraryBig />,
+    },
+    {
+      value: "integrals",
+      href: "/integrals.html",
+      label: "Integrales",
+      icon: <Int />,
+    },
+    {
+      value: "references",
+      href: "/references.html",
+      label: "Referencias",
+      icon: <BookSearch />,
+    },
   ];
 
   return (

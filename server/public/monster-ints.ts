@@ -23,7 +23,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 8,
       int: String.raw`\int_0^\infty \frac {x^s} {\cosh x - 1}\,dx`,
-      header: String.raw`\text{Hallar la Generalización:}`,
+      header: "\\text{Hallar la Generalización:}",
     },
     {
       id: 9,
@@ -67,7 +67,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 21,
       int: String.raw`\int_0^1 \frac {1-x^n} {1-x}\,dx`,
-      header: String.raw`\text{Hallar la Generalización:}`,
+      header: "\\text{Hallar la Generalización:}",
     },
     { id: 22, int: String.raw`\int_0^\infty \frac {\cos x} {\cosh x}\,dx` },
     {
@@ -84,8 +84,8 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 27,
       int: String.raw`I_n = -\int_0^1 x^n \ln (1-x)\,dx\,,\quad n \in \mathbb N_0`,
-      title: String.raw`\text{Hallar la Generalización:}`,
-      footer: String.raw`\text{Expresada en Números Armónicos}`,
+      header: "\\text{Hallar la Generalización:}",
+      footer: "\\text{Expresada en Números Armónicos}",
     },
     {
       id: 28,
@@ -196,7 +196,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 61,
       int: String.raw`\int_0^1 \frac {x^\alpha - x^\beta} {(1+x+x^2)\ln\left(\frac 1 x\right)}\,dx\,,\quad\alpha , \beta > -1`,
-      header: String.raw`\text{Hallar la Generalización:}`,
+      header: "\\text{Hallar la Generalización:}",
     },
     {
       id: 62,
@@ -238,7 +238,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 73,
       int: String.raw`\int_0^\infty \frac {1-e^x} {1-e^{\alpha x}}\,dx\,,\quad \alpha > 1`,
-      header: String.raw`\text{Hallar la Generalización:}`,
+      header: "\\text{Hallar la Generalización:}",
     },
     { id: 74, int: String.raw`\int_0^1 x^5 \ln^3(1-x)\,dx` },
     {
@@ -248,7 +248,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 76,
       int: String.raw`\int_0^\infty e^{-\sigma x^n} \cos(\alpha x^n)\,dx\,,\quad \sigma,\alpha > 1`,
-      header: String.raw`\text{Hallar la Generalización:}`,
+      header: "\\text{Hallar la Generalización:}",
     },
     { id: 77, int: String.raw`\int_0^\infty {x^9 \ln x \over e^x - 1}\,dx` },
     {
@@ -280,7 +280,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 85,
       int: String.raw`\int_0^1 \frac{(1+x^{s-1})\sin(a\ln x)+1-\cos(a\ln x)}{\ln x}\,dx\,,\quad s>0,\,a\in\R`,
-      header: String.raw`\text{Hallar la Generalización:}`,
+      header: "\\text{Hallar la Generalización:}",
     },
     { id: 86, int: String.raw`\int_0^{2\pi} \sin(123x)\sin(456x)\,dx` },
     {
@@ -300,7 +300,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 91,
       int: String.raw`\int_0^\infty \left(x\ln x\right)^3 e^{-sx}\,dx\,,\quad s>0`,
-      header: String.raw`\text{Hallar la Generalización:}`,
+      header: "\\text{Hallar la Generalización:}",
     },
     {
       id: 92,
@@ -343,7 +343,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 105,
       int: String.raw`\int_0^\infty \frac {x^{13}} {e^x - 1}\,dx`,
-      header: String.raw`\text{Expresar en función de } B_{14}:`,
+      header: "\\text{Expresar en función de } B_{14}:",
     },
     {
       id: 106,
@@ -385,7 +385,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 118,
       int: String.raw`\Gamma(z) = \int_0^\infty x^{z-1}e^{-x}\,dx,\qquad \Re(z) > 0`,
-      header: String.raw`\text{Demostrar la función Gamma:}`,
+      header: "\\text{Demostrar la función Gamma:}",
     },
     {
       id: 119,
@@ -412,7 +412,7 @@ export const monsterIntsToml: { items: Array<Int> } = {
     {
       id: 127,
       int: String.raw`\int_0^\infty x^\alpha e^{-\beta x}\cos(\gamma x)\,dx\qquad \gamma \in \mathbb R,\, \alpha,\beta \in \mathbb R^+`,
-      header: String.raw`\text{Hallar la Generalización:}`,
+      header: "\\text{Hallar la Generalización:}",
     },
     { id: 128, int: String.raw`\int_0^4 x\,\lfloor x\rfloor \,dx` },
     {

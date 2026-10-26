@@ -15,13 +15,13 @@ export default function BgReferences() {
         speed={2.5}
         rayColor1={theme === "dark" ? "#74c7ec" : "#209fb5"}
         rayColor2={theme === "dark" ? "#74c7ec" : "#209fb5"}
-        intensity={4}
+        intensity={2.5}
         spread={2}
         origin="bottom-right"
         sharpness={0.1}
         tilt={0}
         saturation={1}
-        blend={0.75}
+        blend={0.25}
         falloff={1.6}
         opacity={1}
         lightMode={theme === "light"}

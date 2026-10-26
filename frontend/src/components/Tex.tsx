@@ -5,9 +5,10 @@ import { BlockMath } from 'react-katex';
 export default function Tex({
   children,
   className,
-}: {children: string, className?: string}) {
+  ref,
+}: {children: string, className?: string, ref?: React.Ref<HTMLDivElement>}) {
   return (
-    <div className={className}>
+    <div className={className} ref={ref}>
       <BlockMath>{`${children}`}</BlockMath>
     </div>
   );
