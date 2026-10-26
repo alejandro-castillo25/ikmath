@@ -213,9 +213,10 @@ body {
 }
 
 
-button:hover {
+button:hover, a:hover {
   cursor: pointer;
 }
+
 
 /*button,
 [role="button"] {

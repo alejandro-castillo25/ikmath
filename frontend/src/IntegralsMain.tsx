@@ -10,7 +10,18 @@ import { Camera, Ellipsis } from "lucide-react";
 
 import { toPng } from "html-to-image";
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
 export interface FetchDataSettings {
+  count?: true;
   id?: number;
   from?: number;
   to?: number;
@@ -18,22 +29,27 @@ export interface FetchDataSettings {
 }
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = true;
+const DEV = false;
 
 export default function IntegralsMain() {
   // TODO: Add light/dark label as a postfix of the download name
 
   const [int, setInt] = useState<Int>({ int: "", id: 0 });
+  const [id, setId] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [isExporting, setIsExporting] = useState<boolean>(false);
+
+  const [count, setCount] = useState<number>(0);
 
   const fetchData = useCallback(async (settings: FetchDataSettings) => {
     let paramsStr = "?";
 
     if (Object.keys(settings).length === 0) {
       paramsStr = "";
+    } else if (settings?.count !== undefined) {
+      paramsStr += `count=${settings.count.toString()}`;
     } else if (settings?.id !== undefined) {
       paramsStr += `id=${settings.id}`;
     } else if (settings?.search !== undefined) {
@@ -62,6 +78,19 @@ export default function IntegralsMain() {
       },
     );
 
+    if (settings?.count !== undefined) {
+      const data: {
+        count: number;
+      } = await response.json();
+
+      setCount(data.count);
+      setIsLoading(false);
+
+      console.log(data.count);
+
+      return;
+    }
+
     const data: Int = await response.json();
     console.log(data);
 
@@ -70,21 +99,46 @@ export default function IntegralsMain() {
     setIsLoading(false);
   }, []);
 
+  const getIdsArr = useCallback(
+    (n = 3): Array<number> => {
+      // const parts = Math.floor(count / n);
+      const leftOver = count % n;
+
+      const ans: Array<number> = [];
+
+      for (let i = 1; i <= count; i += n) {
+        const start = i;
+        const end = i + n - 1;
+
+        if (id <= end && id >= start) {
+          if (end > count)
+            for (let j = start; j <= end - leftOver - 1; j++) ans.push(j);
+          else for (let j = start; j <= end; j++) ans.push(j);
+          return ans;
+        }
+      }
+
+      return ans;
+    },
+    [count, id],
+  );
+
   useEffect(() => {
     queueMicrotask(() => {
-      fetchData({ id: Math.floor(Math.random() * 133) + 1 });
+      fetchData({ count: true });
+
+      fetchData({ id: 1 });
     });
   }, [fetchData]);
 
   const handleDownloadPng = async () => {
     if (!cardRef.current || isLoading || isExporting) return;
 
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     setIsExporting(true);
 
-    await sleep(250);  //? for the animation to take effect, don't judge me!
-
+    await sleep(250); //? for the animation to take effect, don't judge me!
 
     const element = cardRef.current;
 
@@ -94,14 +148,14 @@ export default function IntegralsMain() {
 
     const FRAME_W = 1920;
     const FRAME_H = 1080;
-    
+
     const FRAME_PAD_X = 80; //? 140 -> 100
     const FRAME_PAD_Y = 120;
-    
+
     const MAX_SCALE = Infinity;
 
     // TODO: If possible, make a function to change the quality of the image
-    const EXPORT_PIXEL_RATIO = 3 //? 2
+    const EXPORT_PIXEL_RATIO = 3; //? 2
 
     const targets = new Set<HTMLElement>();
     element.querySelectorAll<HTMLElement>(".katex-display").forEach((d) => {
@@ -122,7 +176,6 @@ export default function IntegralsMain() {
     const originalMinHeight = element.style.minHeight;
 
     try {
-
       targets.forEach((t) => {
         t.style.width = "max-content";
         t.style.overflow = "visible";
@@ -131,7 +184,6 @@ export default function IntegralsMain() {
       });
       element.style.width = "max-content";
       element.style.minHeight = "0";
-
 
       const elRect = element.getBoundingClientRect();
 
@@ -143,13 +195,11 @@ export default function IntegralsMain() {
       element.querySelectorAll<HTMLElement>(".katex").forEach((k) => {
         const r = k.getBoundingClientRect();
 
-
         if (r.width === 0 || r.height === 0) return;
-
 
         minL = Math.min(minL, r.left);
         minT = Math.min(minT, r.top);
-        
+
         maxR = Math.max(maxR, r.right);
         maxB = Math.max(maxB, r.bottom);
       });
@@ -165,7 +215,6 @@ export default function IntegralsMain() {
       const contentWidth = Math.ceil(maxR - minL);
       const contentHeight = Math.ceil(maxB - minT);
 
-      
       const offsetX = minL - elRect.left; // where the math starts inside the card (he said the thing....)
       const offsetY = minT - elRect.top;
 
@@ -174,7 +223,7 @@ export default function IntegralsMain() {
         (FRAME_W - FRAME_PAD_X * 2) / contentWidth,
         (FRAME_H - FRAME_PAD_Y * 2) / contentHeight,
       );
-      
+
       // Center the scaled content inside the frame
       const tx = (FRAME_W - contentWidth * scale) / 2 - offsetX * scale;
       const ty = (FRAME_H - contentHeight * scale) / 2 - offsetY * scale;
@@ -182,9 +231,7 @@ export default function IntegralsMain() {
       const probe = document.createElement("div");
       probe.style.backgroundColor = "var(--background)";
 
-
       document.body.appendChild(probe);
-
 
       const bgColor = getComputedStyle(probe).backgroundColor;
       probe.remove();
@@ -209,7 +256,6 @@ export default function IntegralsMain() {
         },
       });
       const link = document.createElement("a");
-
 
       link.href = dataUrl;
       link.download = `integral-#${int.id || "card"}.png`;
@@ -243,9 +289,9 @@ export default function IntegralsMain() {
           </Badge>
         )}
 
-        <div className={`${!isExporting && "opacity-0"} bg-white h-full w-full absolute top-0 left-0 z-5 rounded-lg tansition-opacity duration-150 ease-in`}>
-          
-        </div>
+        <div
+          className={`${!isExporting && "opacity-0"} bg-white h-full w-full absolute top-0 left-0 z-5 rounded-lg tansition-opacity duration-150 ease-in`}
+        ></div>
         <div
           ref={cardRef}
           className="w-full flex flex-col items-center justify-center min-h-full"
@@ -279,7 +325,64 @@ export default function IntegralsMain() {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      <Button onClick={() => fetchData({ id: Math.floor(Math.random() * 133) + 1 })}>¡Sorpréndeme!</Button>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href={id === 1 ? undefined : `#${id - 1}`}
+              aria-disabled={id === 1}
+              tabIndex={id === 1 ? -1 : undefined}
+              className={`${int.int === "" && "hidden"} ${id === 1 && "pointer-events-none opacity-50"}`}
+              text="Anterior"
+              onClick={() => {
+                fetchData({ id: id - 1 });
+                setId(id - 1);
+              }}
+            />
+          </PaginationItem>
+
+          {getIdsArr(3).map((i) => (
+            <PaginationItem key={i}>
+              <PaginationLink
+                href={`#${i}`}
+                isActive={id === i}
+                onClick={() => {
+                  fetchData({ id: i });
+                  setId(i);
+                }}
+              >
+                {i}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+          {/*<PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>*/}
+          <PaginationItem>
+            <PaginationNext
+              href={id === count ? undefined : `#${id + 1}`}
+              aria-disabled={id === 1}
+              tabIndex={id === count ? -1 : undefined}
+              className={`${int.int === "" && "hidden"} ${id === count && "pointer-events-none opacity-50"}`}
+              text="Siguiente"
+              onClick={() => {
+                fetchData({ id: id + 1 });
+                setId(id + 1);
+              }}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+
+      <Button
+        onClick={() => {
+          const randomId = Math.floor(Math.random() * count) + 1;
+          fetchData({ id: randomId });
+          setId(randomId);
+        }}
+      >
+        ¡Sorpréndeme!
+      </Button>
     </main>
   );
 }
