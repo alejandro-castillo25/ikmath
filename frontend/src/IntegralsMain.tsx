@@ -18,7 +18,7 @@ export interface FetchDataSettings {
 }
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = false;
+const DEV = true;
 
 export default function IntegralsMain() {
   // TODO: Add light/dark label as a postfix of the download name
