@@ -29,7 +29,7 @@ export interface FetchDataSettings {
 }
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = false;
+const DEV = true;
 
 export default function IntegralsMain() {
   // TODO: Add light/dark label as a postfix of the download name
@@ -122,6 +122,46 @@ export default function IntegralsMain() {
     },
     [count, id],
   );
+
+  const setLocationHash = (hash: string) => {
+    window.location.hash = hash;
+  };
+
+  useEffect(() => {
+    const initHash = window.location.hash.replace("#", "");
+
+    let initId = Number.parseInt(initHash);
+
+    if(Number.isNaN(initId)) initId = 1
+    
+
+    queueMicrotask(() => {
+      setId(initId);
+      fetchData({ id: initId });
+    });
+
+    const ctrl = new AbortController();
+
+    window.addEventListener(
+      "hashchange",
+      () => {
+        const hash = window.location.hash.replace("#", "");
+        let id = Number.parseInt(hash);
+
+        if(Number.isNaN(id)) id = 1
+
+        setId(id);
+        fetchData({ id });
+      },
+      {
+        signal: ctrl.signal,
+      },
+    );
+
+    return () => {
+      ctrl.abort();
+    };
+  }, []);
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -285,12 +325,12 @@ export default function IntegralsMain() {
             className="absolute -top-1 -left-1 text-md p-2.5 z-10"
             variant="default"
           >
-            {isLoading ? <Ellipsis /> : <Tex>{`\\#\\,${int.id}`}</Tex>}
+            <Tex>{`\\#\\,${id}`}</Tex>
           </Badge>
         )}
 
         <div
-          className={`${!isExporting && "opacity-0"} bg-white h-full w-full absolute top-0 left-0 z-5 rounded-lg tansition-opacity duration-150 ease-in`}
+          className={`${!isExporting && "opacity-0"} bg-white h-full w-full absolute top-0 left-0 pointer-events-none z-5 rounded-lg tansition-opacity duration-150 ease-in`}
         ></div>
         <div
           ref={cardRef}
@@ -313,15 +353,17 @@ export default function IntegralsMain() {
           )}
         </div>
 
-        <Button
-          onClick={handleDownloadPng}
-          disabled={isLoading || isExporting}
-          className="absolute -top-1 -right-1 z-10"
-          variant="secondary"
-          size="icon"
-        >
-          {isExporting ? <Spinner className="size-4" /> : <Camera />}
-        </Button>
+        {int.id !== 0 && (
+          <Button
+            onClick={handleDownloadPng}
+            disabled={isLoading || isExporting}
+            className="absolute -top-1 -right-1 z-10"
+            variant="secondary"
+            size="icon"
+          >
+            {isExporting ? <Spinner className="size-4" /> : <Camera />}
+          </Button>
+        )}
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
@@ -335,8 +377,8 @@ export default function IntegralsMain() {
               className={`${int.int === "" && "hidden"} ${id === 1 && "pointer-events-none opacity-50"}`}
               text="Anterior"
               onClick={() => {
-                fetchData({ id: id - 1 });
-                setId(id - 1);
+                // fetchData({ id: id - 1 });
+                // setId(id - 1);
               }}
             />
           </PaginationItem>
@@ -347,8 +389,8 @@ export default function IntegralsMain() {
                 href={`#${i}`}
                 isActive={id === i}
                 onClick={() => {
-                  fetchData({ id: i });
-                  setId(i);
+                  // fetchData({ id: i });
+                  // setId(i);
                 }}
               >
                 {i}
@@ -366,8 +408,8 @@ export default function IntegralsMain() {
               className={`${int.int === "" && "hidden"} ${id === count && "pointer-events-none opacity-50"}`}
               text="Siguiente"
               onClick={() => {
-                fetchData({ id: id + 1 });
-                setId(id + 1);
+                // fetchData({ id: id + 1 });
+                // setId(id + 1);
               }}
             />
           </PaginationItem>
@@ -377,8 +419,7 @@ export default function IntegralsMain() {
       <Button
         onClick={() => {
           const randomId = Math.floor(Math.random() * count) + 1;
-          fetchData({ id: randomId });
-          setId(randomId);
+          setLocationHash(`#${randomId}`)
         }}
       >
         ¡Sorpréndeme!
