@@ -17,12 +17,10 @@ export interface FetchDataSettings {
   search?: string;
 }
 
-
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
 const DEV = true;
 
 export default function IntegralsMain() {
-
   // TODO: Add light/dark label as a postfix of the download name
 
   const [int, setInt] = useState<Int>({ int: "", id: 0 });
@@ -79,50 +77,136 @@ export default function IntegralsMain() {
   }, [fetchData]);
 
   const handleDownloadPng = async () => {
-      if (!cardRef.current || isLoading || isExporting) return;
+    if (!cardRef.current || isLoading || isExporting) return;
 
-      try {
-        setIsExporting(true);
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-        const element = cardRef.current;
+    setIsExporting(true);
 
-        const originalWidth = element.style.width;
-        element.style.width = "max-content";
+    await sleep(100);  //? for the animation to take effect, don't judge me!
 
-        const fullWidth = element.scrollWidth + 64;
-        const fullHeight = element.scrollHeight + 64;
 
-        // ? Someone kill me, this took a lil long;-;
+    const element = cardRef.current;
 
-        element.style.width = originalWidth;
+    // Marging of the integral
+    // ik it's technically padding but, think about it
+    const MARGIN = 16;
 
-        const dataUrl = await toPng(element, {
-          cacheBust: true,
-          pixelRatio: 4,
-          backgroundColor: "var(--background)",
-          width: fullWidth,
-          height: fullHeight,
-          style: {
-            width: "max-content",
-            height: "max-content",
-            minHeight: "100%",
-            maxWidth: "none",
-            maxHeight: "none",
-            overflow: "visible",
-            padding: "32px",
-          },
-        });
-
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = `integral-#${int.id || "card"}.png`;
-        link.click();
-      } catch (error) {
-        console.error("Error generating image with html-to-image:", error);
-      } finally {
-        setIsExporting(false);
+    const targets = new Set<HTMLElement>();
+    element.querySelectorAll<HTMLElement>(".katex-display").forEach((d) => {
+      let node: HTMLElement | null = d;
+      while (node && node !== element) {
+        targets.add(node);
+        node = node.parentElement;
       }
-    };
+    });
+
+    const props = ["width", "overflow", "alignSelf", "textAlign"] as const;
+
+    const saved = Array.from(targets).map((el) => ({
+      el,
+      values: props.map((p) => el.style[p]),
+    }));
+    const originalWidth = element.style.width;
+    const originalMinHeight = element.style.minHeight;
+
+    try {
+
+      targets.forEach((t) => {
+        t.style.width = "max-content";
+        t.style.overflow = "visible";
+        t.style.alignSelf = "center";
+        t.style.textAlign = "center";
+      });
+      element.style.width = "max-content";
+      element.style.minHeight = "0";
+
+
+      const elRect = element.getBoundingClientRect();
+
+      let minL = Infinity;
+      let minT = Infinity;
+      let maxR = -Infinity;
+      let maxB = -Infinity;
+
+      element.querySelectorAll<HTMLElement>(".katex").forEach((k) => {
+        const r = k.getBoundingClientRect();
+
+
+        if (r.width === 0 || r.height === 0) return;
+
+
+        minL = Math.min(minL, r.left);
+        minT = Math.min(minT, r.top);
+        maxR = Math.max(maxR, r.right);
+        maxB = Math.max(maxB, r.bottom);
+      });
+
+      // ? Fallback if no .katex was found (which is, not very likely)
+      if (!Number.isFinite(minL)) {
+        minL = elRect.left;
+        minT = elRect.top;
+        maxR = elRect.right;
+        maxB = elRect.bottom;
+      }
+
+      const contentWidth = Math.ceil(maxR - minL);
+      const contentHeight = Math.ceil(maxB - minT);
+
+      
+      const offsetX = minL - elRect.left; // where the math starts inside the card (he said the thing....)
+      const offsetY = minT - elRect.top;
+
+      const probe = document.createElement("div");
+      probe.style.backgroundColor = "var(--background)";
+
+
+      document.body.appendChild(probe);
+
+
+      const bgColor = getComputedStyle(probe).backgroundColor;
+      probe.remove();
+
+      const dataUrl = await toPng(element, {
+        cacheBust: true,
+        pixelRatio: 4,
+        backgroundColor: bgColor,
+        width: contentWidth + MARGIN * 2,
+        height: contentHeight + MARGIN * 2,
+        style: {
+          width: `${Math.ceil(elRect.width)}px`,
+          height: `${Math.ceil(elRect.height)}px`,
+          minHeight: "0",
+          maxWidth: "none",
+          maxHeight: "none",
+          overflow: "visible",
+          margin: "0",
+          padding: "0",
+          transform: `translate(${MARGIN - offsetX}px, ${MARGIN - offsetY}px)`,
+          transformOrigin: "top left",
+        },
+      });
+
+      const link = document.createElement("a");
+
+
+      link.href = dataUrl;
+      link.download = `integral-#${int.id || "card"}.png`;
+      link.click();
+    } catch (error) {
+      console.error("Error generating image with html-to-image:", error);
+    } finally {
+      element.style.width = originalWidth;
+      element.style.minHeight = originalMinHeight;
+
+      saved.forEach(({ el, values }) => {
+        props.forEach((p, i) => {
+          el.style[p] = values[i];
+        });
+      });
+      setIsExporting(false);
+    }
+  };
   return (
     <main className="flex w-full h-full items-center justify-center flex-col gap-2 p-2 pt-6 pb-6 mt-16 ">
       <ScrollArea
@@ -137,7 +221,10 @@ export default function IntegralsMain() {
             {isLoading ? <Ellipsis /> : <Tex>{`\\#\\,${int.id}`}</Tex>}
           </Badge>
         )}
-        <div ref={cardRef} className="w-full flex flex-col items-center justify-center min-h-full">
+        <div
+          ref={cardRef}
+          className="w-full flex flex-col items-center justify-center min-h-full"
+        >
           {isLoading ? (
             <Spinner className="size-10 text-primary" />
           ) : (
@@ -146,9 +233,7 @@ export default function IntegralsMain() {
                 <Tex className="w-full">{int.header}</Tex>
               )}
 
-              <Tex className="w-full">
-                {int.int}
-              </Tex>
+              <Tex className="w-full">{int.int}</Tex>
 
               {int?.footer !== undefined && (
                 <Tex className="w-full">{int.footer}</Tex>
@@ -169,11 +254,7 @@ export default function IntegralsMain() {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      <Button
-        onClick={() => fetchData({ id:106 })}
-      >
-        ¡Sorpréndeme!
-      </Button>
+      <Button onClick={() => fetchData({ id: Math.floor(Math.random() * 133) + 1 })}>¡Sorpréndeme!</Button>
     </main>
   );
 }
