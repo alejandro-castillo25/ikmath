@@ -83,7 +83,7 @@ export default function IntegralsMain() {
 
     setIsExporting(true);
 
-    await sleep(100);  //? for the animation to take effect, don't judge me!
+    await sleep(250);  //? for the animation to take effect, don't judge me!
 
 
     const element = cardRef.current;
@@ -95,7 +95,7 @@ export default function IntegralsMain() {
     const FRAME_W = 1920;
     const FRAME_H = 1080;
     
-    const FRAME_PAD_X = 100; //? 140
+    const FRAME_PAD_X = 80; //? 140 -> 100
     const FRAME_PAD_Y = 120;
     
     const MAX_SCALE = Infinity;
@@ -236,12 +236,16 @@ export default function IntegralsMain() {
       >
         {int.id !== 0 && (
           <Badge
-            className="absolute -top-1 -left-1 text-md p-2.5"
+            className="absolute -top-1 -left-1 text-md p-2.5 z-10"
             variant="default"
           >
             {isLoading ? <Ellipsis /> : <Tex>{`\\#\\,${int.id}`}</Tex>}
           </Badge>
         )}
+
+        <div className={`${!isExporting && "opacity-0"} bg-white h-full w-full absolute top-0 left-0 z-5 rounded-lg tansition-opacity duration-150 ease-in`}>
+          
+        </div>
         <div
           ref={cardRef}
           className="w-full flex flex-col items-center justify-center min-h-full"
