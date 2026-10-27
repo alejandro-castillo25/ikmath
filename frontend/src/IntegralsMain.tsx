@@ -19,8 +19,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { throttle } from "lodash";
+
+import GooeyNav from "./components/GooeyNav";
+import { useAppContext } from "./AppContext";
 
 export interface FetchDataSettings {
+  category: string;
   count?: true;
   id?: number;
   from?: number;
@@ -28,16 +33,29 @@ export interface FetchDataSettings {
   search?: string;
 }
 
-import { throttle } from "lodash";
+// #{category}-{id}
+export type Category = "monsters" | "normals";
+export type IntHash = `#${Category}-${string}`;
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
 const DEV = true;
 
 export default function IntegralsMain() {
+  const {
+    theme: [theme],
+  } = useAppContext();
   // TODO: Add light/dark label as a postfix of the download name
 
   const [int, setInt] = useState<Int>({ int: "", id: 0 });
+
   const [id, setId] = useState<number>(1);
+  const [category, setCategory] = useState<Category>(() => {
+      const rawHash = window.location.hash.replace("#", "").split("-");
+      return rawHash[0] === "normals" || rawHash[0] === "monsters"
+        ? (rawHash[0] as Category)
+        : "normals";
+    });
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -71,7 +89,7 @@ export default function IntegralsMain() {
     setIsLoading(true);
 
     const response = await fetch(
-      `${DEV ? "http://localhost:3000" : ""}/api/integrals/monsters${paramsStr}`,
+      `${DEV ? "http://localhost:3000" : ""}/api/integrals/${settings.category}${paramsStr}`,
       {
         method: "GET",
         headers: {
@@ -125,20 +143,24 @@ export default function IntegralsMain() {
     [count, id],
   );
 
-  const setLocationHash = useCallback((hash: `#${string}`) => {
+  const setLocationHash = useCallback((hash: IntHash) => {
     window.location.hash = hash;
   }, []);
 
   useEffect(() => {
-    const initHash = window.location.hash.replace("#", "");
-    let initId = Number.parseInt(initHash);
-
+    const rawHash = window.location.hash.replace("#", "").split("-");
+    const initCat =
+      rawHash[0] === "normals" || rawHash[0] === "monsters"
+        ? rawHash[0]
+        : "normals";
+    let initId = Number.parseInt(rawHash[1] ?? "NaN");
     if (Number.isNaN(initId)) initId = 1;
 
     queueMicrotask(() => {
+      setCategory(initCat as Category);
       setId(initId);
-      fetchData({ count: true });
-      fetchData({ id: initId });
+      fetchData({ count: true, category: initCat });
+      fetchData({ id: initId, category: initCat });
     });
 
     const ctrl = new AbortController();
@@ -146,24 +168,27 @@ export default function IntegralsMain() {
     window.addEventListener(
       "hashchange",
       () => {
-        const hash = window.location.hash.replace("#", "");
-        let newId = Number.parseInt(hash);
-
+        const hash = window.location.hash.replace("#", "").split("-");
+        const newCat =
+          hash[0] === "normals" || hash[0] === "monsters"
+            ? hash[0]
+            : "monsters";
+        let newId = Number.parseInt(hash[1] ?? "NaN");
         if (Number.isNaN(newId)) newId = 1;
 
         setId(newId);
-        fetchData({ id: newId });
+        setCategory(newCat as Category);
+
+        fetchData({ count: true, category: newCat });
+        fetchData({ id: newId, category: newCat }); // <-- Fixed: uses newId
       },
-      {
-        signal: ctrl.signal,
-      },
+      { signal: ctrl.signal },
     );
 
     return () => {
       ctrl.abort();
     };
   }, [fetchData]);
-
   const handleDownloadPng = async () => {
     if (!cardRef.current || isLoading || isExporting) return;
 
@@ -317,14 +342,14 @@ export default function IntegralsMain() {
 
           const randomId = Math.floor(Math.random() * currentCount) + 1;
 
-          setLocationHash(`#${randomId}`);
+          setLocationHash(`#${category}-${randomId}`);
         },
         650,
         {
           trailing: true,
         },
       ),
-    [count, setLocationHash],
+    [count, category, setLocationHash],
   );
 
   const handleNavClick = useMemo(
@@ -332,23 +357,49 @@ export default function IntegralsMain() {
       throttle(
         (targetId: number) => {
           if (targetId < 1 || (count > 0 && targetId > count)) return;
-          setLocationHash(`#${targetId}`);
+          setLocationHash(`#${category}-${targetId}`);
         },
         650,
         { trailing: true },
       ),
-    [count, setLocationHash],
+    [count, category, setLocationHash],
   );
 
+  const items = [
+    { label: "Normales", value: "normals", href: "#normals-1"},
+    { label: "Monsters", value: "monsters", href: "#monsters-1" },
+  ];
+
   return (
-    <main className="flex w-full h-full items-center justify-center flex-col gap-2 p-2 pt-6 pb-6 mt-16 ">
+    <main className="flex w-full h-full items-center justify-center flex-col gap-8 p-2 pt-6 pb-6 mt-16 ">
+      <GooeyNav
+        key={category}
+        className="z-15"
+        color={theme === "dark" ? "#74c7ec" : "#209fb5"}
+        items={items}
+        initialActiveIndex={category === "normals" ? 0 : 1}
+        theme={theme}
+        size="lg"
+        frame
+        particleCount={15}
+        spread={56}
+        animationTime={750}
+        timeVariance={300}
+        gooeyness={0.5}
+        wobble={0.5}
+        hoverEffect
+        onChange={(_, item) => {
+          setLocationHash(`#${item.value as Category}-1`); // <-- Fixed: updates hash/category on tab switch
+        }}
+      />
+
       <ScrollArea
         key={int?.id}
-        className={`relative h-auto min-h-38 sm:max-w-[65%] w-full border border-border bg-background/35 backdrop-blur-xs p-2 rounded-lg`}
+        className={`relative h-auto min-h-40 sm:max-w-[65%] w-full border border-border bg-background/35 backdrop-blur-xs p-2 rounded-lg`}
       >
         {int.id !== 0 && (
           <Badge
-            className="absolute -top-1 -left-1 text-md p-2.5 z-10"
+            className="absolute -top-1.5 -left-1.5 text-md p-2.5 z-10"
             variant="default"
           >
             <Tex>{`\\#\\,${id}`}</Tex>
@@ -383,7 +434,7 @@ export default function IntegralsMain() {
           <Button
             onClick={handleDownloadPng}
             disabled={isLoading || isExporting}
-            className="absolute -top-1 -right-1 z-10"
+            className="absolute -top-1.5 -right-1.5 z-10"
             variant="secondary"
             size="icon"
           >
@@ -397,7 +448,7 @@ export default function IntegralsMain() {
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              href={id === 1 ? undefined : `#${id - 1}`}
+              href={id === 1 ? undefined : `#${category}-${id - 1}`}
               onClick={(e) => {
                 if (id === 1) return;
                 e.preventDefault();
@@ -413,7 +464,7 @@ export default function IntegralsMain() {
           {getIdsArr(3).map((i) => (
             <PaginationItem key={i}>
               <PaginationLink
-                href={`#${i}`}
+                href={`#${category}-${i}`}
                 onClick={(e) => {
                   if (id === i) return;
                   e.preventDefault();
@@ -435,7 +486,7 @@ export default function IntegralsMain() {
           </PaginationItem>*/}
           <PaginationItem>
             <PaginationNext
-              href={id === count ? undefined : `#${id + 1}`}
+              href={id === count ? undefined : `#${category}-${id + 1}`}
 
               onClick={(e) => {
                 if (id === count) return;
@@ -452,7 +503,7 @@ export default function IntegralsMain() {
         </PaginationContent>
       </Pagination>
 
-      <Button onClick={handleSurprise}>
+      <Button variant="secondary" onClick={handleSurprise}>
         <Dices />
         ¡Sorpréndeme!
       </Button>
