@@ -1,7 +1,6 @@
 import type { Int } from "ikmath-shared";
 
-export const monsterIntsToml: { items: Array<Int> } = {
-  items: [
+export const monsterInts: Array<Int>  = [
     { id: 1, int: String.raw`\int_0^\infty \frac {\sin^3x\cos^2x} x \,dx` },
     { id: 2, int: String.raw`\int_0^1 \frac {x^6-x^3}{(1+x)\ln x}\,dx` },
     {
@@ -431,5 +430,4 @@ export const monsterIntsToml: { items: Array<Int> } = {
       int: String.raw`\int_0^n x^2 \,\lceil x \rceil,\qquad n \in \mathbb Z^+`,
       header: String.raw`\text{Evaluar:}`,
     },
-  ],
-};
+  ];

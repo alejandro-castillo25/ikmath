@@ -319,7 +319,7 @@ export default function IntegralsMain() {
 
           setLocationHash(`#${randomId}`);
         },
-        500,
+        650,
         {
           trailing: true,
         },
@@ -334,7 +334,7 @@ export default function IntegralsMain() {
           if (targetId < 1 || (count > 0 && targetId > count)) return;
           setLocationHash(`#${targetId}`);
         },
-        500,
+        650,
         { trailing: true },
       ),
     [count, setLocationHash],

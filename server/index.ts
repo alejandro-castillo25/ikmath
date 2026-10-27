@@ -7,7 +7,8 @@ import type { Int } from "ikmath-shared";
 
 // import monsterIntsToml from "./public/monster-ints.toml";
 
-import { monsterIntsToml } from "./public/monster-ints";
+import { monsterInts } from "./public/monster-ints";
+import { normalInts } from "./public/normal-ints";
 
 const app = new Hono().basePath("/api");
 // const app = new Hono();
@@ -26,96 +27,90 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
 
   if (intsType === "") return c.notFound();
 
+  let mainInts: Array<Int>;
+
   if (["monster", "monsters"].includes(intsType)) {
-    const { items: monsterInts } = monsterIntsToml;
+    mainInts = monsterInts;
+  } else if (["normal", "normals"].includes(intsType)) {
+    mainInts = normalInts;
+  } else return c.notFound();
 
-    const count = c.req.query("count");
+  const count = c.req.query("count");
 
-    if (count !== undefined) {
-      if (count.toLowerCase() === "true")
-        return c.json({
-          count: monsterInts.length,
-        } as Object);
+  if (count !== undefined) {
+    if (count.toLowerCase() === "true")
+      return c.json({
+        count: mainInts.length,
+      } as Object);
 
-      return c.text("Invalid argument in count query. Expected: 'true'", 400);
-    }
+    return c.text("Invalid argument in count query. Expected: 'true'", 400);
+  }
 
-    const id = c.req.query("id");
-    const { from, to } = c.req.query();
-    const search = c.req.query("search");
-    const hasHeader = c.req.query("has_header");
+  const id = c.req.query("id");
+  const { from, to } = c.req.query();
+  const search = c.req.query("search");
+  const hasHeader = c.req.query("has_header");
 
-    const isOutBounds = (index: number) =>
-      index > monsterInts.length || index <= 0;
+  const isOutBounds = (index: number) => index > mainInts.length || index <= 0;
 
-    let elementForLookup = "";
+  let elementForLookup = "";
 
-    if (id !== undefined) {
-      const target = Number.parseInt(id);
+  if (id !== undefined) {
+    const target = Number.parseInt(id);
 
-      if (isOutBounds(target)) return c.notFound();
+    if (isOutBounds(target)) return c.notFound();
 
-      return c.json(monsterInts[target - 1]);
-    }
-    if (search !== undefined) {
-      elementForLookup = search.trim();
-    }
+    return c.json(mainInts[target - 1]);
+  }
+  if (search !== undefined) {
+    elementForLookup = search.trim();
+  }
 
-    let from_i = 0;
-    let to_i = monsterInts.length;
+  let from_i = 0;
+  let to_i = mainInts.length;
 
-    if ([from, to, search].every((v) => v === undefined))
-      return c.json(monsterInts);
-    // may disable it, because characters such as < and >, get treated as unicode by some reason... maybe just my browser
+  if ([from, to, search].every((v) => v === undefined)) return c.json(mainInts);
+  // may disable it, because characters such as < and >, get treated as unicode by some reason... maybe just my browser
 
-    if (from !== undefined) {
-      from_i = Number.parseInt(from);
+  if (from !== undefined) {
+    from_i = Number.parseInt(from);
 
-      if (Number.isNaN(from_i))
-        return c.text(`from=${from} is not a number`, 400);
+    if (Number.isNaN(from_i))
+      return c.text(`from=${from} is not a number`, 400);
 
-      if (from_i > monsterInts.length) from_i = monsterInts.length;
-      else if (from_i < 0)
-        return c.text("I've never heard of negative id's", 400);
-    }
-    if (to !== undefined) {
-      to_i = Number.parseInt(to);
+    if (from_i > mainInts.length) from_i = mainInts.length;
+    else if (from_i < 0)
+      return c.text("I've never heard of negative id's", 400);
+  }
+  if (to !== undefined) {
+    to_i = Number.parseInt(to);
 
-      if (Number.isNaN(to_i)) return c.text(`to=${to} is not a number`, 400);
+    if (Number.isNaN(to_i)) return c.text(`to=${to} is not a number`, 400);
 
-      if (to_i > monsterInts.length) to_i = monsterInts.length;
-      else if (to_i < 0)
-        return c.text("I've never heard of negative id's", 400);
-    }
+    if (to_i > mainInts.length) to_i = mainInts.length;
+    else if (to_i < 0) return c.text("I've never heard of negative id's", 400);
+  }
 
-    if (from_i > to_i)
-      //todo: consider changing this to return a descending array, makes sense (i think...)
-      return c.text(
-        `Bad request!\nfrom=${from} > to=${to}, that doesn't make sense`,
-        400,
-      );
-
-    return c.json(
-      monsterInts.filter((intEl: Int) => {
-        const { id, int, header, footer } = intEl;
-
-        return (
-          id >= from_i &&
-          id <= to_i &&
-          (int.includes(elementForLookup) ||
-            (header ?? "").includes(elementForLookup) ||
-            (footer ?? "").includes(elementForLookup))
-        );
-      }),
+  if (from_i > to_i)
+    //todo: consider changing this to return a descending array, makes sense (i think...)
+    return c.text(
+      `Bad request!\nfrom=${from} > to=${to}, that doesn't make sense`,
+      400,
     );
-  }
 
-  if (["normal", "normals"].includes(intsType)) {
-    c.header("Content-Type", "text/plain; charset=utf-8");
-    return c.text("todo!");
-  }
+  return c.json(
+    mainInts.filter((intEl: Int) => {
+      const { id, int, header, footer } = intEl;
 
-  return c.notFound();
+      return (
+        id >= from_i &&
+        id <= to_i &&
+        (int.includes(elementForLookup) ||
+          (header ?? "").includes(elementForLookup) ||
+          (footer ?? "").includes(elementForLookup))
+      );
+    }),
+  );
 });
 
 app.get("/", (c) => {
