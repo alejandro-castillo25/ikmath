@@ -38,7 +38,7 @@ export type Category = "monsters" | "normals";
 export type IntHash = `#${Category}-${string}`;
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = true;
+const DEV = false;
 
 export default function IntegralsMain() {
   const {
@@ -50,11 +50,11 @@ export default function IntegralsMain() {
 
   const [id, setId] = useState<number>(1);
   const [category, setCategory] = useState<Category>(() => {
-      const rawHash = window.location.hash.replace("#", "").split("-");
-      return rawHash[0] === "normals" || rawHash[0] === "monsters"
-        ? (rawHash[0] as Category)
-        : "normals";
-    });
+    const rawHash = window.location.hash.replace("#", "").split("-");
+    return rawHash[0] === "normals" || rawHash[0] === "monsters"
+      ? (rawHash[0] as Category)
+      : "normals";
+  });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -86,7 +86,9 @@ export default function IntegralsMain() {
       }
     }
 
-    setIsLoading(true);
+    const isCount = settings?.count !== undefined;
+
+    if (!isCount) setIsLoading(true);
 
     const response = await fetch(
       `${DEV ? "http://localhost:3000" : ""}/api/integrals/${settings.category}${paramsStr}`,
@@ -98,27 +100,16 @@ export default function IntegralsMain() {
       },
     );
 
-    if (settings?.count !== undefined) {
-      const data: {
-        count: number;
-      } = await response.json();
-
+    if (isCount) {
+      const data: { count: number } = await response.json();
       setCount(data.count);
-      setIsLoading(false);
-
-      console.log(data.count);
-
       return;
     }
 
     const data: Int = await response.json();
-    console.log(data);
-
     setInt(data);
-
     setIsLoading(false);
   }, []);
-
   const getIdsArr = useCallback(
     (n = 3): Array<number> => {
       // const parts = Math.floor(count / n);
@@ -366,14 +357,14 @@ export default function IntegralsMain() {
   );
 
   const items = [
-    { label: "Normales", value: "normals", href: "#normals-1"},
+    { label: "Normales", value: "normals", href: "#normals-1" },
     { label: "Monsters", value: "monsters", href: "#monsters-1" },
   ];
 
   return (
     <main className="flex w-full h-full items-center justify-center flex-col gap-8 p-2 pt-6 pb-6 mt-16 ">
       <GooeyNav
-        key={category}
+        // key={category}
         className="z-15"
         color={theme === "dark" ? "#74c7ec" : "#209fb5"}
         items={items}
@@ -413,7 +404,7 @@ export default function IntegralsMain() {
           ref={cardRef}
           className="w-full flex flex-col items-center justify-center min-h-full"
         >
-          {isLoading ? (
+          {isLoading || int.id !== id ? (
             <Spinner className="size-10 text-primary" />
           ) : (
             <>
@@ -444,65 +435,68 @@ export default function IntegralsMain() {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href={id === 1 ? undefined : `#${category}-${id - 1}`}
-              onClick={(e) => {
-                if (id === 1) return;
-                e.preventDefault();
-                handleNavClick(id - 1);
-              }}
-              aria-disabled={id === 1}
-              tabIndex={id === 1 ? -1 : undefined}
-              className={`${int.int === "" && "hidden"} ${id === 1 && "pointer-events-none opacity-50 "} transition-opacity duration-250 ease-in-out`}
-              text="Anterior"
-            />
-          </PaginationItem>
-
-          {getIdsArr(3).map((i) => (
-            <PaginationItem key={i}>
-              <PaginationLink
-                href={`#${category}-${i}`}
+      {int.int !== "" && (
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href={id <= 1 ? undefined : `#${category}-${id - 1}`}
                 onClick={(e) => {
-                  if (id === i) return;
+                  if (id <= 1) return;
                   e.preventDefault();
-                  handleNavClick(i);
+                  handleNavClick(id - 1);
                 }}
-                isActive={id === i}
-                className={id === i ? "bg-background/35! backdrop-blur-xs" : ""}
-              >
-                <Tex
-                  className={`${id >= 100 ? "scale-90" : id >= 10 ? "scale-95" : ""}`}
-                >
-                  {i}
-                </Tex>
-              </PaginationLink>
+                aria-disabled={id <= 1}
+                tabIndex={id <= 1 ? -1 : undefined}
+                className={`${int.int === "" && "hidden"} ${id <= 1 && "pointer-events-none opacity-50 "} transition-opacity duration-250 ease-in-out`}
+                text="Anterior"
+              />
             </PaginationItem>
-          ))}
-          {/*<PaginationItem>
+
+            {getIdsArr(3).map((i) => (
+              <PaginationItem key={i}>
+                <PaginationLink
+                  href={`#${category}-${i}`}
+                  onClick={(e) => {
+                    if (id === i) return;
+                    e.preventDefault();
+                    handleNavClick(i);
+                  }}
+                  isActive={id === i}
+                  className={
+                    id === i ? "bg-background/35! backdrop-blur-xs" : ""
+                  }
+                >
+                  <Tex
+                    className={`${id >= 100 ? "scale-90" : id >= 10 ? "scale-95" : ""}`}
+                  >
+                    {i}
+                  </Tex>
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            {/*<PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>*/}
-          <PaginationItem>
-            <PaginationNext
-              href={id === count ? undefined : `#${category}-${id + 1}`}
+            <PaginationItem>
+              <PaginationNext
+                href={id >= count ? undefined : `#${category}-${id + 1}`}
 
-              onClick={(e) => {
-                if (id === count) return;
-                e.preventDefault();
-                handleNavClick(id + 1);
-              }}
+                onClick={(e) => {
+                  if (id >= count) return;
+                  e.preventDefault();
+                  handleNavClick(id + 1);
+                }}
 
-              aria-disabled={id === 1}
-              tabIndex={id === count ? -1 : undefined}
-              className={`${int.int === "" && "hidden"} ${id === count && "pointer-events-none opacity-50"}  transition-opacity duration-250 ease-in-out`}
-              text="Siguiente"
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-
+                aria-disabled={id >= count}
+                tabIndex={id >= count ? -1 : undefined}
+                className={`${int.int === "" && "hidden"} ${id >= count && "pointer-events-none opacity-50"}  transition-opacity duration-250 ease-in-out`}
+                text="Siguiente"
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
       <Button variant="secondary" onClick={handleSurprise}>
         <Dices />
         ¡Sorpréndeme!
