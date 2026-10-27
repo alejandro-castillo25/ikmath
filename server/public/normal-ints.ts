@@ -9,7 +9,7 @@ export const normalInts: Array<Int> = [
   },
   {
     id: 2,
-    int: String.raw`\int_a^b f(x)\,dx = \int_a^b f(a+b-x)\,dx`,
+    int: String.raw`\int_0^{\pi/2} x\sin x\,dx`,
     header: "\\text{Resolver por King's Rule:}",
   },
   {

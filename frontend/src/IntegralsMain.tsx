@@ -40,6 +40,20 @@ export type IntHash = `#${Category}-${string}`;
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
 const DEV = false;
 
+function parseHash(): { category: Category; id: number } {
+  const [rawCat, rawId] = window.location.hash
+    .replace("#", "")
+    .toLowerCase()
+    .split("-");
+
+  const category: Category =
+    rawCat === "monsters" || rawCat === "monster" ? "monsters" : "normals";
+
+  const parsedId = Number.parseInt(rawId ?? "NaN");
+
+  return { category, id: Number.isNaN(parsedId) ? 1 : parsedId };
+}
+
 export default function IntegralsMain() {
   const {
     theme: [theme],
@@ -49,12 +63,9 @@ export default function IntegralsMain() {
   const [int, setInt] = useState<Int>({ int: "", id: 0 });
 
   const [id, setId] = useState<number>(1);
-  const [category, setCategory] = useState<Category>(() => {
-    const rawHash = window.location.hash.replace("#", "").split("-");
-    return rawHash[0] === "normals" || rawHash[0] === "monsters"
-      ? (rawHash[0] as Category)
-      : "normals";
-  });
+  const [category, setCategory] = useState<Category>(
+    () => parseHash().category,
+  );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -139,13 +150,7 @@ export default function IntegralsMain() {
   }, []);
 
   useEffect(() => {
-    const rawHash = window.location.hash.replace("#", "").split("-");
-    const initCat =
-      rawHash[0] === "normals" || rawHash[0] === "monsters"
-        ? rawHash[0]
-        : "normals";
-    let initId = Number.parseInt(rawHash[1] ?? "NaN");
-    if (Number.isNaN(initId)) initId = 1;
+    const { category: initCat, id: initId } = parseHash();
 
     queueMicrotask(() => {
       setCategory(initCat as Category);
@@ -159,14 +164,7 @@ export default function IntegralsMain() {
     window.addEventListener(
       "hashchange",
       () => {
-        const hash = window.location.hash.replace("#", "").split("-");
-        const newCat =
-          hash[0] === "normals" || hash[0] === "monsters"
-            ? hash[0]
-            : "monsters";
-        let newId = Number.parseInt(hash[1] ?? "NaN");
-        if (Number.isNaN(newId)) newId = 1;
-
+        const { category: newCat, id: newId } = parseHash();
         setId(newId);
         setCategory(newCat as Category);
 
@@ -390,7 +388,7 @@ export default function IntegralsMain() {
       >
         {int.id !== 0 && (
           <Badge
-            className="absolute -top-1.5 -left-1.5 text-md p-2.5 z-10"
+            className="absolute -top-1 -left-1 text-md p-2.5 z-10"
             variant="default"
           >
             <Tex>{`\\#\\,${id}`}</Tex>
@@ -425,7 +423,7 @@ export default function IntegralsMain() {
           <Button
             onClick={handleDownloadPng}
             disabled={isLoading || isExporting}
-            className="absolute -top-1.5 -right-1.5 z-10"
+            className="absolute -top-1 -right-1 z-10"
             variant="secondary"
             size="icon"
           >
