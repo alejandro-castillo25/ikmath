@@ -1,12 +1,12 @@
 import { Button } from "./components/ui/button";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Tex from "./components/Tex";
 import type { Int } from "ikmath-shared";
 import { Spinner } from "./components/ui/spinner";
 import { Badge } from "./components/ui/badge";
-import { Camera, Ellipsis } from "lucide-react";
+import { Camera, Ellipsis, Dices } from "lucide-react";
 
 import { toPng } from "html-to-image";
 
@@ -27,6 +27,8 @@ export interface FetchDataSettings {
   to?: number;
   search?: string;
 }
+
+import { throttle } from "lodash";
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
 const DEV = true;
@@ -123,20 +125,19 @@ export default function IntegralsMain() {
     [count, id],
   );
 
-  const setLocationHash = (hash: string) => {
+  const setLocationHash = useCallback((hash: `#${string}`) => {
     window.location.hash = hash;
-  };
+  }, []);
 
   useEffect(() => {
     const initHash = window.location.hash.replace("#", "");
-
     let initId = Number.parseInt(initHash);
 
-    if(Number.isNaN(initId)) initId = 1
-    
+    if (Number.isNaN(initId)) initId = 1;
 
     queueMicrotask(() => {
       setId(initId);
+      fetchData({ count: true });
       fetchData({ id: initId });
     });
 
@@ -146,12 +147,12 @@ export default function IntegralsMain() {
       "hashchange",
       () => {
         const hash = window.location.hash.replace("#", "");
-        let id = Number.parseInt(hash);
+        let newId = Number.parseInt(hash);
 
-        if(Number.isNaN(id)) id = 1
+        if (Number.isNaN(newId)) newId = 1;
 
-        setId(id);
-        fetchData({ id });
+        setId(newId);
+        fetchData({ id: newId });
       },
       {
         signal: ctrl.signal,
@@ -161,14 +162,6 @@ export default function IntegralsMain() {
     return () => {
       ctrl.abort();
     };
-  }, []);
-
-  useEffect(() => {
-    queueMicrotask(() => {
-      fetchData({ count: true });
-
-      fetchData({ id: 1 });
-    });
   }, [fetchData]);
 
   const handleDownloadPng = async () => {
@@ -314,6 +307,39 @@ export default function IntegralsMain() {
       setIsExporting(false);
     }
   };
+
+  const handleSurprise = useMemo(
+    () =>
+      throttle(
+        () => {
+          const currentCount = count;
+          if (currentCount === 0) return;
+
+          const randomId = Math.floor(Math.random() * currentCount) + 1;
+
+          setLocationHash(`#${randomId}`);
+        },
+        500,
+        {
+          trailing: true,
+        },
+      ),
+    [count, setLocationHash],
+  );
+
+  const handleNavClick = useMemo(
+    () =>
+      throttle(
+        (targetId: number) => {
+          if (targetId < 1 || (count > 0 && targetId > count)) return;
+          setLocationHash(`#${targetId}`);
+        },
+        500,
+        { trailing: true },
+      ),
+    [count, setLocationHash],
+  );
+
   return (
     <main className="flex w-full h-full items-center justify-center flex-col gap-2 p-2 pt-6 pb-6 mt-16 ">
       <ScrollArea
@@ -372,14 +398,15 @@ export default function IntegralsMain() {
           <PaginationItem>
             <PaginationPrevious
               href={id === 1 ? undefined : `#${id - 1}`}
+              onClick={(e) => {
+                if (id === 1) return;
+                e.preventDefault();
+                handleNavClick(id - 1);
+              }}
               aria-disabled={id === 1}
               tabIndex={id === 1 ? -1 : undefined}
-              className={`${int.int === "" && "hidden"} ${id === 1 && "pointer-events-none opacity-50"}`}
+              className={`${int.int === "" && "hidden"} ${id === 1 && "pointer-events-none opacity-50 "} transition-opacity duration-250 ease-in-out`}
               text="Anterior"
-              onClick={() => {
-                // fetchData({ id: id - 1 });
-                // setId(id - 1);
-              }}
             />
           </PaginationItem>
 
@@ -387,13 +414,19 @@ export default function IntegralsMain() {
             <PaginationItem key={i}>
               <PaginationLink
                 href={`#${i}`}
-                isActive={id === i}
-                onClick={() => {
-                  // fetchData({ id: i });
-                  // setId(i);
+                onClick={(e) => {
+                  if (id === i) return;
+                  e.preventDefault();
+                  handleNavClick(i);
                 }}
+                isActive={id === i}
+                className={id === i ? "bg-background/35! backdrop-blur-xs" : ""}
               >
-                {i}
+                <Tex
+                  className={`${id >= 100 ? "scale-90" : id >= 10 ? "scale-95" : ""}`}
+                >
+                  {i}
+                </Tex>
               </PaginationLink>
             </PaginationItem>
           ))}
@@ -403,25 +436,24 @@ export default function IntegralsMain() {
           <PaginationItem>
             <PaginationNext
               href={id === count ? undefined : `#${id + 1}`}
+
+              onClick={(e) => {
+                if (id === count) return;
+                e.preventDefault();
+                handleNavClick(id + 1);
+              }}
+
               aria-disabled={id === 1}
               tabIndex={id === count ? -1 : undefined}
-              className={`${int.int === "" && "hidden"} ${id === count && "pointer-events-none opacity-50"}`}
+              className={`${int.int === "" && "hidden"} ${id === count && "pointer-events-none opacity-50"}  transition-opacity duration-250 ease-in-out`}
               text="Siguiente"
-              onClick={() => {
-                // fetchData({ id: id + 1 });
-                // setId(id + 1);
-              }}
             />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
 
-      <Button
-        onClick={() => {
-          const randomId = Math.floor(Math.random() * count) + 1;
-          setLocationHash(`#${randomId}`)
-        }}
-      >
+      <Button onClick={handleSurprise}>
+        <Dices />
         ¡Sorpréndeme!
       </Button>
     </main>

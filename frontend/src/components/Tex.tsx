@@ -6,7 +6,7 @@ export default function Tex({
   children,
   className,
   ref,
-}: {children: string, className?: string, ref?: React.Ref<HTMLDivElement>}) {
+}: {children: string | React.ReactNode, className?: string, ref?: React.Ref<HTMLDivElement>}) {
   return (
     <div className={className} ref={ref}>
       <BlockMath>{`${children}`}</BlockMath>
