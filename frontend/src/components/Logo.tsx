@@ -42,15 +42,16 @@ export function Logo({ size = 48, ...props }: LogoProps) {
       />
 
       <text
-        x="30"
-        y="80"
+        x="50"
+        y="68"
+        textAnchor="middle"
+        dominantBaseline="central"
         fill="currentColor"
-        // fontSize="52"
         style={{
           fontSize: "2.75rem",
-          userSelect: "none"
+          userSelect: "none",
         }}
-        fontFamily='"Computer Modern Serif", "New Computer Modern", serif'
+        fontFamily="Libron, Georgia, serif"
       >
         ik
       </text>

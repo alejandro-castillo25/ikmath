@@ -11,8 +11,8 @@
         transform-origin: center;
       }
 
-      .computer-roman {
-        font-family: "Computer Modern Serif", "New Computer Modern", serif;
+      .text-part {
+        font-family: 'Libron', Georgia, serif;
         font-size: 52px;
       }
     </style>
@@ -44,5 +44,12 @@
     "
   />
 
-  <text x="28" y="80" class="computer-roman" fill="#cdd6f4">ik</text>
+  <text
+    x="50"
+    y="68"
+    text-anchor="middle"
+    dominant-baseline="central"
+    class="text-part"
+    fill="#cdd6f4"
+  >ik</text>
 </svg>

@@ -1,4 +1,5 @@
 /*@import url("https://cdn.jsdelivr.net/gh/bitmaks/cm-web-fonts@latest/fonts.css");*/
+@import "@alexandernygard/libron/libron.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -110,7 +111,8 @@
 
 @theme inline {
   /*--font-sans: "Computer Modern Serif", "Times New Roman", Times, serif;*/
-  --font-sans: Georgia, Times, serif;
+  /*--font-sans: Georgia, Times, serif;*/
+  --font-sans: 'Libron', Georgia, sans-serif;
 
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);

@@ -44,7 +44,7 @@ export type Category = "monsters" | "normals";
 export type IntHash = `#${Category}-${string}`;
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = false;
+const DEV = true;
 
 function parseHash(): { category: Category; id: number } {
   const [rawCat, rawId] = window.location.hash
@@ -85,7 +85,6 @@ export default function IntegralsMain() {
     const value = Number.parseInt(searchValue);
     return !Number.isNaN(value) && value >= 1 && value <= count;
   }, [searchValue, count]);
-
 
   const fetchData = useCallback(async (settings: FetchDataSettings) => {
     let paramsStr = "?";
@@ -372,12 +371,11 @@ export default function IntegralsMain() {
     [count, category, setLocationHash],
   );
 
-
   const items = [
     { label: "Normales", value: "normals", href: "#normals-1" },
     { label: "Monsters", value: "monsters", href: "#monsters-1" },
   ];
-  
+
   const goToId = useCallback(
     (raw: string) => {
       const value = Number.parseInt(raw);
@@ -386,14 +384,14 @@ export default function IntegralsMain() {
     },
     [count, category, setLocationHash],
   );
-  
+
   const debouncedGoTo = useMemo(() => debounce(goToId, 750), [goToId]);
-  
+
   const throttledGoTo = useMemo(
     () => throttle(goToId, 750, { leading: true, trailing: false }),
     [goToId],
   );
-  
+
   useEffect(() => {
     return () => {
       debouncedGoTo.cancel();
@@ -512,7 +510,7 @@ export default function IntegralsMain() {
                   `}
                 >
                   <span
-                    // className={`${id >= 100 ? "scale-90" : id >= 10 ? "scale-95" : ""}`}
+                  // className={`${id >= 100 ? "scale-90" : id >= 10 ? "scale-95" : ""}`}
                   >
                     {i}
                   </span>
@@ -545,26 +543,43 @@ export default function IntegralsMain() {
       )}
       <InputGroup className="max-w-50">
         <InputGroupInput
-          type="number"
-          name="search"
-          min={1}
-          max={count}
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          name="integral-number"
           autoComplete="off"
+          data-1p-ignore
+          data-lpignore="true"
+          data-form-type="other"
           value={searchValue}
           onChange={(e) => {
-            setSearchValue(e.target.value);
-            debouncedGoTo(e.target.value);
+            const clean = e.target.value.replace(/\D/g, "");
+            setSearchValue(clean);
+            debouncedGoTo(clean);
           }}
           onKeyDown={(e) => {
-            if (["e", "E", "+", "-", "."].includes(e.key)) {
+            if (e.key === "ArrowUp" || e.key === "ArrowDown") {
               e.preventDefault();
+              if (count === 0) return;
+
+              const current = Number.parseInt(searchValue);
+              const delta = e.key === "ArrowUp" ? 1 : -1;
+
+              const base = Number.isNaN(current)
+                ? delta === 1
+                  ? 0
+                  : count + 1
+                : current;
+              const next = Math.min(count, Math.max(1, base + delta));
+
+              setSearchValue(next.toString());
+              debouncedGoTo(next.toString());
               return;
             }
-          
+
             if (e.key === "Enter") {
               e.preventDefault();
-              
-              debouncedGoTo.cancel(); //? for twice case
+              debouncedGoTo.cancel();
               throttledGoTo(searchValue);
             }
           }}
