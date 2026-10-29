@@ -112,7 +112,7 @@
 @theme inline {
   /*--font-sans: "Computer Modern Serif", "Times New Roman", Times, serif;*/
   /*--font-sans: Georgia, Times, serif;*/
-  --font-sans: 'Libron', Georgia, sans-serif;
+  --font-sans: 'Libron', Georgia, "Times New Roman", sans-serif;
 
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);

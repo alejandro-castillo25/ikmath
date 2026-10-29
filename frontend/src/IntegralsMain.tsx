@@ -44,7 +44,7 @@ export type Category = "monsters" | "normals";
 export type IntHash = `#${Category}-${string}`;
 
 // IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = true;
+const DEV = false;
 
 function parseHash(): { category: Category; id: number } {
   const [rawCat, rawId] = window.location.hash

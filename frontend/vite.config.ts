@@ -19,6 +19,7 @@ export default defineConfig({
         subjects: path.resolve(import.meta.dirname, "subjects.html"),
         integrals: path.resolve(import.meta.dirname, "integrals.html"),
         references: path.resolve(import.meta.dirname, "references.html"),
+        notFound:  path.resolve(import.meta.dirname, "404.html"),
       },
     },
   },

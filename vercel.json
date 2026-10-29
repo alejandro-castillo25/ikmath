@@ -4,9 +4,13 @@
 
   "services": {
     "frontend": {
-      "root": "frontend/",
-      "framework": "vite"
-    },
+        "root": "frontend/",
+        "framework": "vite",
+        "routes": [
+          { "handle": "filesystem" },
+          { "src": "/(.*)", "status": 404, "dest": "/404.html" }
+        ]
+      },
     "backend": {
       "root": "server/",
       "entrypoint": "index.ts",
@@ -27,5 +31,13 @@
         "service": "frontend"
       }
     }
-  ]
+  ],
+  
+  "redirects": [
+     {
+       "source": "/ints.html",
+       "destination": "/integrals.html",
+       "permanent": true
+     }
+   ]
 }

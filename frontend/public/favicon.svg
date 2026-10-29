@@ -12,7 +12,7 @@
       }
 
       .text-part {
-        font-family: 'Libron', Georgia, serif;
+        font-family: 'Libron', Georgia,  "Times New Roman", serif;
         font-size: 52px;
       }
     </style>

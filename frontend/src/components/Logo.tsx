@@ -51,7 +51,7 @@ export function Logo({ size = 48, ...props }: LogoProps) {
           fontSize: "2.75rem",
           userSelect: "none",
         }}
-        fontFamily="Libron, Georgia, serif"
+        fontFamily="Libron, Georgia, 'Times New Roman', serif"
       >
         ik
       </text>
