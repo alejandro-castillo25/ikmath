@@ -6,23 +6,29 @@ import Tex from "./components/Tex";
 import type { Int } from "ikmath-shared";
 import { Spinner } from "./components/ui/spinner";
 import { Badge } from "./components/ui/badge";
-import { Camera, Ellipsis, Dices } from "lucide-react";
+import { Camera, Search, Dices } from "lucide-react";
 
 import { toPng } from "html-to-image";
 
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
+  // PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { throttle } from "lodash";
+import { debounce, throttle } from "lodash";
 
 import GooeyNav from "./components/GooeyNav";
 import { useAppContext } from "./AppContext";
+
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 
 export interface FetchDataSettings {
   category: string;
@@ -58,7 +64,6 @@ export default function IntegralsMain() {
   const {
     theme: [theme],
   } = useAppContext();
-  // TODO: Add light/dark label as a postfix of the download name
 
   const [int, setInt] = useState<Int>({ int: "", id: 0 });
 
@@ -73,6 +78,14 @@ export default function IntegralsMain() {
   const [isExporting, setIsExporting] = useState<boolean>(false);
 
   const [count, setCount] = useState<number>(0);
+
+  const [searchValue, setSearchValue] = useState<string>("");
+  const isValidSearch = useMemo(() => {
+    if (searchValue === "" || count === 0) return true;
+    const value = Number.parseInt(searchValue);
+    return !Number.isNaN(value) && value >= 1 && value <= count;
+  }, [searchValue, count]);
+
 
   const fetchData = useCallback(async (settings: FetchDataSettings) => {
     let paramsStr = "?";
@@ -113,11 +126,16 @@ export default function IntegralsMain() {
 
     if (isCount) {
       const data: { count: number } = await response.json();
+
+      console.log(data);
+
       setCount(data.count);
       return;
     }
 
     const data: Int = await response.json();
+    console.log(data);
+
     setInt(data);
     setIsLoading(false);
   }, []);
@@ -150,34 +168,32 @@ export default function IntegralsMain() {
   }, []);
 
   useEffect(() => {
-    const { category: initCat, id: initId } = parseHash();
+    let currentCat: Category | null = null;
 
-    queueMicrotask(() => {
-      setCategory(initCat as Category);
-      setId(initId);
-      fetchData({ count: true, category: initCat });
-      fetchData({ id: initId, category: initCat });
-    });
+    const load = () => {
+      const { category: newCat, id: newId } = parseHash();
+
+      setId(newId);
+      setCategory(newCat);
+
+      if (newCat !== currentCat) {
+        currentCat = newCat;
+        fetchData({ count: true, category: newCat });
+      }
+
+      fetchData({ id: newId, category: newCat });
+    };
+
+    queueMicrotask(load);
 
     const ctrl = new AbortController();
-
-    window.addEventListener(
-      "hashchange",
-      () => {
-        const { category: newCat, id: newId } = parseHash();
-        setId(newId);
-        setCategory(newCat as Category);
-
-        fetchData({ count: true, category: newCat });
-        fetchData({ id: newId, category: newCat }); // <-- Fixed: uses newId
-      },
-      { signal: ctrl.signal },
-    );
+    window.addEventListener("hashchange", load, { signal: ctrl.signal });
 
     return () => {
       ctrl.abort();
     };
   }, [fetchData]);
+
   const handleDownloadPng = async () => {
     if (!cardRef.current || isLoading || isExporting) return;
 
@@ -202,13 +218,14 @@ export default function IntegralsMain() {
     const MAX_SCALE = Infinity;
 
     // TODO: If possible, make a function to change the quality of the image
-    const EXPORT_PIXEL_RATIO = 3; //? 2
-
+    const EXPORT_PIXEL_RATIO = 2; //? 2 ; x \in {1,2,3,4}
     const targets = new Set<HTMLElement>();
     element.querySelectorAll<HTMLElement>(".katex-display").forEach((d) => {
       let node: HTMLElement | null = d;
+
       while (node && node !== element) {
         targets.add(node);
+
         node = node.parentElement;
       }
     });
@@ -255,6 +272,7 @@ export default function IntegralsMain() {
       if (!Number.isFinite(minL)) {
         minL = elRect.left;
         minT = elRect.top;
+
         maxR = elRect.right;
         maxB = elRect.bottom;
       }
@@ -305,7 +323,7 @@ export default function IntegralsMain() {
       const link = document.createElement("a");
 
       link.href = dataUrl;
-      link.download = `integral-#${int.id || "card"}.png`;
+      link.download = `${category}-integral#${int.id}-${theme}.png`;
       link.click();
     } catch (error) {
       console.error("Error generating image with html-to-image:", error);
@@ -333,7 +351,7 @@ export default function IntegralsMain() {
 
           setLocationHash(`#${category}-${randomId}`);
         },
-        650,
+        750,
         {
           trailing: true,
         },
@@ -348,16 +366,40 @@ export default function IntegralsMain() {
           if (targetId < 1 || (count > 0 && targetId > count)) return;
           setLocationHash(`#${category}-${targetId}`);
         },
-        650,
+        750,
         { trailing: true },
       ),
     [count, category, setLocationHash],
   );
 
+
   const items = [
     { label: "Normales", value: "normals", href: "#normals-1" },
     { label: "Monsters", value: "monsters", href: "#monsters-1" },
   ];
+  
+  const goToId = useCallback(
+    (raw: string) => {
+      const value = Number.parseInt(raw);
+      if (Number.isNaN(value) || value < 1 || value > count) return;
+      setLocationHash(`#${category}-${value}`);
+    },
+    [count, category, setLocationHash],
+  );
+  
+  const debouncedGoTo = useMemo(() => debounce(goToId, 750), [goToId]);
+  
+  const throttledGoTo = useMemo(
+    () => throttle(goToId, 750, { leading: true, trailing: false }),
+    [goToId],
+  );
+  
+  useEffect(() => {
+    return () => {
+      debouncedGoTo.cancel();
+      throttledGoTo.cancel();
+    };
+  }, [debouncedGoTo, throttledGoTo]);
 
   return (
     <main className="flex w-full h-full items-center justify-center flex-col gap-8 p-2 pt-6 pb-6 mt-16 ">
@@ -366,7 +408,7 @@ export default function IntegralsMain() {
         className="z-15"
         color={theme === "dark" ? "#74c7ec" : "#209fb5"}
         items={items}
-        initialActiveIndex={category === "normals" ? 0 : 1}
+        activeIndex={category === "normals" ? 0 : 1}
         theme={theme}
         size="lg"
         frame
@@ -378,7 +420,7 @@ export default function IntegralsMain() {
         wobble={0.5}
         hoverEffect
         onChange={(_, item) => {
-          setLocationHash(`#${item.value as Category}-1`); // <-- Fixed: updates hash/category on tab switch
+          setLocationHash(`#${item.value as Category}-1`);
         }}
       />
 
@@ -391,7 +433,7 @@ export default function IntegralsMain() {
             className="absolute -top-1 -left-1 text-md p-2.5 z-10"
             variant="default"
           >
-            <Tex>{`\\#\\,${id}`}</Tex>
+            {`#\u2009${id}`}
           </Badge>
         )}
 
@@ -438,6 +480,8 @@ export default function IntegralsMain() {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
+                size="lg"
+
                 href={id <= 1 ? undefined : `#${category}-${id - 1}`}
                 onClick={(e) => {
                   if (id <= 1) return;
@@ -454,6 +498,8 @@ export default function IntegralsMain() {
             {getIdsArr(3).map((i) => (
               <PaginationItem key={i}>
                 <PaginationLink
+                  size="icon-lg"
+
                   href={`#${category}-${i}`}
                   onClick={(e) => {
                     if (id === i) return;
@@ -461,15 +507,15 @@ export default function IntegralsMain() {
                     handleNavClick(i);
                   }}
                   isActive={id === i}
-                  className={
-                    id === i ? "bg-background/35! backdrop-blur-xs" : ""
-                  }
+                  className={`
+                    ${id === i ? "bg-background/35! backdrop-blur-xs" : ""}
+                  `}
                 >
-                  <Tex
-                    className={`${id >= 100 ? "scale-90" : id >= 10 ? "scale-95" : ""}`}
+                  <span
+                    // className={`${id >= 100 ? "scale-90" : id >= 10 ? "scale-95" : ""}`}
                   >
                     {i}
-                  </Tex>
+                  </span>
                 </PaginationLink>
               </PaginationItem>
             ))}
@@ -478,6 +524,8 @@ export default function IntegralsMain() {
           </PaginationItem>*/}
             <PaginationItem>
               <PaginationNext
+                size="lg"
+
                 href={id >= count ? undefined : `#${category}-${id + 1}`}
 
                 onClick={(e) => {
@@ -495,6 +543,42 @@ export default function IntegralsMain() {
           </PaginationContent>
         </Pagination>
       )}
+      <InputGroup className="max-w-50">
+        <InputGroupInput
+          type="number"
+          name="search"
+          min={1}
+          max={count}
+          autoComplete="off"
+          value={searchValue}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+            debouncedGoTo(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (["e", "E", "+", "-", "."].includes(e.key)) {
+              e.preventDefault();
+              return;
+            }
+          
+            if (e.key === "Enter") {
+              e.preventDefault();
+              
+              debouncedGoTo.cancel(); //? for twice case
+              throttledGoTo(searchValue);
+            }
+          }}
+          aria-invalid={!isValidSearch}
+          className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          placeholder="#..."
+        />
+        <InputGroupAddon>
+          <Search />
+        </InputGroupAddon>
+        <InputGroupAddon align="inline-end">
+          ({count} Integrales)
+        </InputGroupAddon>
+      </InputGroup>
       <Button variant="secondary" onClick={handleSurprise}>
         <Dices />
         ¡Sorpréndeme!

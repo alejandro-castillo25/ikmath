@@ -32,9 +32,9 @@ export default function SubjectsApp() {
 
           <h2 className="text-(--calculus)">Cálculo</h2>
           <p className="text-foreground/80">
-            Las herramientas de la matemáticas, y donde nacen los conceptos más
-            importantes de estas. Estudia el cambio contínuo, y como cantidades
-            se acumulas con el tiempo
+            Las herramientas de las matemáticas, y donde nacen los conceptos más
+            importantes de estas. Estudia el cambio contínuo y cómo cantidades
+            se acumulan con el tiempo
           </p>
 
           <SquareFunction className="size-10 absolute bottom-0 right-0 m-2 md:m-4 text-(--calculus)" />

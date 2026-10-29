@@ -1,0 +1,195 @@
+[[items]]
+id = 1
+int = '\int_a^b f(x)\,dx = \int_a^b f(a+b-x)\,dx'
+header = '\text{Demostrar:}'
+footer = '''\text{King's Rule}'''
+
+[[items]]
+id = 2
+int = '\int_0^{\pi/2} x\sin x\,dx'
+header = '''\text{Resolver por King's Rule:}'''
+
+[[items]]
+id = 3
+int = '\int_0^{\pi/2} \frac{\cos x}{\sin x+\cos x}\,dx'
+
+[[items]]
+id = 4
+int = '\int_0^\pi \frac{x\sin x}{1+\cos^2x}\,dx'
+
+[[items]]
+id = 5
+int = '\int_0^2 \frac {x^2} {x^2 + (2-x)^2}\,dx'
+
+[[items]]
+id = 6
+int = '\int_0^{\pi/2} \frac {dx} {1+ \tan^3 x}'
+
+[[items]]
+id = 7
+int = '\int_0^{\pi/2} \frac {e^{\cos x}} {e^{\sin x} + e^{\cos x}}\,dx'
+
+[[items]]
+id = 8
+int = '\int_0^{\pi/2}x\sin x \cos x\,dx'
+
+[[items]]
+id = 9
+int = '\int_0^{\pi/2} \ln (\tan x)\,dx'
+
+[[items]]
+id = 10
+int = '\int_0^{\pi/2} \frac {h(\cos x)} {h(\sin x) + h(\cos x)}\,dx'
+header = '\text{Sea:} \qquad h:\,\mathbb{R} \to \mathbb{R}\,;\quad h(\sin x) + h(\cos x) \ne 0\,,\,\forall x \in \left[0,\frac \pi 2\right]'
+
+[[items]]
+id = 11
+int = '\int_0^{\pi/2} \frac{\sqrt[3]{\sin x}}{\sqrt[3]{\sin x}+\sqrt[3]{\cos x}}\,dx'
+
+[[items]]
+id = 12
+int = '\int_{-\infty}^{\infty} \frac{x^7\,\cosh(x)\,\ln(1+x^4)}{e^{x^2}\left(1+x^2+\cos^2(x^3)\right)}\,dx'
+
+[[items]]
+id = 13
+int = '\int_0^{\pi/2} \frac{\ln(2+\sin^4x)\,e^{\tan(\sin x)}}{\ln(2+\sin^4x)\,e^{\tan(\sin x)}+\ln(2+\cos^4x)\,e^{\tan(\cos x)}}\,dx'
+
+[[items]]
+id = 14
+int = '\int_1^2 \frac {\ln x} {\ln x + \ln(3-x)}\,dx'
+
+[[items]]
+id = 15
+int = '\int_0^5 \frac {e^x} {e^x + e^{5-x}}\,dx'
+
+[[items]]
+id = 16
+int = '\int_0^4 \frac {\sqrt x} {\sqrt x + \sqrt{4-x}}\,dx'
+
+[[items]]
+id = 17
+header = '\text{Sea:} \qquad h:\,\mathbb{R} \to \mathbb{R}\,;\quad h(x) + h(a+b -x) \ne 0\,,\,\forall x \in [a,b]'
+int = '\int_a^b \frac {h(x)} {h(x) + h(a+b-x)}\,dx'
+
+[[items]]
+id = 18
+header = '\text{Evaluar:}'
+int = '\int\text{erf}(x)\,dx'
+footer = '\text{Sabiendo que:}\quad \text{erf}(x)= \frac 2 {\sqrt \pi } \int_0^x e^{-t^2}\,dt'
+
+[[items]]
+id = 19
+int = '\int_{1/e}^e \frac {\sqrt{1-\ln ^2x}} x \, dx'
+
+[[items]]
+id = 20
+int = '\int_0^{1/3} \frac {x^{-1/2}} {x+1}\,dx'
+
+[[items]]
+id = 21
+int = '\int_2^6 \frac x {\sqrt{x+\frac 1  4}\left(\sqrt{x+\frac 1  4} - \frac 1 2\right)}\,dx'
+
+[[items]]
+id = 22
+int = '\int_0^1 \sqrt{-\ln x}\,dx'
+
+[[items]]
+id = 23
+int = '\int \psi(x)\,dx'
+
+[[items]]
+id = 24
+int = '\int\frac {\psi(x)} {1+\Gamma(x)}\,dx'
+
+[[items]]
+id = 25
+int = '\int_0^1 \frac {x^3} {(1+x^2)^2} \,dx'
+
+[[items]]
+id = 26
+int = '\int_0^1 \sqrt \frac {1-x} {1+x} \,dx'
+
+[[items]]
+id = 27
+int = '\int \sin x \cos x \tan x \csc x \sec x \cot x\,dx'
+
+[[items]]
+id = 28
+int = '\int_0^1 \frac {1 - \frac 1 {x^2}} {x^2 - \frac 1 {x^2}}\,dx'
+
+[[items]]
+id = 29
+int = '\int \frac {dx} {\sqrt{9-4x^2}}\quad'
+
+[[items]]
+id = 30
+int = '\int \frac {e^x}{e^x - e^{-x}}\,dx\quad'
+
+[[items]]
+id = 31
+int = '\int_{-\pi/2}^{\pi/2} \frac {x^2+\sin x + \cos x - 1} {\tan x}\,dx'
+
+[[items]]
+id = 32
+int = '\int x^2\cos x\,dx'
+
+[[items]]
+id = 33
+int = '\int \cos x \,e^{\sin x}\,dx'
+
+[[items]]
+id = 34
+int = '\int_{\pi/8}^{\pi/4} \left(e^{\tan x}\sec^2 x + \frac 1 x\right)\cos\left( e^{\tan x} + \ln x \right)\,dx'
+
+[[items]]
+id = 35
+int = '\int_1^\infty \frac {(x-1)\ln x} {\sqrt x (1+x)^2}\,dx'
+
+[[items]]
+id = 36
+int = '\int_0^\infty \left( \frac {\cos x} {e^x} \right)^2\,dx'
+
+[[items]]
+id = 37
+int = '\int_0^{\pi/2} \sin^{10} x \cos x \,dx'
+
+[[items]]
+id = 38
+int = '\int_0^{\pi/2} \frac{\sin^4 x + \cos^2 x}{\cos^4 x + \sin^2x}\,dx'
+
+[[items]]
+id = 39
+int = '\int H_x\,dx'
+
+[[items]]
+id = 40
+int = '\int_{e-2}^{e^2 - 2} \frac {\ln(x^2+4x+4)} {x+2}\,dx'
+
+[[items]]
+id = 41
+int = '\int_0^{\pi/8} \frac {\frac{\tan x}{\cos^2 x - \sin^2 x}} {\frac 1 2 \sec^2 x - \tan^2 x}\,dx'
+
+[[items]]
+id = 42
+int = '\int_C \bar z \,dz'
+footer = 'C: |z|=1,\,\text{Círculo completo, Sentido antihorario}'
+
+[[items]]
+id = 43
+int = '\int_C \Re(z)\,dz'
+footer = 'C:|z| = 2,\,\text{Círculo completo, Sentido antihorario}'
+
+[[items]]
+id = 44
+int = '\int_C \Im(z)\,dz'
+footer = 'C: \text{El segmento de recta de } z=0,\text a\, z = 2'
+
+[[items]]
+id = 45
+int = '\int_C \Re(z)\,dz'
+footer = 'C: \text{El segmento de recta de } z = 0\,\text a\, z = 1 + i'
+
+[[items]]
+id = 46
+int = '\int_C \Im(z)\,dz'
+footer = 'C: \text{El segmento de recta de } z = 0 \, \text a \, z = 2 + i'
