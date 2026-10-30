@@ -48,7 +48,7 @@ export default function Main({ focusStart, setFocusStart }: ButtonFocusStart) {
             onBlur={handleFocusOut}
           >
             <Play />
-            Empezar
+            {mainLang[lang].startText}
           </a>
         </div>
         <Logo

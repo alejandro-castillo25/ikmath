@@ -275,7 +275,7 @@ export default function NavExtraButtons({
 
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Idiomas</SelectLabel>
+                    <SelectLabel>{navLang[lang].settings.langLabel}</SelectLabel>
                     {items.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.label}
