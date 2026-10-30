@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App.tsx";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { flushSync } from "react-dom";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <TooltipProvider>
-      <App />
-    </TooltipProvider>
-  </StrictMode>,
-);
+flushSync(() => {
+  createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <TooltipProvider>
+        <App />
+      </TooltipProvider>
+    </StrictMode>,
+  );
+});

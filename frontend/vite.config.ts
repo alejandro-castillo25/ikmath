@@ -68,9 +68,23 @@ function themeInitPlugin(): Plugin {
   };
 }
 
+function blockingModulesPlugin(): Plugin {
+  return {
+    name: "blocking-modules",
+    transformIndexHtml: {
+      order: "post",
+      handler: (html) =>
+        html.replace(
+          /<script type="module"/g,
+          '<script type="module" blocking="render"',
+        ),
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), themeInitPlugin()],
+  plugins: [react(), tailwindcss(), themeInitPlugin(), blockingModulesPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "./src"),
