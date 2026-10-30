@@ -5,7 +5,7 @@
 /*@import "@fontsource-variable/geist";*/
 
 @custom-variant dark (&:is(.dark *));
-
+/* TODO Remove all non used font packages with bun remove */
 
 /* Catppuccin Latte (light) */
 :root {

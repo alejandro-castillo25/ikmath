@@ -32,7 +32,7 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Github } from "./Icons";
 import { useAppContext, type Lang } from "@/AppContext";
 import type { Contents, Links } from "./Nav";
@@ -55,6 +55,9 @@ export default function NavExtraButtons({
     theme: [theme, setTheme],
     lang: [lang, setLang],
   } = useAppContext()!;
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const pendingHref = useRef<string | null>(null);
 
   const isMobile = useIsMobile();
 
@@ -143,7 +146,20 @@ export default function NavExtraButtons({
         </Tooltip>
       </div>
 
-      <Drawer showSwipeHandle={isMobile} swipeDirection="right">
+      <Drawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        onOpenChangeComplete={(open) => {
+          if (!open && pendingHref.current) {
+            const href = pendingHref.current;
+
+            pendingHref.current = null;
+            window.location.href = href;
+          }
+        }}
+        showSwipeHandle={isMobile}
+        swipeDirection="right"
+      >
         <DrawerTrigger
           render={
             <Button
@@ -184,7 +200,23 @@ export default function NavExtraButtons({
                 key={l.label}
                 value={l.value}
                 render={
-                  <a href={l.href}>
+                  <a
+                    href={l.href}
+                    onClick={(e) => {
+                      // ? let ctrl/cmd/shift/middle click behave normally
+                      if (
+                        e.metaKey ||
+                        e.ctrlKey ||
+                        e.shiftKey ||
+                        e.button !== 0
+                      )
+                        return;
+
+                      e.preventDefault();
+                      if (l.value !== current) pendingHref.current = l.href;
+                      setDrawerOpen(false);
+                    }}
+                  >
                     {l.icon}
                     {l.label}
                   </a>

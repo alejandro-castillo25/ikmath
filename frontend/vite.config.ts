@@ -16,12 +16,17 @@ const themeInit = ` (function () {
   } catch (e) {}
 })();`;
 
-const viewTransitionCss = `@view-transition {
-    navigation: auto
-  }
-  ::view-transition-old(root),::view-transition-new(root) {
-    animation-duration: 500ms
-  }`;
+
+// ? Disabled for now, because of hang ups
+// const viewTransitionCss = `@view-transition {
+//     navigation: auto
+//   }
+//   ::view-transition-old(root),::view-transition-new(root) {
+//     animation-duration: 500ms
+//   }
+// `;
+
+const viewTransitionCss = ``;
 
 const fontCss = `
 @font-face{font-family:"Libron";src:url("/fonts/Libron-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:block}
