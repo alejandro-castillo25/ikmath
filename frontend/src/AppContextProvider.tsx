@@ -7,7 +7,18 @@ export function AppContextProvider({
   children: ReactNode | ReactNode[];
 }) {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem("theme") as Theme) ?? "dark",
+    () => {
+      const localTheme = localStorage.getItem("theme") as Theme | null;
+      if (localTheme !== null) return localTheme;
+
+      const systemTheme: Theme = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches
+        ? "dark"
+        : "light";
+
+      return systemTheme;
+    }
   );
   const [lang, setLang] = useState<Lang>(
     () => (localStorage.getItem("lang") as Lang) ?? "es",
