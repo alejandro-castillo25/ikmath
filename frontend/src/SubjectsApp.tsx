@@ -33,7 +33,7 @@ export default function SubjectsApp() {
           <h2 className="text-(--calculus)">Cálculo</h2>
           <p className="text-foreground/80">
             Las herramientas de las matemáticas, y donde nacen los conceptos más
-            importantes de estas. Estudia el cambio contínuo y cómo cantidades
+            importantes de estas. Estudia el cambio continuo y cómo cantidades
             se acumulan con el tiempo
           </p>
 
@@ -89,8 +89,8 @@ export default function SubjectsApp() {
           <h2 className="text-(--complex-analysis)">Análisis Complejo</h2>
           <p className="text-foreground/80">
             Es la rama de las matemáticas que estudia las funciones complejas de
-            forma analítica. Estudia cómo trabajar con los complejos simplifica
-            un problema, que hacerlo únicamente con análisis real
+            forma analítica. Estudia cómo trabajar con números complejos simplifica
+            un problema que, de otra forma, se resolvería con análisis real
           </p>
           <Angle className="size-10 absolute bottom-0 right-0 m-2 md:m-4 text-(--complex-analysis)" />
         </Button>
@@ -108,7 +108,7 @@ export default function SubjectsApp() {
           <h2 className="text-(--number-theory)">Teoría de Números</h2>
           <p className="text-foreground/80">
             Es una rama de matemáticas puras, que estudia las relaciones de
-            enteros, funciones enteras, números primos, divisivilidad, así
+            enteros, funciones enteras, números primos, divisibilidad, así
             también como teoría de funciones especiales
           </p>
           <SquareSigma className="size-10 absolute bottom-0 right-0 m-2 md:m-4 text-(--number-theory)" />

@@ -217,7 +217,9 @@ export default function IntegralsMain() {
     const MAX_SCALE = Infinity;
 
     // TODO: If possible, make a function to change the quality of the image
-    const EXPORT_PIXEL_RATIO = 2; //? 2 ; x \in {1,2,3,4}
+    const EXPORT_PIXEL_RATIO = 1; //? 1 |-> 1 ; x \in {0.25,0.5,0.75,1,1.25,...,3.5, 3.75, 4}
+
+
     const targets = new Set<HTMLElement>();
     element.querySelectorAll<HTMLElement>(".katex-display").forEach((d) => {
       let node: HTMLElement | null = d;
@@ -235,6 +237,8 @@ export default function IntegralsMain() {
       el,
       values: props.map((p) => el.style[p]),
     }));
+
+
     const originalWidth = element.style.width;
     const originalMinHeight = element.style.minHeight;
 
@@ -245,6 +249,8 @@ export default function IntegralsMain() {
         t.style.alignSelf = "center";
         t.style.textAlign = "center";
       });
+
+
       element.style.width = "max-content";
       element.style.minHeight = "0";
 
