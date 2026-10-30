@@ -2,14 +2,18 @@ import { Logo } from "@/components/Logo";
 import { Play } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
-import type { ButtonFocusStart } from "@/App";
+import type { ButtonFocusStart } from "@/apps/App";
 import { useRef } from "react";
-import Tex from "./Tex";
+import Tex from "../../components/Tex";
+import { useAppContext } from "@/AppContext";
 
-
-
+import mainLang from "../../langs/main.json";
 
 export default function Main({ focusStart, setFocusStart }: ButtonFocusStart) {
+  const {
+    lang: [lang],
+  } = useAppContext();
+
   const timeoutRef = useRef(null);
 
   function handleFocusIn() {
@@ -32,10 +36,7 @@ export default function Main({ focusStart, setFocusStart }: ButtonFocusStart) {
           <h1 className="select-none">
             <span className="text-primary">ik</span>math
           </h1>
-          <p className="text-center">
-            Un lugar para aprender los límites divergentes de las matemáticas.
-            Abarcando desde métodos elementales, hasta teoria de números
-          </p>
+          <p className="text-center text-pretty">{mainLang[lang].mainText}</p>
 
           <a
             href="/subjects.html"
@@ -54,11 +55,12 @@ export default function Main({ focusStart, setFocusStart }: ButtonFocusStart) {
           className={`main-logo md:ml-auto min-h-40 min-w-40 lg:min-w-60 lg:min-h-60 transition-colors duration-300 ease-in-out ${focusStart && "text-primary"}`}
         />
       </main>
-      
-      <Tex className={`fixed bottom-0 text-2xl opacity-0 transition-opacity duration-400 pointer-events-none ${focusStart && "main-lim-anim"} `}>
-        {String.raw`\lim_{\Delta\to\infty} f(\Delta)`} 
+
+      <Tex
+        className={`fixed bottom-0 text-2xl opacity-0 transition-opacity duration-400 pointer-events-none ${focusStart && "main-lim-anim"} `}
+      >
+        {String.raw`\lim_{\Delta\to\infty} f(\Delta)`}
       </Tex>
-      
     </>
   );
 }

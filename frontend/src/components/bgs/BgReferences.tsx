@@ -1,4 +1,4 @@
-import SideRays from "./SideRays";
+import SideRays from "../SideRays";
 import { useAppContext } from "@/AppContext";
 
 export default function BgReferences() {

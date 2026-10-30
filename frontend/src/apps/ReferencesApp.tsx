@@ -1,6 +1,6 @@
-import { AppContextProvider } from "./AppContextProvider";
+import { AppContextProvider } from "../AppContextProvider";
 import Nav from "@/components/Nav";
-import BgReferences from "./components/BgReferences";
+import BgReferences from "../components/bgs/BgReferences";
 
 export default function ReferencesApp() {
   return (

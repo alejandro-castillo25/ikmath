@@ -7,6 +7,18 @@
 @custom-variant dark (&:is(.dark *));
 /* TODO Remove all non used font packages with bun remove */
 
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  main {
+    animation: page-in 350ms ease-out;
+  }
+}
+
 /* Catppuccin Latte (light) */
 :root {
   --background: oklch(0.958 0.006 264.532);

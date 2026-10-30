@@ -1,0 +1,52 @@
+{
+  "en": {
+    "cards": {
+      "comingSoon": "Coming soon",
+      "calculus": {
+        "title": "Calculus",
+        "text": "The tools of mathematics, and where originate the most important concepts of these. Study continous change y how amounts accumulate over time"
+      },
+      "algebra": {
+        "title": "Algebra",
+        "text": "The Universal language of the mathematics. Studying the symbols, notation, and algebraic structures to generalize arithmetic"
+      },
+      "realAnalysis": {
+        "title": "Real Analysis",
+        "text": "It's the branch of mathematics that develops the rigorous and logical foundation for calculus. It studies the system of real numbers and any function that has a real value"
+      },
+      "complexAnalysis": {
+        "title": "Complex Analysis",
+        "text": "The branch of mathematics that studies complex functions analytically. Study how work with complex numbers simplifies a problems that would otherwise be solved with real analysis"
+      },
+      "numberTheory": {
+        "title": "Number Theory",
+        "text": "A branch of pure mathematics that studies the relationships between integers, integer functions, prime numbers, divisibility, as well the theory of special functions"
+      }
+    }
+  },
+  "es": {
+    "cards": {
+      "comingSoon": "Próximamente",
+      "calculus": {
+        "title": "Cálculo",
+        "text": "Las herramientas de las matemáticas, y donde nacen los conceptos más importantes de estas. Estudia el cambio continuo y cómo cantidades se acumulan con el tiempo"
+      },
+      "algebra": {
+        "title": "Álgebra",
+        "text": "El lenguaje universal de las matemáticas. Estudiando los símbolos, la notación, y estructuras algebraicas para generalizar la aritmética"
+      },
+      "realAnalysis": {
+        "title": "Análisis Real",
+        "text": "Es la rama de las matemáticas que desarrolla la fundación rigurosa y lógica del cálculo. Estudia el sistema de los números reales, y toda función que sea de valor real"
+      },
+      "complexAnalysis": {
+        "title": "Análisis Complejo",
+        "text": "Es la rama de las matemáticas que estudia las funciones complejas de forma analítica. Estudia cómo trabajar con números complejos simplifica un problema que, de otra forma, se resolvería con análisis real"
+      },
+      "numberTheory": {
+        "title": "Teoría de Números",
+        "text": "Es una rama de matemáticas puras, que estudia las relaciones de enteros, funciones enteras, números primos, divisibilidad, así también como teoría de funciones especiales"
+      }
+    }
+  }
+}

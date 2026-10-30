@@ -1,11 +1,11 @@
-import { Button } from "./components/ui/button";
+import { Button } from "../../components/ui/button";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import Tex from "./components/Tex";
+import Tex from "../../components/Tex";
 import type { Int } from "ikmath-shared";
-import { Spinner } from "./components/ui/spinner";
-import { Badge } from "./components/ui/badge";
+import { Spinner } from "../../components/ui/spinner";
+import { Badge } from "../../components/ui/badge";
 import { Camera, Search, Dices } from "lucide-react";
 
 import { toPng } from "html-to-image";
@@ -21,14 +21,17 @@ import {
 } from "@/components/ui/pagination";
 import { debounce, throttle } from "lodash";
 
-import GooeyNav from "./components/GooeyNav";
-import { useAppContext } from "./AppContext";
+import GooeyNav from "../../components/GooeyNav";
+import { useAppContext } from "../../AppContext";
 
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+
+
+import intsLang from "../../langs/integrals.json"
 
 export interface FetchDataSettings {
   category: string;
@@ -63,6 +66,7 @@ function parseHash(): { category: Category; id: number } {
 export default function IntegralsMain() {
   const {
     theme: [theme],
+    lang: [lang]
   } = useAppContext();
 
   const [int, setInt] = useState<Int>({ int: "", id: 0 });
@@ -86,58 +90,66 @@ export default function IntegralsMain() {
     return !Number.isNaN(value) && value >= 1 && value <= count;
   }, [searchValue, count]);
 
-  const fetchData = useCallback(async (settings: FetchDataSettings) => {
-    let paramsStr = "?";
+  const fetchData = useCallback(
+    async (settings: FetchDataSettings, signal?: AbortSignal) => {
+      let paramsStr = "?";
 
-    if (Object.keys(settings).length === 0) {
-      paramsStr = "";
-    } else if (settings?.count !== undefined) {
-      paramsStr += `count=${settings.count.toString()}`;
-    } else if (settings?.id !== undefined) {
-      paramsStr += `id=${settings.id}`;
-    } else if (settings?.search !== undefined) {
-      paramsStr += `search=${settings.search}`;
-    } else {
-      const from: number | undefined = settings?.from;
-      const to: number | undefined = settings?.to;
+      if (Object.keys(settings).length === 0) {
+        paramsStr = "";
+      } else if (settings?.count !== undefined) {
+        paramsStr += `count=${settings.count.toString()}`;
+      } else if (settings?.id !== undefined) {
+        paramsStr += `id=${settings.id}`;
+      } else if (settings?.search !== undefined) {
+        paramsStr += `search=${settings.search}`;
+      } else {
+        const from: number | undefined = settings?.from;
+        const to: number | undefined = settings?.to;
 
-      if (from !== undefined) paramsStr += `from=${from}`;
+        if (from !== undefined) paramsStr += `from=${from}`;
 
-      if (to !== undefined) {
-        if (from !== undefined) paramsStr += "&";
-        paramsStr += `to=${to}`;
+        if (to !== undefined) {
+          if (from !== undefined) paramsStr += "&";
+          paramsStr += `to=${to}`;
+        }
       }
-    }
 
-    const isCount = settings?.count !== undefined;
+      const isCount = settings?.count !== undefined;
+      if (!isCount) setIsLoading(true);
 
-    if (!isCount) setIsLoading(true);
+      try {
+        const response = await fetch(
+          `${DEV ? "http://localhost:3000" : ""}/api/integrals/${settings.category}${paramsStr}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            signal,
+          },
+        );
 
-    const response = await fetch(
-      `${DEV ? "http://localhost:3000" : ""}/api/integrals/${settings.category}${paramsStr}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
+        if (isCount) {
+          const data: { count: number } = await response.json();
 
-    if (isCount) {
-      const data: { count: number } = await response.json();
+          console.log(data);
 
-      console.log(data);
+          setCount(data.count);
+          return;
+        }
 
-      setCount(data.count);
-      return;
-    }
+        const data: Int = await response.json();
+        console.log(data);
 
-    const data: Int = await response.json();
-    console.log(data);
-
-    setInt(data);
-    setIsLoading(false);
-  }, []);
+        setInt(data);
+        setIsLoading(false);
+      } catch (e) {
+        if ((e as Error).name === "AbortError") return;
+        throw e;
+      }
+    },
+    [],
+  );
   const getIdsArr = useCallback(
     (n = 3): Array<number> => {
       // const parts = Math.floor(count / n);
@@ -168,6 +180,8 @@ export default function IntegralsMain() {
 
   useEffect(() => {
     let currentCat: Category | null = null;
+    let countCtrl: AbortController | null = null;
+    let dataCtrl: AbortController | null = null;
 
     const load = () => {
       const { category: newCat, id: newId } = parseHash();
@@ -177,10 +191,17 @@ export default function IntegralsMain() {
 
       if (newCat !== currentCat) {
         currentCat = newCat;
-        fetchData({ count: true, category: newCat });
+
+        countCtrl?.abort();
+        countCtrl = new AbortController();
+
+        fetchData({ count: true, category: newCat }, countCtrl.signal);
       }
 
-      fetchData({ id: newId, category: newCat });
+      dataCtrl?.abort();
+      dataCtrl = new AbortController();
+
+      fetchData({ id: newId, category: newCat }, dataCtrl.signal);
     };
 
     queueMicrotask(load);
@@ -190,6 +211,8 @@ export default function IntegralsMain() {
 
     return () => {
       ctrl.abort();
+      countCtrl?.abort();
+      dataCtrl?.abort();
     };
   }, [fetchData]);
 
@@ -219,7 +242,6 @@ export default function IntegralsMain() {
     // TODO: If possible, make a function to change the quality of the image
     const EXPORT_PIXEL_RATIO = 1; //? 1 |-> 1 ; x \in {0.25,0.5,0.75,1,1.25,...,3.5, 3.75, 4}
 
-
     const targets = new Set<HTMLElement>();
     element.querySelectorAll<HTMLElement>(".katex-display").forEach((d) => {
       let node: HTMLElement | null = d;
@@ -238,7 +260,6 @@ export default function IntegralsMain() {
       values: props.map((p) => el.style[p]),
     }));
 
-
     const originalWidth = element.style.width;
     const originalMinHeight = element.style.minHeight;
 
@@ -249,7 +270,6 @@ export default function IntegralsMain() {
         t.style.alignSelf = "center";
         t.style.textAlign = "center";
       });
-
 
       element.style.width = "max-content";
       element.style.minHeight = "0";
@@ -377,9 +397,23 @@ export default function IntegralsMain() {
     [count, category, setLocationHash],
   );
 
+  const throttledSetHash = useMemo(
+    () =>
+      throttle((hash: IntHash) => setLocationHash(hash), 750, {
+        leading: true,
+        trailing: false,
+      }),
+    [setLocationHash],
+  );
+
+  const handleCategoryChange = (value: Category) => {
+    if (value === category) return;
+    throttledSetHash(`#${value}-1`);
+  };
+
   const items = [
-    { label: "Normales", value: "normals", href: "#normals-1" },
-    { label: "Monsters", value: "monsters", href: "#monsters-1" },
+    { label: intsLang[lang].normals, value: "normals", href: "#normals-1" },
+    { label: intsLang[lang].monsters, value: "monsters", href: "#monsters-1" },
   ];
 
   const goToId = useCallback(
@@ -402,8 +436,9 @@ export default function IntegralsMain() {
     return () => {
       debouncedGoTo.cancel();
       throttledGoTo.cancel();
+      throttledSetHash.cancel();
     };
-  }, [debouncedGoTo, throttledGoTo]);
+  }, [debouncedGoTo, throttledGoTo, throttledSetHash]);
 
   return (
     <main className="flex w-full h-full items-center justify-center flex-col gap-8 p-2 pt-6 pb-6 mt-16 ">
@@ -423,9 +458,7 @@ export default function IntegralsMain() {
         gooeyness={0.5}
         wobble={0.5}
         hoverEffect
-        onChange={(_, item) => {
-          setLocationHash(`#${item.value as Category}-1`);
-        }}
+        onChange={(_, item) => handleCategoryChange(item.value as Category)}
       />
 
       <ScrollArea
@@ -597,12 +630,12 @@ export default function IntegralsMain() {
           <Search />
         </InputGroupAddon>
         <InputGroupAddon align="inline-end">
-          ({count} Integrales)
+          ({count} {intsLang[lang].integrals})
         </InputGroupAddon>
       </InputGroup>
       <Button variant="secondary" onClick={handleSurprise}>
         <Dices />
-        ¡Sorpréndeme!
+        {intsLang[lang].surpriseLabel}
       </Button>
     </main>
   );

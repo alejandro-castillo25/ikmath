@@ -1,4 +1,4 @@
-import { AppContextProvider } from "./AppContextProvider";
+import { AppContextProvider } from "../AppContextProvider";
 
 import Nav from "@/components/Nav";
 
@@ -15,8 +15,8 @@ export interface ThemeState {
 }
 
 import { useState } from "react";
-import Main from "@/components/Main";
-import Bg from "@/components/Bg";
+import Main from "@/apps/main/Main";
+import Bg from "@/components/bgs/Bg";
 
 function App() {
   const [focusStart, setFocusStart] = useState<boolean>(false);

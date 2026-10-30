@@ -21,7 +21,16 @@ export function AppContextProvider({
     }
   );
   const [lang, setLang] = useState<Lang>(
-    () => (localStorage.getItem("lang") as Lang) ?? "es",
+    (): Lang => {
+      const localLang = localStorage.getItem("lang") as Lang | null;
+      if (localLang !== null) return localLang;
+
+      const systemLanguage = navigator.language.split("-")[0]!;
+
+      if (["en", "es"].includes(systemLanguage)) return systemLanguage as Lang;
+
+      return "en";
+    }
   );
 
   useLayoutEffect(() => {
@@ -31,6 +40,7 @@ export function AppContextProvider({
 
   useEffect(() => {
     localStorage.setItem("lang", lang);
+    document.documentElement.lang = lang;
   }, [lang]);
 
   return (

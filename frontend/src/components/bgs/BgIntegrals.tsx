@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PixelSnow from "./PixelSnow";
+import PixelSnow from "../PixelSnow";
 import { useAppContext } from "@/AppContext";
 import { useIsChristmasMonth } from "@/hooks/use-christmas-month";
 

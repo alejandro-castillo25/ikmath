@@ -21,7 +21,7 @@ const themeInit = ` (function () {
 // const viewTransitionCss = `@view-transition {
 //     navigation: auto
 //   }
-//   ::view-transition-old(root),::view-transition-new(root) {
+//   ::view-transition-old(body),::view-transition-new(body) {
 //     animation-duration: 500ms
 //   }
 // `;

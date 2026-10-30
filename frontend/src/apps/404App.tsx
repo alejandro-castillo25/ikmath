@@ -1,5 +1,5 @@
-import FourOFourMain from "./404Main";
-import { AppContextProvider } from "./AppContextProvider";
+import FourOFourMain from "./main/404Main";
+import { AppContextProvider } from "../AppContextProvider";
 import Nav from "@/components/Nav";
 // import BgReferences from "./components/BgReferences";
 

@@ -1,0 +1,24 @@
+{
+  "en": {
+    "drawerTitle": "Contents",
+    "subjects": "Subjects",
+    "integrals": "Integrals",
+    "references": "References",
+    "settings": {
+      "githubLabel": "Github Repository",
+      "langLabel": "Language",
+      "themeLabel": "Theme"
+    }
+  },
+  "es": {
+    "drawerTitle": "Contenidos",
+    "subjects": "Materias",
+    "integrals": "Integrales",
+    "references": "Referencias",
+    "settings": {
+      "githubLabel": "Repositorio de Github",
+      "langLabel": "Idioma",
+      "themeLabel": "Tema"
+    }
+  }
+}

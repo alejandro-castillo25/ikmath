@@ -1,7 +1,7 @@
 // import SideRays from "./SideRays";
 import { useAppContext } from "@/AppContext";
 
-import LightRays from "./LightRays";
+import LightRays from "../LightRays";
 
 export default function BgSubjects() {
   const {

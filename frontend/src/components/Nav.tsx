@@ -5,6 +5,10 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookSearch, LibraryBig } from "lucide-react";
 import { Int } from "./Icons";
 
+import navLang from "../langs/nav.json"
+
+import { useAppContext } from "@/AppContext";
+
 export type Contents = "subjects" | "integrals" | "references";
 export type Links = Array<{
   value: string;
@@ -14,23 +18,28 @@ export type Links = Array<{
 }>;
 
 export default function Nav({ current }: { current: Contents | null }) {
+
+  const {
+    lang: [lang]
+  } = useAppContext();
+  
   const links: Links = [
     {
       value: "subjects",
       href: "/subjects.html",
-      label: "Materias",
+      label: navLang[lang].subjects,
       icon: <LibraryBig />,
     },
     {
       value: "integrals",
       href: "/integrals.html",
-      label: "Integrales",
+      label: navLang[lang].integrals,
       icon: <Int />,
     },
     {
       value: "references",
       href: "/references.html",
-      label: "Referencias",
+      label: navLang[lang].references,
       icon: <BookSearch />,
     },
   ];

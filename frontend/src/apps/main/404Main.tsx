@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import FuzzyText from "./components/FuzzyText";
+import FuzzyText from "../../components/FuzzyText";
 
 export default function FourOFourMain() {
   const getRandomText = useCallback((): string => {

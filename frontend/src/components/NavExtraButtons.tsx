@@ -39,6 +39,9 @@ import type { Contents, Links } from "./Nav";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
+import navLang from "../langs/nav.json"
+
+
 const items: Array<{ label: string; value: Lang }> = [
   { label: "Español", value: "es" },
   { label: "English", value: "en" },
@@ -88,7 +91,7 @@ export default function NavExtraButtons({
             <SelectValue />
           </TooltipTrigger>
           <TooltipContent>
-            <p>Repositorio de Github</p>
+            <p>{navLang[lang].settings.githubLabel}</p>
           </TooltipContent>
         </Tooltip>
 
@@ -102,20 +105,20 @@ export default function NavExtraButtons({
           <Tooltip>
             <TooltipTrigger
               render={
-                <SelectTrigger className="hidden w-35 bg-transparent! hover:bg-muted! border-0! h-full!" />
+                <SelectTrigger className="w-35 bg-transparent! hover:bg-muted! border-0! h-full!" />
               }
             >
               <Languages />
               <SelectValue />
             </TooltipTrigger>
             <TooltipContent>
-              <p>Idioma</p>
+              <p>{navLang[lang].settings.langLabel}</p>
             </TooltipContent>
           </Tooltip>
 
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Idiomas</SelectLabel>
+              <SelectLabel>{navLang[lang].settings.langLabel}</SelectLabel>
               {items.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.label}
@@ -141,7 +144,7 @@ export default function NavExtraButtons({
             }
           />
           <TooltipContent>
-            <p>Tema</p>
+            <p>{navLang[lang].settings.themeLabel}</p>
           </TooltipContent>
         </Tooltip>
       </div>
@@ -184,7 +187,7 @@ export default function NavExtraButtons({
             >
               <X />
             </DrawerClose>
-            <DrawerTitle>Contenidos</DrawerTitle>
+            <DrawerTitle>{navLang[lang].drawerTitle}</DrawerTitle>
             <DrawerDescription></DrawerDescription>
           </DrawerHeader>
 
@@ -249,7 +252,7 @@ export default function NavExtraButtons({
                   <SelectValue />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Repositorio de Github</p>
+                  <p>{navLang[lang].settings.githubLabel}</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -260,13 +263,13 @@ export default function NavExtraButtons({
               >
                 <Tooltip>
                   <TooltipTrigger
-                    render={<SelectTrigger className="hidden w-35 h-full!" />}
+                    render={<SelectTrigger className="w-35 h-full!" />}
                   >
                     <Languages />
                     <SelectValue />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Idioma</p>
+                    <p>{navLang[lang].settings.langLabel}</p>
                   </TooltipContent>
                 </Tooltip>
 
@@ -298,7 +301,7 @@ export default function NavExtraButtons({
                   }
                 />
                 <TooltipContent>
-                  <p>Tema</p>
+                  <p>{navLang[lang].settings.themeLabel}</p>
                 </TooltipContent>
               </Tooltip>
             </div>
