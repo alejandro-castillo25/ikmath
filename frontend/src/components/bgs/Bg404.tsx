@@ -18,7 +18,7 @@ export default function Bg404() {
         rotateOnHover
         followCursor
         hue={0}
-        size={1}
+        size={1.2}
         glow={1}
         bleed={1}
         wobble={1}

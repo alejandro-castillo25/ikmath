@@ -345,7 +345,7 @@ const GlideSelect: React.FC<GlideSelectProps> = ({
             </span>
           ) : null}
           <span
-            className="data-[empty]:opacity-60 group-data-[swap]:animate-[gs-swap_160ms_ease] motion-reduce:group-data-[swap]:animate-none"
+            className="data-[empty]:opacity-60 group-data-[swap]:animate-[gs-swap_400ms_ease] motion-reduce:group-data-[swap]:animate-none"
             key={current}
             data-empty={selected < 0 ? '' : undefined}
           >
