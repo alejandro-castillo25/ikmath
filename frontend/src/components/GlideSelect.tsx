@@ -99,6 +99,7 @@ const GlideSelect: React.FC<GlideSelectProps> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
   const instant = useRef(false);
+  const pointerFocus = useRef(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const scrub = useRef<{ id: number; top: number } | null>(null);
   const id = useId();
@@ -192,6 +193,8 @@ const GlideSelect: React.FC<GlideSelectProps> = ({
       if (!viaKey && rootRef.current) rootRef.current.dataset.swap = '';
     }
     close('instant');
+    // returning focus after a mouse/touch pick must not show the keyboard ring
+    pointerFocus.current = !viaKey;
     triggerRef.current?.focus({ preventScroll: true });
   };
 
@@ -315,16 +318,23 @@ const GlideSelect: React.FC<GlideSelectProps> = ({
         className={`group/trigger relative m-0 inline-flex h-full w-full cursor-pointer touch-manipulation items-center justify-between gap-1.5 border-0 bg-transparent pr-2 pl-2.5 leading-none whitespace-nowrap outline-none select-none transition-colors [-webkit-tap-highlight-color:transparent] [font-family:inherit] [border-radius:var(--gs-radius)] [color:var(--gs-text)] [font-size:var(--gs-font)] hover:bg-muted aria-expanded:bg-muted/50 aria-expanded:hover:bg-muted/50 data-[kb]:ring-3 data-[kb]:ring-ring/50 disabled:cursor-default disabled:opacity-50${triggerClassName ? ` ${triggerClassName}` : ''}`}
         onPointerDown={e => {
           if (e.button !== 0 || disabled) return;
+          pointerFocus.current = true;
           delete e.currentTarget.dataset.kb;
           e.currentTarget.focus({ preventScroll: true });
           if (phase === 'open') close('pop');
           else open(false);
+        }}
+        onFocus={e => {
+          // focus that did not come from the pointer (Tab, Shift+Tab, etc.) shows the ring
+          if (!pointerFocus.current) e.currentTarget.dataset.kb = '';
+          pointerFocus.current = false;
         }}
         onKeyDown={e => {
           e.currentTarget.dataset.kb = '';
           onTriggerKey(e);
         }}
         onBlur={e => {
+          pointerFocus.current = false;
           delete e.currentTarget.dataset.kb;
         }}
       >
