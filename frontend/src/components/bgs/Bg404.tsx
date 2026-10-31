@@ -10,8 +10,8 @@ export default function Bg404() {
       <Orb
         colors={
           theme === "dark"
-            ? ["#74c7ec", "#a6e3a1", "#cba6f7"]
-            : ["#209fb5", "#40a02b", "#8839ef"]
+            ? ["#74c7ec", "#89b4fa", "#a6e3a1"]
+            : ["#209fb5", "#1e66f5", "#40a02b"]
         }
         hoverIntensity={1}
         trail={1}
@@ -27,7 +27,6 @@ export default function Bg404() {
         tiltY={0}
         speed={1}
         backgroundColor="#000000"
-        lightMode={theme === "light"}
         forceHoverState={false}
         clickPulse
         intro

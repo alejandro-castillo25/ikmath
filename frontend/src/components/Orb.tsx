@@ -6,7 +6,6 @@ export interface OrbProps {
   colors?: string[];
   hue?: number;
   backgroundColor?: string;
-  lightMode?: boolean;
   size?: number;
   glow?: number;
   bleed?: number;
@@ -33,7 +32,6 @@ type Settings = {
   colors: string[];
   hue: number;
   backgroundColor: string;
-  light: boolean;
   size: number;
   glow: number;
   bleed: number;
@@ -74,7 +72,6 @@ uniform vec2 uReach;
 uniform float uNear;
 uniform float uAwake;
 uniform vec3 uBackground;
-uniform float uLight;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
 uniform vec3 uColor3;
@@ -133,8 +130,7 @@ vec4 draw(vec2 uv) {
   float ang = atan(dir.y, dir.x);
   float invLen = len > 0.0 ? 1.0 / len : 0.0;
   float near = facing * uNear;
-  // light mode forces the light-background look, whatever the background color is
-  float bgLuminance = max(dot(uBackground, vec3(0.299, 0.587, 0.114)), uLight);
+  float bgLuminance = dot(uBackground, vec3(0.299, 0.587, 0.114));
 
   float n0 = snoise3(vec3(uv * 0.65, uTime * 0.5)) * 0.5 + 0.5;
   float r0 = mix(0.8 - 0.04 * uWobble, 0.8 + 0.04 * uWobble, n0);
@@ -253,8 +249,7 @@ const link = (gl: WebGL2RenderingContext): Program | null => {
 const Orb = ({
   colors = ['#9c43fe', '#4cc2e9', '#101499'],
   hue = 0,
-  backgroundColor,
-  lightMode = false,
+  backgroundColor = '#000000',
   size = 1,
   glow = 1,
   bleed = 1,
@@ -283,9 +278,7 @@ const Orb = ({
   const settings: Settings = {
     colors: [palette[0] ?? '#9c43fe', palette[1] ?? palette[0] ?? '#4cc2e9', palette[2] ?? '#101499'].map(String),
     hue,
-    // if no background is given, light mode blends with white and dark mode with black
-    backgroundColor: String(backgroundColor ?? (lightMode ? '#ffffff' : '#000000')),
-    light: lightMode,
+    backgroundColor: String(backgroundColor),
     size: clamp(size, 0.1, 3),
     glow: clamp(glow, 0.1, 5),
     bleed: clamp(bleed, 0, 4),
@@ -429,7 +422,6 @@ const Orb = ({
       gl.uniform1f(u.uAwake, state.hover * s.hoverIntensity * 0.18);
       gl.uniform1f(u.uRotation, state.rotation);
       gl.uniform3fv(u.uBackground, parse(s.backgroundColor));
-      gl.uniform1f(u.uLight, s.light ? 1 : 0);
       gl.uniform3fv(u.uColor1, c1);
       gl.uniform3fv(u.uColor2, c2);
       gl.uniform3fv(u.uColor3, c3);

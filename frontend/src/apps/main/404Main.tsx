@@ -24,7 +24,6 @@ export default function FourOFourMain() {
       <FuzzyText
         colorSplit={0}
         trigger="hover"
-        // className="bg-red-400"
         direction="horizontal"
         baseIntensity={0.2}
         hoverIntensity={0.5}
