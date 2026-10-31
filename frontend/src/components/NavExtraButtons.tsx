@@ -30,6 +30,16 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import GlideSelect from "./GlideSelect";
+
+const formats = [
+  { value: "png", label: "PNG", tag: "Lossless" },
+  { value: "jpg", label: "JPG", tag: "Smallest" },
+  { value: "webp", label: "WebP", tag: "Modern" },
+  { value: "svg", label: "SVG", tag: "Vector" },
+  { value: "pdf", label: "PDF", tag: "Print" },
+];
+
 import { Separator } from "@/components/ui/separator";
 
 import { useEffect, useRef, useState } from "react";
@@ -39,8 +49,7 @@ import type { Contents, Links } from "./Nav";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-import navLang from "../langs/nav.json"
-
+import navLang from "../langs/nav.json";
 
 const items: Array<{ label: string; value: Lang }> = [
   { label: "Español", value: "es" },
@@ -61,6 +70,12 @@ export default function NavExtraButtons({
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const pendingHref = useRef<string | null>(null);
+
+  const [langOpen, setLangOpen] = useState(false);
+  const [langTipOpen, setLangTipOpen] = useState(false);
+
+  const [langDrawerOpen, setLangDrawerOpen] = useState(false);
+  const [langDrawerTipOpen, setLangDrawerTipOpen] = useState(false);
 
   const isMobile = useIsMobile();
 
@@ -97,36 +112,27 @@ export default function NavExtraButtons({
 
         <Separator orientation="vertical" />
 
-        <Select
-          items={items}
-          value={lang}
-          onValueChange={(lan) => setLang(lan)}
-        >
-          <Tooltip>
-            <TooltipTrigger
-              render={
-                <SelectTrigger className="w-35 bg-transparent! hover:bg-muted! border-0! h-full!" />
-              }
-            >
-              <Languages />
-              <SelectValue />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{navLang[lang].settings.langLabel}</p>
-            </TooltipContent>
-          </Tooltip>
-
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>{navLang[lang].settings.langLabel}</SelectLabel>
-              {items.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <Tooltip open={langTipOpen && !langOpen} onOpenChange={setLangTipOpen}>
+          <TooltipTrigger render={<div className="w-35 h-full" />}>
+            <GlideSelect
+              options={items}
+              value={lang}
+              onChange={(v) => setLang(v as Lang)}
+              onOpenChange={(o) => {
+                setLangOpen(o);
+                if (o) setLangTipOpen(false);
+              }}
+              ariaLabel={navLang[lang].settings.langLabel}
+              showTags={false}
+              placement="bottom"
+              icon={<Languages size={16} />}
+              className="w-full h-full"
+            />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{navLang[lang].settings.langLabel}</p>
+          </TooltipContent>
+        </Tooltip>
 
         <Tooltip>
           <TooltipTrigger
@@ -256,34 +262,32 @@ export default function NavExtraButtons({
                 </TooltipContent>
               </Tooltip>
 
-              <Select
-                items={items}
-                value={lang}
-                onValueChange={(lan) => setLang(lan)}
+              <Tooltip
+                open={langDrawerTipOpen && !langDrawerOpen}
+                onOpenChange={setLangDrawerTipOpen}
               >
-                <Tooltip>
-                  <TooltipTrigger
-                    render={<SelectTrigger className="w-35 h-full!" />}
-                  >
-                    <Languages />
-                    <SelectValue />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{navLang[lang].settings.langLabel}</p>
-                  </TooltipContent>
-                </Tooltip>
+                <TooltipTrigger render={<div className="w-35 h-9.5" />}>
+                  <GlideSelect
+                    options={items}
+                    value={lang}
+                    onChange={(v) => setLang(v as Lang)}
+                    onOpenChange={(o) => {
+                      setLangDrawerOpen(o);
+                      if (o) setLangDrawerTipOpen(false);
+                    }}
+                    ariaLabel={navLang[lang].settings.langLabel}
+                    showTags={false}
+                    placement="top"
+                    icon={<Languages size={16} />}
 
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>{navLang[lang].settings.langLabel}</SelectLabel>
-                    {items.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+                    className="w-full h-full"
+                    triggerClassName="border! border-input! dark:bg-input/30 dark:hover:bg-input/50"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{navLang[lang].settings.langLabel}</p>
+                </TooltipContent>
+              </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger
