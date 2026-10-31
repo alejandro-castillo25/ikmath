@@ -1,0 +1,16 @@
+{
+  "en": {
+    "ikmath": "ikmath",
+    "subjects": "Subjects",
+    "references": "References",
+    "integrals": "Integrals",
+    "404": "404"
+  },
+  "es": {
+    "ikmath": "ikmath",
+    "subjects": "Materias",
+    "references": "Referencias",
+    "integrals": "Integrales",
+    "404": "404"
+  }
+}

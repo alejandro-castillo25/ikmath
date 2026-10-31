@@ -3,6 +3,26 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, type Plugin } from "vite";
 
+import titles from "./src/langs/titles.json";
+
+
+const titleInit = (key: string) => `(function () {
+  try {
+    var titles = ${JSON.stringify(titles)};
+    var key = ${JSON.stringify(key)};
+    var lang = localStorage.getItem("lang");
+    if (!(lang in titles)) {
+      lang = navigator.language.split("-")[0];
+      if (!(lang in titles)) lang = "en";
+    }
+    var t = titles[lang];
+    if (!(key in t)) return;
+    document.documentElement.dataset.titleKey = key;
+    document.documentElement.lang = lang;
+    document.title = key === "ikmath" ? t[key] : t[key] + " • " + t.ikmath;
+  } catch (e) {}
+})();`;
+
 const themeInit = ` (function () {
   try {
     var t = localStorage.getItem("theme");
@@ -36,6 +56,22 @@ const fontCss = `
 `;
 
 const preloadFonts = ["Libron-Regular", "Libron-Bold"];
+
+
+function titleKeyPlugin(): Plugin {
+  return {
+    name: "title-key",
+    transformIndexHtml: {
+      order: "pre",
+      handler: (html) =>
+        html.replace(
+          /<title>\s*([^<]*?)\s*<\/title>/,
+          (_, key) =>
+            `<title>ikmath</title><script>${titleInit(key)}</script>`,
+        ),
+    },
+  };
+}
 
 function themeInitPlugin(): Plugin {
   return {
@@ -84,7 +120,7 @@ function blockingModulesPlugin(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), themeInitPlugin(), blockingModulesPlugin()],
+  plugins: [react(), tailwindcss(), titleKeyPlugin(), themeInitPlugin(), blockingModulesPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "./src"),
