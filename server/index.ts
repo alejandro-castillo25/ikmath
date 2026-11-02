@@ -7,8 +7,11 @@ import type { Int } from "ikmath-shared";
 
 // import monsterIntsToml from "./public/monster-ints.toml";
 
-import { monsterInts } from "./public/monster-ints";
-import { normalInts } from "./public/normal-ints";
+import monsterIntsEs from "./public/monster-ints-es.json";
+import monsterIntsEn from "./public/monster-ints-en.json";
+
+import normalIntsEs from "./public/normal-ints-es.json";
+import normalIntsEn from "./public/normal-ints-en.json";
 
 const app = new Hono().basePath("/api");
 // const app = new Hono();
@@ -27,12 +30,18 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
 
   if (intsType === "") return c.notFound();
 
+  const lang = (c.req.query("lang") ?? "en").toLowerCase().split("-")[0]!;
+
   let mainInts: Array<Int>;
 
+  //? Right now just go to 'en' if not supported
+
   if (["monster", "monsters"].includes(intsType)) {
-    mainInts = monsterInts;
+    if (lang === "es") mainInts = monsterIntsEs;
+    else mainInts = monsterIntsEn;
   } else if (["normal", "normals"].includes(intsType)) {
-    mainInts = normalInts;
+    if (lang === "es") mainInts = normalIntsEs;
+    else mainInts = normalIntsEn;
   } else return c.notFound();
 
   const count = c.req.query("count");
@@ -92,7 +101,7 @@ app.on("GET", ["/ints/:intsType", "/integrals/:intsType"], (c) => {
   }
 
   if (from_i > to_i)
-    //todo: consider changing this to return a descending array, makes sense (i think...)
+    // TODO: consider changing this to return a descending array, makes sense (i think...)
     return c.text(
       `Bad request!\nfrom=${from} > to=${to}, that doesn't make sense`,
       400,

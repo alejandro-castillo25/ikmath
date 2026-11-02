@@ -22,7 +22,7 @@ import {
 import { debounce, throttle } from "lodash";
 
 import GooeyNav from "../../components/GooeyNav";
-import { useAppContext } from "../../AppContext";
+import { useAppContext, type Lang } from "../../AppContext";
 
 import {
   InputGroup,
@@ -30,8 +30,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 
-
-import intsLang from "../../langs/integrals.json"
+import intsLang from "../../langs/integrals.json";
 
 export interface FetchDataSettings {
   category: string;
@@ -40,13 +39,14 @@ export interface FetchDataSettings {
   from?: number;
   to?: number;
   search?: string;
+  lang?: Lang
 }
 
 // #{category}-{id}
 export type Category = "monsters" | "normals";
 export type IntHash = `#${Category}-${string}`;
 
-// IMPORTANT set DEV to false, to build to prodution (yeah... i thought that process.env would've worked)
+// IMPORTANT set DEV to false to build to prodution (yeah... i thought that process.env would've worked)
 const DEV = false;
 
 function parseHash(): { category: Category; id: number } {
@@ -66,7 +66,7 @@ function parseHash(): { category: Category; id: number } {
 export default function IntegralsMain() {
   const {
     theme: [theme],
-    lang: [lang]
+    lang: [lang],
   } = useAppContext();
 
   const [int, setInt] = useState<Int>({ int: "", id: 0 });
@@ -92,27 +92,23 @@ export default function IntegralsMain() {
 
   const fetchData = useCallback(
     async (settings: FetchDataSettings, signal?: AbortSignal) => {
-      let paramsStr = "?";
+      const queryParts: string[] = [];
 
-      if (Object.keys(settings).length === 0) {
-        paramsStr = "";
-      } else if (settings?.count !== undefined) {
-        paramsStr += `count=${settings.count.toString()}`;
-      } else if (settings?.id !== undefined) {
-        paramsStr += `id=${settings.id}`;
-      } else if (settings?.search !== undefined) {
-        paramsStr += `search=${settings.search}`;
+      if (settings.count !== undefined) {
+        queryParts.push(`count=${settings.count}`);
+      } else if (settings.id !== undefined) {
+        queryParts.push(`id=${settings.id}`);
+      } else if (settings.search !== undefined) {
+        queryParts.push(`search=${settings.search}`);
       } else {
-        const from: number | undefined = settings?.from;
-        const to: number | undefined = settings?.to;
-
-        if (from !== undefined) paramsStr += `from=${from}`;
-
-        if (to !== undefined) {
-          if (from !== undefined) paramsStr += "&";
-          paramsStr += `to=${to}`;
-        }
+        if (settings.from !== undefined)
+          queryParts.push(`from=${settings.from}`);
+        if (settings.to !== undefined) queryParts.push(`to=${settings.to}`);
       }
+
+      if (settings.lang) queryParts.push(`lang=${settings.lang}`);
+
+      const paramsStr = queryParts.length > 0 ? `?${queryParts.join("&")}` : "";
 
       const isCount = settings?.count !== undefined;
       if (!isCount) setIsLoading(true);
@@ -126,6 +122,7 @@ export default function IntegralsMain() {
               "Content-Type": "application/json",
             },
             signal,
+            // cache: 'force-cache' // ? WORK ON THIS
           },
         );
 
@@ -152,21 +149,16 @@ export default function IntegralsMain() {
   );
   const getIdsArr = useCallback(
     (n = 3): Array<number> => {
-      // const parts = Math.floor(count / n);
-      const leftOver = count % n;
-
       const ans: Array<number> = [];
 
-      for (let i = 1; i <= count; i += n) {
-        const start = i;
-        const end = i + n - 1;
+      if (count === 0) return ans;
 
-        if (id <= end && id >= start) {
-          if (end > count)
-            for (let j = start; j <= end - leftOver - 1; j++) ans.push(j);
-          else for (let j = start; j <= end; j++) ans.push(j);
-          return ans;
-        }
+      const start = Math.floor((id - 1) / n) * n + 1;
+
+      const end = Math.min(start + n - 1, count);
+
+      for (let i = start; i <= end; i++) {
+        ans.push(i);
       }
 
       return ans;
@@ -195,13 +187,13 @@ export default function IntegralsMain() {
         countCtrl?.abort();
         countCtrl = new AbortController();
 
-        fetchData({ count: true, category: newCat }, countCtrl.signal);
+        fetchData({ count: true, category: newCat, lang }, countCtrl.signal);
       }
 
       dataCtrl?.abort();
       dataCtrl = new AbortController();
 
-      fetchData({ id: newId, category: newCat }, dataCtrl.signal);
+      fetchData({ id: newId, category: newCat, lang }, dataCtrl.signal);
     };
 
     queueMicrotask(load);
@@ -214,7 +206,7 @@ export default function IntegralsMain() {
       countCtrl?.abort();
       dataCtrl?.abort();
     };
-  }, [fetchData]);
+  }, [fetchData, lang]);
 
   const handleDownloadPng = async () => {
     if (!cardRef.current || isLoading || isExporting) return;

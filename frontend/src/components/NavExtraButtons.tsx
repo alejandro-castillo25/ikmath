@@ -52,8 +52,8 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import navLang from "../langs/nav.json";
 
 const items: Array<{ label: string; value: Lang }> = [
-  { label: "Español", value: "es" },
   { label: "English", value: "en" },
+  { label: "Español", value: "es" },
 ];
 
 export default function NavExtraButtons({
