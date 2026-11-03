@@ -39,7 +39,7 @@ export interface FetchDataSettings {
   from?: number;
   to?: number;
   search?: string;
-  lang?: Lang
+  lang?: Lang;
 }
 
 // #{category}-{id}
@@ -76,6 +76,12 @@ export default function IntegralsMain() {
     () => parseHash().category,
   );
 
+  const [lastVisitedIds, setLastVisitedIds] = useState<
+    Record<Category, number>
+  >({
+    normals: 1,
+    monsters: 1,
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -180,6 +186,11 @@ export default function IntegralsMain() {
 
       setId(newId);
       setCategory(newCat);
+
+      setLastVisitedIds((prev) => {
+        if (prev[newCat] === newId) return prev; // Prevent unnecessary renders
+        return { ...prev, [newCat]: newId };
+      });
 
       if (newCat !== currentCat) {
         currentCat = newCat;
@@ -340,7 +351,7 @@ export default function IntegralsMain() {
       const link = document.createElement("a");
 
       link.href = dataUrl;
-      link.download = `${category}-integral#${int.id}-${theme}.png`;
+      link.download = `${intsLang[lang][category].toLowerCase()}-integral#${int.id}-${theme}.png`;
       link.click();
     } catch (error) {
       console.error("Error generating image with html-to-image:", error);
@@ -400,12 +411,24 @@ export default function IntegralsMain() {
 
   const handleCategoryChange = (value: Category) => {
     if (value === category) return;
-    throttledSetHash(`#${value}-1`);
+
+    const targetId = lastVisitedIds[value] || 1;
+
+    throttledSetHash(`#${value}-${targetId}`);
+    // throttledSetHash(`#${value}-1`);
   };
 
   const items = [
-    { label: intsLang[lang].normals, value: "normals", href: "#normals-1" },
-    { label: intsLang[lang].monsters, value: "monsters", href: "#monsters-1" },
+    {
+      label: intsLang[lang].normals,
+      value: "normals",
+      href: `#normals-${lastVisitedIds.normals}`,
+    },
+    {
+      label: intsLang[lang].monsters,
+      value: "monsters",
+      href: `#monsters-${lastVisitedIds.monsters}`,
+    },
   ];
 
   const goToId = useCallback(
@@ -432,6 +455,10 @@ export default function IntegralsMain() {
     };
   }, [debouncedGoTo, throttledGoTo, throttledSetHash]);
 
+  useEffect(() => {
+    if (count > 0 && id > count) setLocationHash(`#${category}-${count}`);
+  }, [id, count, category, setLocationHash]);
+
   return (
     <main className="flex w-full h-full items-center justify-center flex-col gap-8 p-2 pt-6 pb-6 mt-16 ">
       <GooeyNav
@@ -455,7 +482,7 @@ export default function IntegralsMain() {
 
       <ScrollArea
         key={int?.id}
-        className={`relative h-auto min-h-40 sm:max-w-[65%] w-full border border-border bg-background/35 backdrop-blur-xs p-2 rounded-lg`}
+        className={`relative h-auto min-h-52.5 md:max-w-[60%] w-full border border-border bg-background/35 backdrop-blur-xs p-2 rounded-lg`}
       >
         {int.id !== 0 && (
           <Badge
@@ -572,7 +599,7 @@ export default function IntegralsMain() {
           </PaginationContent>
         </Pagination>
       )}
-      <InputGroup className="max-w-50">
+      <InputGroup className={`${count === 0 && "hidden"} max-w-50`}>
         <InputGroupInput
           type="text"
           inputMode="numeric"
