@@ -106,7 +106,7 @@ interface Pipeline {
 const THEMES: Record<Palette, Record<string, string>> = {
   dark: {
     "--gn-frame": "oklch(0.216 0.025 284.065 / 0.66)",
-    "--gn-frame-edge": "oklch(0.404 0.032 280.152 / 0.4)",
+    "--gn-frame-edge": "oklch(0.404 0.032 280.152)",
     "--gn-frame-highlight": "rgba(255, 255, 255, 0.07)",
     "--gn-frame-shadow": "0",
     // "--gn-frame-shadow":
@@ -116,7 +116,7 @@ const THEMES: Record<Palette, Record<string, string>> = {
   },
   light: {
     "--gn-frame": "oklch(0.933 0.009 264.521 / 0.8)",
-    "--gn-frame-edge": "oklch(0.808 0.017 271.198 / 0.6)",
+    "--gn-frame-edge": "oklch(0.808 0.017 271.198)",
     "--gn-frame-highlight": "rgba(255, 255, 255, 0.95)",
     "--gn-frame-shadow": "0",
     // "--gn-frame-shadow":
@@ -1039,11 +1039,12 @@ const GooeyNav = ({
 
   return (
     <nav
-      className={`${ROOT}${frame ? ` ${FRAMED}` : ""} bg-background/35 backdrop-blur-xs ${className}`.trim()}
+      className={`${ROOT}${frame ? ` ${FRAMED}` : ""} bg-background/35! backdrop-blur-xs! backdrop-saturate-100! ${className}`.trim()}
       style={
         {
           ...(SIZES[size] ?? SIZES.md),
           ...THEMES[palette],
+          "--gn-frame": "transparent",
           "--gn-pill": pillColor,
           "--gn-active-ink": textColor,
           ...style,
