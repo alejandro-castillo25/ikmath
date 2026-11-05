@@ -85,7 +85,7 @@ export default function SubjectsMain() {
 
         <h2 className="text-(--complex-analysis)">{subjectsLang[lang].cards.complexAnalysis.title}</h2>
         <p className="text-foreground/80">
-          {subjectsLang[lang].cards.realAnalysis.text}
+          {subjectsLang[lang].cards.complexAnalysis.text}
         </p>
         <Angle className="size-10 absolute bottom-0 right-0 m-2 md:m-4 text-(--complex-analysis)" />
       </Button>
