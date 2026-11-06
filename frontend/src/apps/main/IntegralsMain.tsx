@@ -89,6 +89,8 @@ export default function IntegralsMain() {
 
   const [count, setCount] = useState<number>(0);
 
+  const [countLoading, setCountLoading] = useState<boolean>(true);
+
   const [searchValue, setSearchValue] = useState<string>("");
   const isValidSearch = useMemo(() => {
     if (searchValue === "" || count === 0) return true;
@@ -133,11 +135,13 @@ export default function IntegralsMain() {
         );
 
         if (isCount) {
+          setCountLoading(true);
           const data: { count: number } = await response.json();
 
           console.log(data);
 
           setCount(data.count);
+          setCountLoading(false);
           return;
         }
 
@@ -197,6 +201,8 @@ export default function IntegralsMain() {
 
         countCtrl?.abort();
         countCtrl = new AbortController();
+
+        setCountLoading(true);
 
         fetchData({ count: true, category: newCat, lang }, countCtrl.signal);
       }
@@ -456,8 +462,9 @@ export default function IntegralsMain() {
   }, [debouncedGoTo, throttledGoTo, throttledSetHash]);
 
   useEffect(() => {
+    if (countLoading) return;
     if (count > 0 && id > count) setLocationHash(`#${category}-${count}`);
-  }, [id, count, category, setLocationHash]);
+  }, [id, count, category, countLoading, setLocationHash]);
 
   return (
     <main className="flex w-full h-full items-center justify-center flex-col gap-8 p-2 pt-6 pb-6 mt-16 ">
@@ -599,7 +606,7 @@ export default function IntegralsMain() {
           </PaginationContent>
         </Pagination>
       )}
-      <InputGroup className={`${count === 0 && "hidden"} max-w-50`}>
+      <InputGroup className={`${count === 0 && !countLoading && "hidden"} max-w-50`}>
         <InputGroupInput
           type="text"
           inputMode="numeric"

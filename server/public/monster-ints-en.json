@@ -435,5 +435,18 @@
     "id": 139,
     "header": "\\text{Find:}",
     "int": "\\mathcal{L}\\{\\,\\text{sinc}\\,(wt)\\}(s),\\qquad w\\neq 0"
+  },
+  {
+    "id": 140,
+    "int": "\\int_1^{e^{1/e}} x^{x^{x^\\dots}}\\,dx"
+  },
+  {
+    "id": 141,
+    "int": "\\int_0^{\\pi/2} \\tan ^ i x \\,dx"
+  },
+  {
+    "id": 142,
+    "header": "\\text{Prove that:}",
+    "int": "\\int_0^\\infty \\frac {f(t)} t\\,dt = \\int_0^\\infty \\mathcal L \\{ f(t) \\}(s)\\,ds"
   }
 ]

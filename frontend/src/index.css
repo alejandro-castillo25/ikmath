@@ -305,3 +305,13 @@ p {
     scale: 1;
   }
 }
+
+
+.drawer-content::after {
+  content: "";
+  position: absolute;
+  background: var(--card);
+  height: 100%;
+  width: 25%;
+}
+
