@@ -180,7 +180,7 @@ export default function NavExtraButtons({
         >
           <Menu />
         </DrawerTrigger>
-        <DrawerContent className="drawer-content w-[75%] ">
+        <DrawerContent className="drawer-content w-[75%] max-w-140">
           <DrawerHeader>
             <DrawerClose
               render={

@@ -10,8 +10,8 @@ export default function Bg404() {
       <Orb
         colors={
           theme === "dark"
-            ? ["#74c7ec", "#89b4fa", "#a6e3a1"]
-            : ["#209fb5", "#1e66f5", "#40a02b"]
+            ? ["#74c7ec", "#89b4fa", "#94e2d5"]
+            : ["#209fb5", "#1e66f5", "#179299"]
         }
         hoverIntensity={1}
         trail={1}

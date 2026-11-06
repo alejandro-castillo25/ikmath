@@ -606,7 +606,7 @@ export default function IntegralsMain() {
           </PaginationContent>
         </Pagination>
       )}
-      <InputGroup className={`${count === 0 && !countLoading && "hidden"} max-w-50`}>
+      <InputGroup className={`${(int.id === 0 || (count === 0 && !countLoading)) && "hidden"} max-w-50`}>
         <InputGroupInput
           type="text"
           inputMode="numeric"

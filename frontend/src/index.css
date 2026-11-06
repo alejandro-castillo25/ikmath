@@ -187,11 +187,7 @@
   justify-content: center;
 }
 
-#root.subjects {
-  justify-content: flex-start;
-}
-
-#root.integrals {
+#root.subjects, #root.integrals, #root.references  {
   justify-content: flex-start;
 }
 

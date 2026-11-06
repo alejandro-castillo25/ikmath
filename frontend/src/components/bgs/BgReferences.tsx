@@ -1,4 +1,4 @@
-import SideRays from "../SideRays";
+import Aurora from "@/components/Aurora";
 import { useAppContext } from "@/AppContext";
 
 export default function BgReferences() {
@@ -11,19 +11,24 @@ export default function BgReferences() {
       className="fixed size-full -z-3"
       style={{ width: "100%", height: "100%", position: "fixed" }}
     >
-      <SideRays
-        speed={2.5}
-        rayColor1={theme === "dark" ? "#74c7ec" : "#209fb5"}
-        rayColor2={theme === "dark" ? "#74c7ec" : "#209fb5"}
-        intensity={2.5}
-        spread={2}
-        origin="bottom-right"
-        sharpness={0.1}
-        tilt={0}
-        saturation={1}
-        blend={0.25}
-        falloff={1.6}
+      <Aurora
+        colorStops={
+          theme === "dark"
+            ? ["#74c7ec", "#89b4fa", "#94e2d5"]
+            : ["#209fb5", "#1e66f5", "#179299"]
+        }
+        amplitude={1.75}
+        blend={0.2}
+        height={0.45}
+        speed={1}
+        glow={0.6}
+        scale={1}
+        brightness={.75}
+        layers={1}
+        direction="bottom"
         opacity={1}
+        mouseInteraction={false} //? disabled for now!
+        intro
         lightMode={theme === "light"}
       />
     </div>
