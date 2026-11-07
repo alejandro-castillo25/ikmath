@@ -489,7 +489,7 @@ export default function IntegralsMain() {
 
       <ScrollArea
         key={int?.id}
-        className={`relative h-auto min-h-52.5 md:max-w-[60%] w-full border border-border bg-background/35 backdrop-blur-xs p-2 rounded-lg`}
+        className={`relative h-auto min-h-52.5 md:max-w-[60%] w-full border border-border bg-background/40 backdrop-blur-xs p-2 rounded-lg`}
       >
         {int.id !== 0 && (
           <Badge
@@ -571,7 +571,7 @@ export default function IntegralsMain() {
                   }}
                   isActive={id === i}
                   className={`
-                    ${id === i ? "bg-background/35! backdrop-blur-xs" : ""}
+                    ${id === i ? "bg-background/40! backdrop-blur-xs" : ""}
                   `}
                 >
                   <span

@@ -7,6 +7,17 @@
 >
   <defs>
     <style>
+      :root {
+        --logo-bg-color: #eff1f5;
+        --logo-text-color: #4c4f69;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+         --logo-bg-color: #1e1e2e;
+         --logo-text-color: #cdd6f4;
+        }
+      }
+
       .transform {
         transform-origin: center;
       }
@@ -22,11 +33,11 @@
     </clipPath>
   </defs>
 
-  <rect width="100" height="100" rx="4" fill="#11111b" />
+  <rect width="400" height="400" fill="var(--logo-bg-color)" rx="10"/>
   <path
     class="transform"
     fill="none"
-    stroke="#cdd6f4"
+    stroke="var(--logo-text-color)"
     stroke-width="2"
     transform="scale(1.18)"
     clip-path="url(#deltaClip)"
@@ -50,6 +61,6 @@
     text-anchor="middle"
     dominant-baseline="central"
     class="text-part"
-    fill="#cdd6f4"
+    fill="var(--logo-text-color)"
   >ik</text>
 </svg>

@@ -448,5 +448,18 @@
     "id": 142,
     "header": "\\text{Probar que:}",
     "int": "\\int_0^\\infty \\frac {f(t)} t\\,dt = \\int_0^\\infty \\mathcal L \\{ f(t) \\}(s)\\,ds"
+  },
+  {
+    "id": 143,
+    "int": "\\int_0^{1/2} \\sum_{k=1}^\\infty k r^k \\,dr"
+  },
+  {
+    "id": 144,
+    "int": "\\int_0^{e^3} \\lfloor \\ln x \\rfloor \\,dx"
+  },
+  {
+    "id": 145,
+    "header": "\\text{Demostrar:}",
+    "int": "\\int_0^{2\\pi} \\sin^{2n+1} x \\cos^{2n+1} x \\,dx = 0,\\qquad n \\in \\mathbb Z_{\\geq 0}"
   }
 ]

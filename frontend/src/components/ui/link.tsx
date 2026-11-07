@@ -5,7 +5,7 @@ export default function Link({
   className,
   ...rest
 } : ComponentProps<"a">) {
-  return <a className={`text-primary underline ${className}`} {...rest} target="_blank">
+  return <a className={`text-primary hover:text-primary/80 underline ${className}`} {...rest} target="_blank">
     {children}
   </a>
 }
