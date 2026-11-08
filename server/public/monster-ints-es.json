@@ -460,6 +460,32 @@
   {
     "id": 145,
     "header": "\\text{Demostrar:}",
-    "int": "\\int_0^{2\\pi} \\sin^{2n+1} x \\cos^{2n+1} x \\,dx = 0,\\qquad n \\in \\mathbb Z_{\\geq 0}"
+    "int": "\\int_0^{2\\pi} \\sin^{2n+1} x\\, \\cos^{2n+1} x \\,dx = 0,\\qquad n \\in \\mathbb Z_{\\geq 0}"
+  },
+  {
+    "id": 146,
+    "int": "\\int_0^\\infty \\frac {(\\log_\\pi x\\, \\log_x \\pi)!} {\\pi^{-x} + \\pi^x } \\,dx"
+  },
+  {
+    "id": 147,
+    "int": "\\int_0^1 x \\left\\lfloor \\frac 1 x \\right\\rfloor \\,dx"
+  },
+  {
+    "id": 148,
+    "header": "\\text{Probar que:}",
+    "int": "\\int_0^{2\\pi} e^{2ikx} \\,dx = 0,\\qquad k \\in \\mathbb Z \\setminus \\set{0}"
+  },
+  {
+    "id": 149,
+    "int": "\\int_0^{2\\pi} \\lfloor 2\\sin x \\rfloor \\,dx"
+  },
+  {
+    "id": 150,
+    "int": "\\int_0^1 \\left\\lfloor \\frac 1 {\\sqrt x} \\right\\rfloor \\,dx"
+  },
+  {
+    "id": 151,
+    "header": "\\text{Hallar:}",
+    "int": "\\mathcal L\\{ \\lfloor t \\rfloor \\}(s)"
   }
 ]
