@@ -23,7 +23,7 @@ export default function BgReferences() {
         speed={1}
         glow={0.6}
         scale={1}
-        brightness={.7}
+        brightness={.65}
         layers={1}
         direction="bottom"
         opacity={1}

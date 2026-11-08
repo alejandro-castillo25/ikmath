@@ -17,8 +17,8 @@ export default function ReferencesMain() {
           {refsLang[lang].ordinal[3]} {refsLang[lang].editionSuffix}).
         </li>
         <li>
-          arXiv. (2026). <cite className="italic">arXiv.org</cite>.{" "}
-          <Link href="https://arxiv.org">https://arxiv.org</Link>.
+          arXiv. (2026). <Link href="https://arxiv.org">https://arxiv.org</Link>
+          .
         </li>
         <li>
           Burton, D. M. (2011).{" "}
@@ -27,7 +27,6 @@ export default function ReferencesMain() {
         </li>
         <li>
           The Daily Integral. (2026).{" "}
-          <cite className="italic">The Daily Integral</cite>.{" "}
           <Link href="https://dailyintegral.com">
             https://dailyintegral.com
           </Link>
@@ -56,14 +55,14 @@ export default function ReferencesMain() {
           <cite className="italic">Book of marvelous integrals</cite>.
         </li>
         <li>
-          ScienceDirect. (2026). <cite className="italic">ScienceDirect</cite>.{" "}
+          ScienceDirect. (2026).{" "}
           <Link href="https://www.sciencedirect.com">
             https://www.sciencedirect.com
           </Link>
           .
         </li>
         <li>
-          Wikipedia. (2026). <cite className="italic">Wikipedia</cite>.{" "}
+          Wikipedia. (2026).{" "}
           <Link href="https://www.wikipedia.org">
             https://www.wikipedia.org
           </Link>
