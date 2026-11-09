@@ -56,7 +56,7 @@ const countPending = new Set<Category>();
 // ? Cache stuff
 const CACHE_PREFIX = "ikmath:ints:";
 const CACHE_META_KEY = `${CACHE_PREFIX}meta`;
-const CACHE_TTL_MS = DEV ? 0 : 3 * 24 * 60 * 60 * 1000;
+const CACHE_TTL_MS = DEV ? 0 : 5 * 24 * 60 * 60 * 1000;
 
 const cacheKey = (category: string, lang: Lang | undefined, id: number) =>
   `${CACHE_PREFIX}${category}:${lang ?? "default"}:${id}`;
