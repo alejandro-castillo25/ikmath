@@ -6,7 +6,7 @@ import Tex from "../../components/Tex";
 import type { Int } from "ikmath-shared";
 import { Spinner } from "../../components/ui/spinner";
 import { Badge } from "../../components/ui/badge";
-import { Camera, Search, Dices } from "lucide-react";
+import { Camera, Hash, Dices } from "lucide-react";
 
 import { toPng } from "html-to-image";
 
@@ -775,13 +775,13 @@ export default function IntegralsMain() {
           }}
           aria-invalid={!isValidSearch}
           className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-          placeholder="#..."
+          placeholder={intsLang[lang].goTo}
         />
         <InputGroupAddon>
-          <Search />
+          <Hash />
         </InputGroupAddon>
         <InputGroupAddon align="inline-end">
-          ({count} {intsLang[lang].integrals})
+          {countLoading ? "/ …" : `/ ${count}`}
         </InputGroupAddon>
       </InputGroup>
       <Button variant="default" onClick={handleSurprise}>

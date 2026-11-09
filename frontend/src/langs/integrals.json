@@ -3,12 +3,14 @@
     "normals": "Normals",
     "monsters": "Monsters",
     "integrals": "Integrals",
-    "surpriseLabel": "Surprise me!"
+    "surpriseLabel": "Surprise me!",
+    "goTo": "Go to number"
   },
   "es": {
     "normals": "Normales",
     "monsters": "Monsters",
     "integrals": "Integrales",
-    "surpriseLabel": "¡Sorpréndeme!"
+    "surpriseLabel": "¡Sorpréndeme!",
+    "goTo": "Ir al número"
   }
 }
