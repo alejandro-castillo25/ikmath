@@ -55,8 +55,12 @@ const fontCss = `
 @font-face{font-family:"Libron";src:url("/fonts/Libron-BoldItalic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:block}
 `;
 
-const preloadFonts = ["Libron-Regular", "Libron-Bold"];
-
+const preloadFonts = [
+  "Libron-Regular",
+  "Libron-Italic",
+  "Libron-Bold",
+  "Libron-BoldItalic",
+];
 
 function titleKeyPlugin(): Plugin {
   return {

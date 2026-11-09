@@ -13,7 +13,7 @@ export default function ReferencesMain() {
       <ol className="list-[decimal-leading-zero] list-inside space-y-2">
         <li>
           Ahlfors, L. V. (1979).{" "}
-          <cite className="italic">Complex analysis</cite> (
+          <cite>Complex analysis</cite> (
           {refsLang[lang].ordinal[3]} {refsLang[lang].editionSuffix}).
         </li>
         <li>
@@ -22,7 +22,7 @@ export default function ReferencesMain() {
         </li>
         <li>
           Burton, D. M. (2011).{" "}
-          <cite className="italic">Elementary number theory</cite> (
+          <cite>Elementary number theory</cite> (
           {refsLang[lang].ordinal[7]} {refsLang[lang].editionSuffix}).
         </li>
         <li>
@@ -34,25 +34,25 @@ export default function ReferencesMain() {
         </li>
         <li>
           Dyke, P. (2014).{" "}
-          <cite className="italic">
+          <cite>
             An introduction to Laplace transforms and Fourier series
           </cite>{" "}
           ({refsLang[lang].ordinal[2]} {refsLang[lang].editionSuffix}).
         </li>
         <li>
           International Organization for Standardization. (2019).{" "}
-          <cite className="italic">
+          <cite>
             Quantities and units — Part 2: Mathematics
           </cite>{" "}
           ({refsLang[lang].isoStandard} 80000-2:2019).
         </li>
         <li>
-          Santiago, M. (2024). <cite className="italic">Book of integrals</cite>
+          Santiago, M. (2024). <cite>Book of integrals</cite>
           .
         </li>
         <li>
           Santiago, M. (2025).{" "}
-          <cite className="italic">Book of marvelous integrals</cite>.
+          <cite>Book of marvelous integrals</cite>.
         </li>
         <li>
           ScienceDirect. (2026).{" "}
