@@ -47,7 +47,7 @@ export type Category = "monsters" | "normals";
 export type IntHash = `#${Category}-${string}`;
 
 // IMPORTANT set DEV to false to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = false;
+const DEV = true;
 
 // ? mini count cache  in first load stuff duh
 const countCache: Partial<Record<Category, number>> = {};
@@ -612,7 +612,7 @@ export default function IntegralsMain() {
 
       <ScrollArea
         key={int?.id}
-        className={`relative h-auto min-h-52.5 md:max-w-[60%] w-full border border-border bg-background/40 backdrop-blur-xs p-2 rounded-lg`}
+        className={`relative h-auto min-h-52.5 md:max-w-[60%] w-full border border-border bg-background/45 backdrop-blur-xs p-2 rounded-lg`}
       >
         {int.id !== 0 && (
           <Badge
@@ -694,7 +694,7 @@ export default function IntegralsMain() {
                   }}
                   isActive={id === i}
                   className={`
-                    ${id === i ? "bg-background/40! backdrop-blur-xs" : ""}
+                    ${id === i ? "bg-background/45! backdrop-blur-xs" : ""}
                   `}
                 >
                   <span
@@ -784,7 +784,7 @@ export default function IntegralsMain() {
           ({count} {intsLang[lang].integrals})
         </InputGroupAddon>
       </InputGroup>
-      <Button variant="secondary" onClick={handleSurprise}>
+      <Button variant="default" onClick={handleSurprise}>
         <Dices />
         {intsLang[lang].surpriseLabel}
       </Button>

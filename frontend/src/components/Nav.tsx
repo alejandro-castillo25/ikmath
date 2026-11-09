@@ -47,7 +47,7 @@ export default function Nav({ current }: { current: Contents | null }) {
   return (
     <nav
       className="z-10 flex items-center fixed top-0 p-4 w-full h-16
-    border-b border-border bg-background/40 backdrop-blur-xs"
+    border-b border-border bg-background/45 backdrop-blur-xs"
     >
       <a href="/" className="flex items-center gap-4 mr-4">
         <Logo size={32} />
