@@ -5,6 +5,7 @@
     "integrals": "Integrals",
     "references": "References",
     "settings": {
+      "settingsLabel": "Settings",
       "githubLabel": "Github Repository",
       "langLabel": "Language",
       "themeLabel": "Theme"
@@ -16,6 +17,7 @@
     "integrals": "Integrales",
     "references": "Referencias",
     "settings": {
+      "settingsLabel": "Ajustes",
       "githubLabel": "Repositorio de Github",
       "langLabel": "Idioma",
       "themeLabel": "Tema"

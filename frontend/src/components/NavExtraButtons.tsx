@@ -1,6 +1,6 @@
 import { useIsMobile } from "@/hooks/use-mobile";
 
-import { Menu, X, Languages, Moon, Sun } from "lucide-react";
+import { Menu, X, Languages, Moon, Sun, Settings } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 import {
@@ -42,6 +42,8 @@ const items: Array<{ label: string; value: Lang }> = [
   { label: "English", value: "en" },
   { label: "Español", value: "es" },
 ];
+
+const SETTINGS_BTN = false;
 
 export default function NavExtraButtons({
   current,
@@ -140,6 +142,25 @@ export default function NavExtraButtons({
             <p>{navLang[lang].settings.themeLabel}</p>
           </TooltipContent>
         </Tooltip>
+
+        {SETTINGS_BTN && <Tooltip>
+          <TooltipTrigger
+            render={
+              <Button
+                variant="ghost"
+                size="icon-lg"
+                className="h-full"
+              // onClick={() => {}
+              // }
+              >
+                <Settings />
+              </Button>
+            }
+          />
+          <TooltipContent>
+            <p>{navLang[lang].settings?.settingsLabel}</p>
+          </TooltipContent>
+        </Tooltip>}
       </div>
 
       <Drawer
@@ -188,7 +209,7 @@ export default function NavExtraButtons({
             value={[current]}
             variant="outline"
             orientation="vertical"
-            className="w-full p-2"
+            className="w-full p-2 gap-2"
           >
             {links.map((l) => (
               <ToggleGroupItem
@@ -223,7 +244,7 @@ export default function NavExtraButtons({
 
           <DrawerFooter className="gap-4 ">
             <Separator />
-            <div className="flex gap-3 w-full">
+            <div className="flex gap-2 w-full">
               <Tooltip>
                 <TooltipTrigger
                   render={
@@ -295,6 +316,24 @@ export default function NavExtraButtons({
                   <p>{navLang[lang].settings.themeLabel}</p>
                 </TooltipContent>
               </Tooltip>
+              {SETTINGS_BTN && <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      variant="outline"
+                      size="icon-lg"
+                      className="size-9.5"
+                    // onClick={() => {}
+                    // }
+                    >
+                      <Settings />
+                    </Button>
+                  }
+                />
+                <TooltipContent>
+                  <p>{navLang[lang].settings?.settingsLabel}</p>
+                </TooltipContent>
+              </Tooltip>}
             </div>
           </DrawerFooter>
         </DrawerContent>
