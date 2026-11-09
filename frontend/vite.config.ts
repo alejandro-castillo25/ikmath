@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, type Plugin } from "vite";
 
-import titles from "./src/langs/titles.json";
+import titles from "./src/langs/titles.json" with { type: 'json' };
 
 
 const titleInit = (key: string) => `(function () {
@@ -139,6 +139,10 @@ export default defineConfig({
         integrals: path.resolve(import.meta.dirname, "integrals.html"),
         references: path.resolve(import.meta.dirname, "references.html"),
         notFound: path.resolve(import.meta.dirname, "404.html"),
+
+        // subjects
+        calculus: path.resolve(import.meta.dirname, "subjects/calculus.html"),
+        
       },
     },
   },

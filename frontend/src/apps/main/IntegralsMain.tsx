@@ -49,6 +49,76 @@ export type IntHash = `#${Category}-${string}`;
 // IMPORTANT set DEV to false to build to prodution (yeah... i thought that process.env would've worked)
 const DEV = false;
 
+// ? Cache stuff
+const CACHE_PREFIX = "ikmath:ints:";
+const CACHE_META_KEY = `${CACHE_PREFIX}meta`;
+const CACHE_TTL_MS = DEV ? 10 * 1000 : 3 * 24 * 60 * 60 * 1000;
+
+const cacheKey = (category: string, lang: Lang | undefined, id: number) =>
+  `${CACHE_PREFIX}${category}:${lang ?? "default"}:${id}`;
+
+function ensureCacheFresh() {
+  try {
+    const raw = localStorage.getItem(CACHE_META_KEY);
+    const createdAt = raw ? Number(raw) : NaN;
+
+    if (!Number.isNaN(createdAt) && Date.now() - createdAt < CACHE_TTL_MS)
+      return;
+
+    const toRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(CACHE_PREFIX)) toRemove.push(k);
+    }
+    toRemove.forEach((k) => localStorage.removeItem(k));
+
+    localStorage.setItem(CACHE_META_KEY, String(Date.now()));
+  } catch {
+    return;
+  }
+}
+
+function getCachedInt(
+  category: string,
+  lang: Lang | undefined,
+  id: number,
+): Int | null {
+  ensureCacheFresh();
+  try {
+    const raw = localStorage.getItem(cacheKey(category, lang, id));
+    return raw ? (JSON.parse(raw) as Int) : null;
+  } catch {
+    return null;
+  }
+}
+
+function isIntCached(
+  category: string,
+  lang: Lang | undefined,
+  id: number,
+): boolean {
+  ensureCacheFresh();
+  try {
+    return localStorage.getItem(cacheKey(category, lang, id)) !== null;
+  } catch {
+    return false;
+  }
+}
+
+function setCachedInt(
+  category: string,
+  lang: Lang | undefined,
+  id: number,
+  data: Int,
+) {
+  ensureCacheFresh();
+  try {
+    localStorage.setItem(cacheKey(category, lang, id), JSON.stringify(data));
+  } catch {
+    return;
+  }
+}
+
 function parseHash(): { category: Category; id: number } {
   const [rawCat, rawId] = window.location.hash
     .replace("#", "")
@@ -119,6 +189,20 @@ export default function IntegralsMain() {
       const paramsStr = queryParts.length > 0 ? `?${queryParts.join("&")}` : "";
 
       const isCount = settings?.count !== undefined;
+
+      if (!isCount && settings.id !== undefined) {
+        const cached = getCachedInt(
+          settings.category,
+          settings.lang,
+          settings.id,
+        );
+        if (cached) {
+          setInt(cached);
+          setIsLoading(false);
+          return;
+        }
+      }
+
       if (!isCount) setIsLoading(true);
 
       try {
@@ -134,6 +218,8 @@ export default function IntegralsMain() {
           },
         );
 
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
         if (isCount) {
           setCountLoading(true);
           const data: { count: number } = await response.json();
@@ -147,6 +233,9 @@ export default function IntegralsMain() {
 
         const data: Int = await response.json();
         console.log(data);
+
+        if (settings.id !== undefined)
+          setCachedInt(settings.category, settings.lang, settings.id, data);
 
         setInt(data);
         setIsLoading(false);
@@ -374,36 +463,57 @@ export default function IntegralsMain() {
     }
   };
 
-  const handleSurprise = useMemo(
+  const throttledSurprise = useMemo(
     () =>
       throttle(
-        () => {
-          const currentCount = count;
-          if (currentCount === 0) return;
-
-          const randomId = Math.floor(Math.random() * currentCount) + 1;
-
+        (randomId: number) => {
           setLocationHash(`#${category}-${randomId}`);
         },
         750,
-        {
-          trailing: true,
-        },
+        { trailing: true },
       ),
-    [count, category, setLocationHash],
+    [category, setLocationHash],
   );
 
-  const handleNavClick = useMemo(
+  const handleSurprise = useCallback(() => {
+    if (count === 0) return;
+
+    const randomId = Math.floor(Math.random() * count) + 1;
+
+    if (isIntCached(category, lang, randomId)) {
+      throttledSurprise.cancel();
+      setLocationHash(`#${category}-${randomId}`);
+      return;
+    }
+
+    throttledSurprise(randomId);
+  }, [count, category, lang, throttledSurprise, setLocationHash]);
+
+  const throttledNav = useMemo(
     () =>
       throttle(
         (targetId: number) => {
-          if (targetId < 1 || (count > 0 && targetId > count)) return;
           setLocationHash(`#${category}-${targetId}`);
         },
         750,
         { trailing: true },
       ),
-    [count, category, setLocationHash],
+    [category, setLocationHash],
+  );
+
+  const handleNavClick = useCallback(
+    (targetId: number) => {
+      if (targetId < 1 || (count > 0 && targetId > count)) return;
+
+      if (isIntCached(category, lang, targetId)) {
+        throttledNav.cancel();
+        setLocationHash(`#${category}-${targetId}`);
+        return;
+      }
+
+      throttledNav(targetId);
+    },
+    [count, category, lang, throttledNav, setLocationHash],
   );
 
   const throttledSetHash = useMemo(
@@ -606,7 +716,9 @@ export default function IntegralsMain() {
           </PaginationContent>
         </Pagination>
       )}
-      <InputGroup className={`${(int.id === 0 || (count === 0 && !countLoading)) && "hidden"} max-w-50`}>
+      <InputGroup
+        className={`${(int.id === 0 || (count === 0 && !countLoading)) && "hidden"} max-w-50`}
+      >
         <InputGroupInput
           type="text"
           inputMode="numeric"

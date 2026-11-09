@@ -15,12 +15,6 @@ import {
 } from "@/components/ui/drawer";
 
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 
@@ -32,13 +26,6 @@ import {
 
 import GlideSelect from "./GlideSelect";
 
-const formats = [
-  { value: "png", label: "PNG", tag: "Lossless" },
-  { value: "jpg", label: "JPG", tag: "Smallest" },
-  { value: "webp", label: "WebP", tag: "Modern" },
-  { value: "svg", label: "SVG", tag: "Vector" },
-  { value: "pdf", label: "PDF", tag: "Print" },
-];
 
 import { Separator } from "@/components/ui/separator";
 

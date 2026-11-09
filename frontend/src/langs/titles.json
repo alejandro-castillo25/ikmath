@@ -2,6 +2,7 @@
   "en": {
     "ikmath": "ikmath",
     "subjects": "Subjects",
+    "calculus": "Calculus",
     "references": "References",
     "integrals": "Integrals",
     "404": "404"
@@ -9,6 +10,7 @@
   "es": {
     "ikmath": "ikmath",
     "subjects": "Materias",
+    "calculus": "Cálculo",
     "references": "Referencias",
     "integrals": "Integrales",
     "404": "404"

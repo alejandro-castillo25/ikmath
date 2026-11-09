@@ -62,7 +62,10 @@ export default function SubjectsMain() {
         variant="secondary"
         className="border-(--real-analysis) bg-linear-to-br from-background from-40% to-(--real-analysis)/30"
       >
-        <Badge variant="secondary" className="absolute top-0 right-0 m-2">
+        <Badge
+          variant="secondary"
+          className="absolute top-0 right-0 m-2 md:m-4"
+        >
           {subjectsLang[lang].cards.comingSoon}
         </Badge>
 
