@@ -49,10 +49,14 @@ export type IntHash = `#${Category}-${string}`;
 // IMPORTANT set DEV to false to build to prodution (yeah... i thought that process.env would've worked)
 const DEV = false;
 
+// ? mini count cache  in first load stuff duh
+const countCache: Partial<Record<Category, number>> = {};
+const countPending = new Set<Category>();
+
 // ? Cache stuff
 const CACHE_PREFIX = "ikmath:ints:";
 const CACHE_META_KEY = `${CACHE_PREFIX}meta`;
-const CACHE_TTL_MS = DEV ? 10 * 1000 : 3 * 24 * 60 * 60 * 1000;
+const CACHE_TTL_MS = DEV ? 0 : 3 * 24 * 60 * 60 * 1000;
 
 const cacheKey = (category: string, lang: Lang | undefined, id: number) =>
   `${CACHE_PREFIX}${category}:${lang ?? "default"}:${id}`;
@@ -219,15 +223,17 @@ export default function IntegralsMain() {
         );
 
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
         if (isCount) {
-          setCountLoading(true);
           const data: { count: number } = await response.json();
 
           console.log(data);
 
-          setCount(data.count);
-          setCountLoading(false);
+          countCache[settings.category as Category] = data.count;
+
+          if (parseHash().category === settings.category) {
+            setCount(data.count);
+            setCountLoading(false);
+          }
           return;
         }
 
@@ -271,7 +277,6 @@ export default function IntegralsMain() {
 
   useEffect(() => {
     let currentCat: Category | null = null;
-    let countCtrl: AbortController | null = null;
     let dataCtrl: AbortController | null = null;
 
     const load = () => {
@@ -288,12 +293,21 @@ export default function IntegralsMain() {
       if (newCat !== currentCat) {
         currentCat = newCat;
 
-        countCtrl?.abort();
-        countCtrl = new AbortController();
+        const known = countCache[newCat];
 
-        setCountLoading(true);
+        if (known !== undefined) {
+          setCount(known);
+          setCountLoading(false);
+        } else {
+          setCountLoading(true);
 
-        fetchData({ count: true, category: newCat, lang }, countCtrl.signal);
+          if (!countPending.has(newCat)) {
+            countPending.add(newCat);
+            fetchData({ count: true, category: newCat, lang }).finally(() =>
+              countPending.delete(newCat),
+            );
+          }
+        }
       }
 
       dataCtrl?.abort();
@@ -309,7 +323,6 @@ export default function IntegralsMain() {
 
     return () => {
       ctrl.abort();
-      countCtrl?.abort();
       dataCtrl?.abort();
     };
   }, [fetchData, lang]);
