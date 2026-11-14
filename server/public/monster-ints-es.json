@@ -407,7 +407,7 @@
   { "id": 132, "int": "\\int_0^3 \\lceil x^2 \\rceil\\,dx" },
   {
     "id": 133,
-    "int": "\\int_0^n x^2 \\,\\lceil x \\rceil,\\qquad n \\in \\mathbb Z^+",
+    "int": "\\int_0^n x^2 \\,\\lceil x \\rceil\\,dx,\\qquad n \\in \\mathbb Z^+",
     "header": "\\text{Evaluar:}"
   },
   {
@@ -487,5 +487,53 @@
     "id": 151,
     "header": "\\text{Hallar:}",
     "int": "\\mathcal L\\{ \\lfloor t \\rfloor \\}(s)"
+  },
+  {
+    "id": 152,
+    "int": "\\int_0^5 \\left\\lfloor \\frac x 2 \\right\\rfloor \\,dx"
+  },
+  {
+    "id": 153,
+    "int": "\\int_0^5 x \\left\\lfloor \\frac x 2 \\right\\rfloor \\,dx"
+    
+  },
+  {
+    "id": 154,
+    "header": "\\text{Evaluar:}",
+    "int": "\\int_0^{2\\pi} \\lfloor \\sin(nx) \\rfloor \\,dx,\\qquad n \\in \\mathbb Z^+"
+  },
+  {
+    "id": 155,
+    "int": "\\int_0^{10} \\lfloor \\sqrt x \\rfloor \\,dx"
+  },
+  {
+    "id": 156,
+    "int": "\\int_0^{20} \\lfloor \\sqrt {2x} \\rfloor \\,dx"
+  },
+  {
+    "id": 157,
+    "header": "\\text{Evaluar:}",
+    "int": "\\int_0^{n^2} \\lfloor \\sqrt x \\rfloor \\,dx,\\qquad n \\in \\mathbb Z_{\\geq 0}"
+  },
+  {
+    "id": 158,
+    "int": "\\int_1^8 \\lfloor \\sqrt[3] x \\rfloor \\,dx"
+  },
+  {
+    "id": 159,
+    "int": "\\int_1^{e^3} \\lfloor \\ln(2x) \\rfloor \\,dx"
+  },
+  {
+    "id": 160,
+    "int": "\\int_0^{10} \\lfloor \\ln(x+1) \\rfloor \\,dx"
+  },
+  {
+    "id": 161,
+    "int": "\\int_0^2 \\lfloor e^x \\rfloor \\,dx"
+  },
+  {
+    "id": 162,
+    "header": "\\text{Evaluar:}",
+    "int": "\\int_0^n \\lfloor e^x \\rfloor \\,dx,\\qquad n \\in \\mathbb Z^+"
   }
 ]
