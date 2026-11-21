@@ -1039,7 +1039,7 @@ const GooeyNav = ({
 
   return (
     <nav
-      className={`${ROOT}${frame ? ` ${FRAMED}` : ""} bg-background/50! backdrop-blur-xs! backdrop-saturate-100! ${className}`.trim()}
+      className={`${ROOT}${frame ? ` ${FRAMED}` : ""} bg-background/75! backdrop-blur-xs! backdrop-saturate-100! ${className}`.trim()}
       style={
         {
           ...(SIZES[size] ?? SIZES.md),

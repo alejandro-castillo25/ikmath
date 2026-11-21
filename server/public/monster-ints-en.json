@@ -535,5 +535,22 @@
     "id": 162,
     "header": "\\text{Evaluate:}",
     "int": "\\int_0^n \\lfloor e^x \\rfloor \\,dx,\\qquad n \\in \\mathbb Z^+"
+  },
+  {
+    "id": 163,
+    "int": "\\int_{-1}^2 \\lfloor x^3 \\rfloor \\,dx"
+  },
+  {
+    "id": 164,
+    "int": "\\int_0^4 \\lfloor \\arctan x \\rfloor \\,dx"
+  },
+  {
+    "id": 165,
+    "header": "\\text{Evaluate:}",
+    "int": "\\int_0^n \\lfloor \\arctan x \\rfloor \\,dx,\\qquad n \\in \\mathbb Z_{\\geq 2}"
+  },
+  {
+    "id": 166,
+    "int": "\\int_{-2}^3 \\lfloor x^2 \\rfloor \\,dx"
   }
 ]
