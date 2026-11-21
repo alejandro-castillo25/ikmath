@@ -47,7 +47,7 @@ export type Category = "monsters" | "normals";
 export type IntHash = `#${Category}-${string}`;
 
 // IMPORTANT set DEV to false to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = false;
+const DEV = true;
 
 // ? mini count cache  in first load stuff duh
 const countCache: Partial<Record<Category, number>> = {};
@@ -592,7 +592,6 @@ export default function IntegralsMain() {
   return (
     <main className="flex w-full h-full items-center justify-center flex-col gap-8 p-2 pt-6 pb-6 mt-16 ">
       <GooeyNav
-        // key={category}
         className="z-15"
         color={theme === "dark" ? "#74c7ec" : "#209fb5"}
         items={items}
@@ -651,7 +650,7 @@ export default function IntegralsMain() {
           <Button
             onClick={handleDownloadPng}
             disabled={isLoading || isExporting}
-            className="absolute -top-1 -right-1 z-10"
+            className="absolute -top-1 -right-1 z-10 border-border"
             variant="secondary"
             size="icon"
           >
