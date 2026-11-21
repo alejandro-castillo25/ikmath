@@ -4,13 +4,18 @@
     "monsters": "Monsters",
     "integrals": "Integrals",
     "surpriseLabel": "Surprise me!",
-    "goTo": "Go to number"
+    "goTo": "Go to number",
+    "copyLatex": "Copy LaTeX",
+    "takeSS": "Take a screenshoot"
+    
   },
   "es": {
     "normals": "Normales",
     "monsters": "Monsters",
     "integrals": "Integrales",
     "surpriseLabel": "¡Sorpréndeme!",
-    "goTo": "Ir al número"
+    "goTo": "Ir al número",
+    "copyLatex": "Copiar LaTeX",
+    "takeSS": "Tomar una captura"
   }
 }

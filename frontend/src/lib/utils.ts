@@ -1,3 +1,3 @@
 export { cn } from "cn"
 
-export const TOOLTIP_DELAY = 500;
+export const TOOLTIP_DELAY = 250;

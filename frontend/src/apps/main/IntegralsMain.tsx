@@ -1,4 +1,6 @@
 import { Button } from "../../components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -6,7 +8,7 @@ import Tex from "../../components/Tex";
 import type { Int } from "ikmath-shared";
 import { Spinner } from "../../components/ui/spinner";
 import { Badge } from "../../components/ui/badge";
-import { Camera, Hash, Dices } from "lucide-react";
+import { Camera, Hash, Dices, Copy, Check } from "lucide-react";
 
 import { toPng } from "html-to-image";
 
@@ -31,6 +33,7 @@ import {
 } from "@/components/ui/input-group";
 
 import intsLang from "../../langs/integrals.json";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export interface FetchDataSettings {
   category: string;
@@ -47,7 +50,7 @@ export type Category = "monsters" | "normals";
 export type IntHash = `#${Category}-${string}`;
 
 // IMPORTANT set DEV to false to build to prodution (yeah... i thought that process.env would've worked)
-const DEV = true;
+const DEV = false;
 
 // ? mini count cache  in first load stuff duh
 const countCache: Partial<Record<Category, number>> = {};
@@ -171,6 +174,43 @@ export default function IntegralsMain() {
     const value = Number.parseInt(searchValue);
     return !Number.isNaN(value) && value >= 1 && value <= count;
   }, [searchValue, count]);
+
+  const [copied, setCopied] = useState<boolean>(false);
+  
+  const handleCopyLatex = useCallback(async () => {
+    const parts = [int.header, int.int, int.footer].filter(
+      (p): p is string => typeof p === "string" && p.length > 0,
+    );
+    if (parts.length === 0) return;
+  
+    const latex = parts.join("\n\n");
+  
+    try {
+      // ? Modern path (needs HTTPS/localhost + secure context) :>
+      await navigator.clipboard.writeText(latex);
+    } catch {
+      // ? Fallback for old browsers / insecure contexts
+      const ta = document.createElement("textarea");
+      ta.value = latex;
+      ta.style.position = "fixed";
+      ta.style.top = "0";
+      ta.style.left = "0";
+      ta.style.opacity = "0";
+      ta.setAttribute("readonly", "");
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, latex.length);
+      try {
+        document.execCommand("copy");
+      } catch (e) {
+        console.error(e);
+      }
+      document.body.removeChild(ta);
+    }
+  
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1500);
+  }, [int]);
 
   const fetchData = useCallback(
     async (settings: FetchDataSettings, signal?: AbortSignal) => {
@@ -611,7 +651,7 @@ export default function IntegralsMain() {
 
       <ScrollArea
         key={int?.id}
-        className={`relative h-auto min-h-52.5 md:max-w-[60%] w-full border border-border bg-background/75 backdrop-blur-xs p-2 rounded-lg`}
+        className={`relative h-auto min-h-52.5 md:max-w-[60%] w-full border border-border bg-background/85 backdrop-blur-xs p-2 rounded-lg`}
       >
         {int.id !== 0 && (
           <Badge
@@ -647,15 +687,50 @@ export default function IntegralsMain() {
         </div>
 
         {int.id !== 0 && (
-          <Button
-            onClick={handleDownloadPng}
-            disabled={isLoading || isExporting}
-            className="absolute -top-1 -right-1 z-10 border-border"
-            variant="secondary"
-            size="icon"
-          >
-            {isExporting ? <Spinner className="size-4" /> : <Camera />}
-          </Button>
+          <ButtonGroup className="absolute -top-1 -right-1 z-10">
+
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    onClick={handleCopyLatex}
+                    disabled={isLoading || isExporting || int.id !== id}
+                    className=" border-border"
+                    variant="secondary"
+                    size="icon"
+                    aria-label={copied ? "Copied" : "Copy LaTeX"}
+                  >
+                    {copied ? <Check /> : <Copy />}
+                  </Button>
+                }
+              />
+              <TooltipContent>
+                <p>{intsLang[lang].copyLatex}</p>
+              </TooltipContent>
+            </Tooltip>
+          
+
+
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    onClick={handleDownloadPng}
+                    disabled={isLoading || isExporting}
+                    className=" border-border"
+                    variant="secondary"
+                    size="icon"
+                  >
+                    {isExporting ? <Spinner className="size-4" /> : <Camera />}
+                  </Button>
+                }
+              />
+              <TooltipContent>
+                <p>{intsLang[lang].takeSS}</p>
+              </TooltipContent>
+            </Tooltip>
+          
+          </ButtonGroup>
         )}
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
@@ -693,7 +768,7 @@ export default function IntegralsMain() {
                   }}
                   isActive={id === i}
                   className={`
-                    ${id === i ? "bg-background/75! backdrop-blur-xs" : ""}
+                    ${id === i ? "bg-background/85! backdrop-blur-xs" : ""}
                   `}
                 >
                   <span
