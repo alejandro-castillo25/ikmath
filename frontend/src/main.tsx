@@ -5,11 +5,12 @@ import App from "./apps/App.tsx";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { flushSync } from "react-dom";
+import { TOOLTIP_DELAY } from "./lib/utils.ts";
 
 flushSync(() => {
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
-      <TooltipProvider>
+      <TooltipProvider delay={TOOLTIP_DELAY}>
         <App />
       </TooltipProvider>
     </StrictMode>,
